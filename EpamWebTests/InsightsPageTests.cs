@@ -3,11 +3,14 @@ using EpamWeb.Factory;
 using EpamWeb.Pages;
 using Microsoft.Playwright;
 using FluentAssertions;
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
 
 namespace EpamWebTests
 {
+    [AllureNUnit]
     [TestFixture]
-    //[Parallelizable(ParallelScope.All)]
+    [AllureSuite("Insights Page Tests")]
     public class InsightsPageTests
     {
         private IBrowserFactory factory;
@@ -27,6 +30,9 @@ namespace EpamWebTests
         }
 
         [Test]
+        [AllureName("Insights Page Search Functionality Check")]
+        [AllureDescription("Verifies that the search functionality on the EPAM Insights page works as expected.")]
+        [AllureTag("Search", "InsightsPage")]
         public async Task EpamInsightsPage_SearchFunctionalityCheck()
         {
             // Arrange
@@ -44,6 +50,9 @@ namespace EpamWebTests
         }
 
         [Test]
+        [AllureName("Insights Page Find Button Redirect Check")]
+        [AllureDescription("Checks if the 'Find' button redirects to the correct page.")]
+        [AllureTag("Redirect", "InsightsPage")]
         public async Task EpamInsightsPage_FindButtonRedirectCheck()
         {
             // Arrange

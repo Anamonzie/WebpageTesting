@@ -1,3 +1,6 @@
+using Allure.Commons;
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using EpamWeb;
 using EpamWeb.Factory;
 using EpamWeb.Pages;
@@ -6,8 +9,9 @@ using Microsoft.Playwright;
 
 namespace EpamWebTests;
 
+[AllureNUnit]
 [TestFixture]
-//[Parallelizable(ParallelScope.All)]
+[AllureSuite("EPAM Homepage Tests")]
 public class Tests
 {
     private IBrowserFactory factory;
@@ -27,6 +31,9 @@ public class Tests
     }
 
     [Test]
+    [AllureName("EPAM Homepage Title Check")]
+    [AllureDescription("Checks if the title of the EPAM homepage is as expected.")]
+    [AllureTag("Smoke", "Homepage")]
     public async Task EpamHomepage_TitleCheck()
     {
         // Arrange
@@ -43,6 +50,9 @@ public class Tests
     }
 
     [Test]
+    [AllureName("EPAM Homepage Hamburger Menu Check")]
+    [AllureDescription("Checks if the hamburger menu items are as expected.")]
+    [AllureTag("Smoke", "HamburgerMenu")]
     public async Task EpamHomepage_HamburgerMenu()
     {
         // Arrange
