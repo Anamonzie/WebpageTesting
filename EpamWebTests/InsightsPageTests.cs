@@ -14,6 +14,7 @@ namespace EpamWebTests
     public class InsightsPageTests
     {
         private IBrowserFactory factory;
+        private IPageFactory pageFactory;
 
         private static readonly ThreadLocal<IBrowser> browser = new();
         private IBrowserContext context;
@@ -23,6 +24,7 @@ namespace EpamWebTests
         public async Task Setup()
         {
             factory = BrowserFactory.Instance;
+            pageFactory = new PageFactory();
 
             browser.Value = await factory.GetBrowser();
             context = await browser.Value.NewContextAsync();
@@ -36,7 +38,7 @@ namespace EpamWebTests
         public async Task EpamInsightsPage_SearchFunctionalityCheck()
         {
             // Arrange
-            var insightsPageService = PageFactory.CreateInsightsPageService(page);
+            var insightsPageService = pageFactory.CreateInsightsPageService(page);
             await insightsPageService.NavigateToUrlAsync(Constants.EpamInsightsPageUrl);
 
             // Act
@@ -56,7 +58,7 @@ namespace EpamWebTests
         public async Task EpamInsightsPage_FindButtonRedirectCheck()
         {
             // Arrange
-            var insightsPageService = PageFactory.CreateInsightsPageService(page);
+            var insightsPageService = pageFactory.CreateInsightsPageService(page);
             await insightsPageService.NavigateToUrlAsync(Constants.EpamInsightsPageUrl);
             const string expectedTitle = TestData.ExpectedSearchPageTitle;
 

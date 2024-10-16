@@ -15,6 +15,7 @@ namespace EpamWebTests;
 public class Tests
 {
     private IBrowserFactory factory;
+    private IPageFactory pageFactory;
 
     private static readonly ThreadLocal<IBrowser> browser = new();
     private IBrowserContext context;
@@ -24,6 +25,7 @@ public class Tests
     public async Task Setup()
     {
         factory = BrowserFactory.Instance;
+        pageFactory = new PageFactory();
 
         browser.Value = await factory.GetBrowser();
         context = await browser.Value.NewContextAsync();
@@ -39,7 +41,7 @@ public class Tests
         // Arrange
         const string expectedTitle = TestData.ExpectedHomepageTitle;
 
-        var homepageService = PageFactory.CreateHomepageService(page);
+        var homepageService = pageFactory.CreateHomepageService(page);
         await homepageService.NavigateToUrlAsync(Constants.EpamHomepageUrl);
 
         // Act
@@ -58,7 +60,7 @@ public class Tests
         // Arrange
         var expectedItems = TestData.ExpectedHamburgerMenuItems;
 
-        var homepageService = PageFactory.CreateHomepageService(page);
+        var homepageService = pageFactory.CreateHomepageService(page);
         await homepageService.NavigateToUrlAsync(Constants.EpamHomepageUrl);
 
         // Act
