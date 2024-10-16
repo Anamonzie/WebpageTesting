@@ -21,27 +21,48 @@ jobs:
       with:
         dotnet-version: 8.0.x
         
-    # Step 4: Install Playwright package
     - name: Install Playwright
       run: npm install @playwright/test
 
-    # Step 5: Install all required libraries using Playwright script
     - name: Install Playwright Dependencies
       run: npx playwright install-deps
       
     - name: Install dependencies
       run: dotnet restore EpamWebTests/EpamWebTests.sln
 
-    # Step 7: Install Playwright Browsers
     - name: Install Playwright Browsers
       run: npx playwright install
       
-    # Step 8: Build the project
     - name: Build the project
       run: dotnet build EpamWebTests/EpamWebTests.sln --no-restore
           
-    # Step 9: Run Playwright Tests
     - name: Run Playwright Tests
-      run: dotnet test EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal
+      run: dotnet test EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger:"allure"
+
+    - name: Load test report history
+      uses: actions/checkout@v3
+      if: always()
+      continue-on-error: true
+      with:
+        ref: gh-pages
+        path: gh-pages
+        
+       # Publish Allure Report
+    - name: Build and Publish Allure Report
+      uses: simple-elf/allure-report-action@v1.7
+      if: always()
+      with:
+        allure_results: ./allure-results  # Path where Allure results are stored
+        gh_pages: gh-pages
+        allure_history: allure-history
+
+    # Publish test report to GitHub Pages
+    - name: Publish Allure Test Report
+      uses: peaceiris/actions-gh-pages@v3
+      if: always()
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: gh-pages
+        publish_dir: allure-history
       
 
