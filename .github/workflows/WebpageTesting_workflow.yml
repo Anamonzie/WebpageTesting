@@ -42,6 +42,6 @@ jobs:
           
     # Step 9: Run Playwright Tests
     - name: Run Playwright Tests
-      run: dotnet test EpamWebTests/EpamWebTests.csproj --configuration Release --no-build --verbosity normal
+      run: dotnet test EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal
       
 
