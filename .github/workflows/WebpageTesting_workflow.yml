@@ -29,7 +29,7 @@ jobs:
     - name: Install Playwright Dependencies
       run: npx playwright install-deps
       
-    - name: Restore dependencies
+    - name: Install dependencies
       run: dotnet restore EpamWebTests/EpamWebTests.sln
       
     # Step 8: Build the project
@@ -39,10 +39,6 @@ jobs:
     # Step 7: Install Playwright Browsers
     - name: Install Playwright Browsers
       run: npx playwright install
-
-      
-    - name: Clean build artifacts
-      run: dotnet clean EpamWebTests/EpamWebTests.csproj
 
     - name: Run Playwright Tests
       run: dotnet test EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity detailed --no-build --logger "trx;LogFileName=TestResults.trx"
