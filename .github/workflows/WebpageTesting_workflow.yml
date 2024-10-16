@@ -37,32 +37,33 @@ jobs:
       run: dotnet build EpamWebTests/EpamWebTests.sln --no-restore
           
     - name: Run Playwright Tests
-      run: dotnet test EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger:"nunit;LogFilePath=./allure-results"
+      run: dotnet test EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal 
+      #--logger:"nunit;LogFilePath=./allure-results"
 
-    - name: Load test report history
-      uses: actions/checkout@v3
-      if: always()
-      continue-on-error: true
-      with:
-        ref: gh-pages
-        path: gh-pages
+  #  - name: Load test report history
+  #    uses: actions/checkout@v3
+  #   if: always()
+  #    continue-on-error: true
+  #    with:
+  #      ref: gh-pages
+  #      path: gh-pages
         
        # Publish Allure Report
-    - name: Build and Publish Allure Report
-      uses: simple-elf/allure-report-action@v1.7
-      if: always()
-      with:
-        allure_results: ./allure-results  # Path where Allure results are stored
-        gh_pages: gh-pages
-        allure_history: allure-history
+ #   - name: Build and Publish Allure Report
+ #     uses: simple-elf/allure-report-action@v1.7
+ #     if: always()
+ #     with:
+ #       allure_results: ./allure-results  # Path where Allure results are stored
+ #       gh_pages: gh-pages
+ #       allure_history: allure-history
 
     # Publish test report to GitHub Pages
-    - name: Publish Allure Test Report
-      uses: peaceiris/actions-gh-pages@v3
-      if: always()
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_branch: gh-pages
-        publish_dir: allure-history
+#    - name: Publish Allure Test Report
+#      uses: peaceiris/actions-gh-pages@v3
+#      if: always()
+#      with:
+#        github_token: ${{ secrets.GITHUB_TOKEN }}
+#        publish_branch: gh-pages
+#        publish_dir: allure-history
       
 
