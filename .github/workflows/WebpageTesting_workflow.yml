@@ -32,8 +32,8 @@ jobs:
    # - name: Restore dependencies
     #  run: dotnet restore
       
-    - name: Build
-      run: dotnet build --no-restore
+   # - name: Build
+      #run: dotnet build --no-restore
       
     # Step 7: Install Playwright Browsers
     - name: Install Playwright Browsers
@@ -41,7 +41,9 @@ jobs:
 
     # Step 8: Build the project
     - name: Build the project
-      run: dotnet build --configuration Release --no-restore --verbosity detailed
+      run: dotnet build --no-restore
+
+      #run: dotnet build --configuration Release --no-restore --verbosity detailed
 
     # Step 9: Run Playwright Tests
     - name: Run Playwright Tests
