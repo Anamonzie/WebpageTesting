@@ -29,21 +29,16 @@ jobs:
     - name: Install Playwright Dependencies
       run: npx playwright install-deps
       
-   # - name: Restore dependencies
-    #  run: dotnet restore
+    - name: Restore dependencies
+      run: dotnet restore EpamWeb/EpamWeb.sln
       
-   # - name: Build
-      #run: dotnet build --no-restore
-      
+    # Step 8: Build the project
+    - name: Build the project
+      run: dotnet build EpamWeb/EpamWeb.sln --no-restore
+
     # Step 7: Install Playwright Browsers
     - name: Install Playwright Browsers
       run: npx playwright install
-
-    # Step 8: Build the project
-    - name: Build the project
-      run: dotnet build --no-restore
-
-      #run: dotnet build --configuration Release --no-restore --verbosity detailed
 
     # Step 9: Run Playwright Tests
     - name: Run Playwright Tests
