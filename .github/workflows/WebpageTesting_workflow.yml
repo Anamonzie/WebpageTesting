@@ -49,7 +49,7 @@ jobs:
         
     # Publish Allure Report
     - name: Build and Publish Allure Report
-      uses: simple-elf/allure-report-action@1.7
+      uses: simple-elf/allure-report-action@v1.1
       if: always()
       with:
         allure_results: ./allure-results  # Path where Allure results are stored
