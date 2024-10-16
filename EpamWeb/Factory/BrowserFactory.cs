@@ -26,14 +26,14 @@ namespace EpamWeb.Factory
                         threadLocalBrowser.Value = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
                         {
                             Channel = "chrome",
-                            Headless = false
+                            Headless = true
                         });
                         break;
                     case "firefox":
                         threadLocalBrowser.Value = await playwright.Firefox.LaunchAsync(new BrowserTypeLaunchOptions
                         {
                             Channel = "firefox",
-                            Headless = false
+                            Headless = true
                         });
                         break;
                     default:
