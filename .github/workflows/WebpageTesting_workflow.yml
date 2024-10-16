@@ -21,26 +21,21 @@ jobs:
       with:
         dotnet-version: 8.0.x
         
-    # Step 4: Install Playwright package
     - name: Install Playwright
       run: npm install @playwright/test
 
-    # Step 5: Install all required libraries using Playwright script
     - name: Install Playwright Dependencies
       run: npx playwright install-deps
       
     - name: Install dependencies
       run: dotnet restore EpamWebTests/EpamWebTests.sln
 
-    # Step 7: Install Playwright Browsers
     - name: Install Playwright Browsers
       run: npx playwright install
       
-    # Step 8: Build the project
     - name: Build the project
       run: dotnet build EpamWebTests/EpamWebTests.sln --no-restore
           
-    # Step 9: Run Playwright Tests
     - name: Run Playwright Tests
       run: dotnet test EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal
       
