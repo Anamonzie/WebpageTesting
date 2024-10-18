@@ -1,8 +1,9 @@
 # Veli-Private
 
+
 ## Corrections:
 
-move ConfigurationManager to separate folder
+- move ConfigurationManager to separate folder
 - add IConfigurationManager  abstraction for ConfigurationManager 
 - page factory move to the factory
 - separate factories for services and pages, make service factory dependent on page factory
