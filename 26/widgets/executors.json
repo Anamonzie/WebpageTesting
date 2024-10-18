@@ -1,0 +1,10 @@
+[ {
+  "name" : "GitHub Actions",
+  "type" : "github",
+  "url" : "https://Anamonzie.github.io/WebpageTesting",
+  "buildOrder" : 26,
+  "buildName" : "GitHub Actions Run #11400023694",
+  "buildUrl" : "https://github.com/Anamonzie/WebpageTesting/actions/runs/11400023694",
+  "reportName" : "Allure Report with history",
+  "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/26/"
+} ]
