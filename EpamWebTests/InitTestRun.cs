@@ -3,7 +3,7 @@
 [assembly: FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
 
 namespace EpamWebTests
-{    
+{
     [SetUpFixture]
     public sealed class InitTestRun
     {

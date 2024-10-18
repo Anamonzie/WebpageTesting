@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace EpamWeb.Factory
+namespace EpamWeb
 {
     public static class ConfigurationManager
     {

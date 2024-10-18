@@ -1,7 +1,8 @@
-﻿using EpamWeb.PageServices;
+﻿using EpamWeb.Pages;
+using EpamWeb.PageServices;
 using Microsoft.Playwright;
 
-namespace EpamWeb.Pages
+namespace EpamWeb.Factory
 {
     public class PageFactory : IPageFactory
     {

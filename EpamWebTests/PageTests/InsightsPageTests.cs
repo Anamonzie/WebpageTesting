@@ -1,12 +1,11 @@
 ﻿using EpamWeb;
 using EpamWeb.Factory;
-using EpamWeb.Pages;
 using Microsoft.Playwright;
 using FluentAssertions;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
 
-namespace EpamWebTests
+namespace EpamWebTests.PageTests
 {
     [AllureNUnit]
     [TestFixture]

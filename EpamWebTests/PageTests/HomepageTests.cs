@@ -3,11 +3,10 @@ using Allure.NUnit;
 using Allure.NUnit.Attributes;
 using EpamWeb;
 using EpamWeb.Factory;
-using EpamWeb.Pages;
 using FluentAssertions;
 using Microsoft.Playwright;
 
-namespace EpamWebTests;
+namespace EpamWebTests.PageTests;
 
 [AllureNUnit]
 [TestFixture]

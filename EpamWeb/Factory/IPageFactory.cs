@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EpamWeb.Pages
+namespace EpamWeb.Factory
 {
     public interface IPageFactory
     {
