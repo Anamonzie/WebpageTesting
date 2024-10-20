@@ -1,5 +1,5 @@
-﻿using Microsoft.Playwright;
-using System.Xml.Linq;
+﻿using EpamWeb.Config;
+using Microsoft.Playwright;
 
 namespace EpamWeb.Factory
 {
@@ -7,16 +7,21 @@ namespace EpamWeb.Factory
     {
         private static readonly ThreadLocal<IBrowser> threadLocalBrowser = new();
         private static BrowserFactory? instance;
+        private readonly IConfigurationManager _configurationManager;
 
-        private BrowserFactory() { }
+        private BrowserFactory(IConfigurationManager configurationManager)
+        {
+            _configurationManager = configurationManager;
+        }
 
-        public static BrowserFactory Instance => instance ??= new BrowserFactory();  
+        public static BrowserFactory Instance(IConfigurationManager configurationManager)
+                    => instance ??= new BrowserFactory(configurationManager);
 
         public async Task<IBrowser> GetBrowser()
         {
             if (threadLocalBrowser.Value == null)
             {
-                var config = await ConfigurationManager.GetBrowserConfig();
+                var config = _configurationManager.GetBrowserConfig();
                 var browserType = config.BrowserSettings?.DefaultBrowser ?? "chrome";
                 var playwright = await Playwright.CreateAsync();
 

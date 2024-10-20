@@ -1,6 +1,6 @@
 ﻿using System.Collections.Immutable;
 
-namespace EpamWeb
+namespace EpamWeb.Utils
 {
     public static class TestData
     {
@@ -8,7 +8,7 @@ namespace EpamWeb
 
         public const string ExpectedHomepageTitle = "EPAM | Software Engineering & Product Development Services";
 
-        public static readonly ImmutableList<string> ExpectedHamburgerMenuItems = 
+        public static readonly ImmutableList<string> ExpectedHamburgerMenuItems =
             ["Services", "About", "Insights", "Careers"];
 
         // Insights Page Data //

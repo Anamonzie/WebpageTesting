@@ -1,21 +1,25 @@
 ﻿using EpamWeb.Pages;
-using EpamWeb.PageServices;
 using Microsoft.Playwright;
 
 namespace EpamWeb.Factory
 {
     public class PageFactory : IPageFactory
     {
-        public IHomepageService CreateHomepageService(IPage page)
+        private readonly IPage page;
+
+        public PageFactory(IPage page)
         {
-            IHomepage homepage = new Homepage(page);
-            return new HomepageService(homepage, page);
+            this.page = page;
         }
 
-        public IInsightsPageService CreateInsightsPageService(IPage page)
+        public IHomepage CreateHomepage()
         {
-            IInsightsPage insightspage = new InsightsPage(page);
-            return new InsightsPageService(insightspage, page);
+            return new Homepage(page);
+        }
+
+        public IInsightsPage CreateInsightsPage()
+        {
+            return new InsightsPage(page);
         }
     }
 }

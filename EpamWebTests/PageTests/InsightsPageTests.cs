@@ -1,9 +1,10 @@
-﻿using EpamWeb;
-using EpamWeb.Factory;
+﻿using EpamWeb.Factory;
 using Microsoft.Playwright;
 using FluentAssertions;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
+using EpamWeb.Utils;
+using EpamWeb.Config;
 
 namespace EpamWebTests.PageTests
 {
@@ -12,22 +13,33 @@ namespace EpamWebTests.PageTests
     [AllureSuite("Insights Page Tests")]
     public class InsightsPageTests
     {
-        private IBrowserFactory factory;
+        private static IBrowserFactory factory;
         private IPageFactory pageFactory;
+        private IServiceFactory serviceFactory;
+        private static IConfigurationManager configurationManager;
 
         private static readonly ThreadLocal<IBrowser> browser = new();
         private IBrowserContext context;
         private IPage page;
 
+        [OneTimeSetUp]
+        public static void GlobalSetup()
+        {
+            var configuration = ConfigurationLoader.GetConfiguration();
+            configurationManager = new ConfigurationManager(configuration);
+            factory = BrowserFactory.Instance(configurationManager);
+        }
+
         [SetUp]
         public async Task Setup()
         {
-            factory = BrowserFactory.Instance;
-            pageFactory = new PageFactory();
-
             browser.Value = await factory.GetBrowser();
             context = await browser.Value.NewContextAsync();
+
             page = await context.NewPageAsync();
+
+            pageFactory = new PageFactory(page);
+            serviceFactory = new ServiceFactory(pageFactory, page);
         }
 
         [Test]
@@ -37,7 +49,7 @@ namespace EpamWebTests.PageTests
         public async Task EpamInsightsPage_SearchFunctionalityCheck()
         {
             // Arrange
-            var insightsPageService = pageFactory.CreateInsightsPageService(page);
+            var insightsPageService = serviceFactory.CreateInsightsPageService();
             await insightsPageService.NavigateToUrlAsync(Constants.EpamInsightsPageUrl);
 
             // Act
@@ -57,7 +69,7 @@ namespace EpamWebTests.PageTests
         public async Task EpamInsightsPage_FindButtonRedirectCheck()
         {
             // Arrange
-            var insightsPageService = pageFactory.CreateInsightsPageService(page);
+            var insightsPageService = serviceFactory.CreateInsightsPageService();
             await insightsPageService.NavigateToUrlAsync(Constants.EpamInsightsPageUrl);
             const string expectedTitle = TestData.ExpectedSearchPageTitle;
 

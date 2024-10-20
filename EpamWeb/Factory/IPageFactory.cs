@@ -1,17 +1,10 @@
-﻿using EpamWeb.PageServices;
-using Microsoft.Playwright;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EpamWeb.Pages;
 
 namespace EpamWeb.Factory
 {
     public interface IPageFactory
     {
-        IHomepageService CreateHomepageService(IPage page);
-        IInsightsPageService CreateInsightsPageService(IPage page);
-
+        IHomepage CreateHomepage();
+        IInsightsPage CreateInsightsPage();
     }
 }

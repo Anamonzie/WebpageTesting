@@ -1,10 +1,11 @@
-using Allure.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
-using EpamWeb;
+using EpamWeb.Config;
 using EpamWeb.Factory;
+using EpamWeb.Utils;
 using FluentAssertions;
 using Microsoft.Playwright;
+using SeverityLevel = Allure.Net.Commons.SeverityLevel;
 
 namespace EpamWebTests.PageTests;
 
@@ -13,34 +14,44 @@ namespace EpamWebTests.PageTests;
 [AllureSuite("EPAM Homepage Tests")]
 public class Tests
 {
-    private IBrowserFactory factory;
+    private static IBrowserFactory factory;
     private IPageFactory pageFactory;
+    private IServiceFactory serviceFactory;
+    private static IConfigurationManager configurationManager;
 
     private static readonly ThreadLocal<IBrowser> browser = new();
     private IBrowserContext context;
     private IPage page;
 
+    [OneTimeSetUp] 
+    public static void GlobalSetup()
+    {
+        var configuration = ConfigurationLoader.GetConfiguration();
+        configurationManager = new ConfigurationManager(configuration);
+        factory = BrowserFactory.Instance(configurationManager);
+    }
+
     [SetUp]
     public async Task Setup()
     {
-        factory = BrowserFactory.Instance;
-        pageFactory = new PageFactory();
-
         browser.Value = await factory.GetBrowser();
         context = await browser.Value.NewContextAsync();
         page = await context.NewPageAsync();
+
+        pageFactory = new PageFactory(page);
+        serviceFactory = new ServiceFactory(pageFactory, page);        
     }
 
     [Test]
     [AllureName("EPAM Homepage Title Check")]
     [AllureDescription("Checks if the title of the EPAM homepage is as expected.")]
-    [AllureTag("Smoke", "Homepage")]
+    [AllureSeverity(SeverityLevel.critical)]
     public async Task EpamHomepage_TitleCheck()
     {
         // Arrange
         const string expectedTitle = TestData.ExpectedHomepageTitle;
 
-        var homepageService = pageFactory.CreateHomepageService(page);
+        var homepageService = serviceFactory.CreateHomepageService();
         await homepageService.NavigateToUrlAsync(Constants.EpamHomepageUrl);
 
         // Act
@@ -59,7 +70,7 @@ public class Tests
         // Arrange
         var expectedItems = TestData.ExpectedHamburgerMenuItems;
 
-        var homepageService = pageFactory.CreateHomepageService(page);
+        var homepageService = serviceFactory.CreateHomepageService();
         await homepageService.NavigateToUrlAsync(Constants.EpamHomepageUrl);
 
         // Act

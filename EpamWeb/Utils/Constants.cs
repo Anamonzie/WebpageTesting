@@ -1,4 +1,4 @@
-﻿namespace EpamWeb
+﻿namespace EpamWeb.Utils
 {
     public static class Constants
     {
