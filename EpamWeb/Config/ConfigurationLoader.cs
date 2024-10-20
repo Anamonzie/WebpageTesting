@@ -8,7 +8,7 @@ namespace EpamWeb.Config
 
         private static IConfigurationRoot LoadConfiguration()
         {
-            var absolutePath = @"C:\Users\PC\Desktop\EPAM\Internship\Code\WebpageTesting\EpamWebTests\Config";
+            var absolutePath = @"C:/Users/PC/Desktop/EPAM/Internship/Code/WebpageTesting/EpamWebTests/Config";
 
             return new ConfigurationBuilder()
                 .SetBasePath(absolutePath)
