@@ -40,7 +40,7 @@ jobs:
       run: dotnet build EpamWebTests/EpamWebTests.sln --no-restore
           
     - name: Run Playwright Tests
-      run: dotnet test EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger:"Allure.Net.Commons;LogFilePath=./allure-results"
+      run: dotnet test EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory ./allure-results
 
     - name: Load test report history
       uses: actions/checkout@v4
