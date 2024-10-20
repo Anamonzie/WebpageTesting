@@ -1,0 +1,65 @@
+{
+  "uid" : "98d3104e051c652961429bf95fa0b5d6",
+  "children" : [ {
+    "name" : "EpamWebTests.PageTests.InsightsPageTests",
+    "children" : [ {
+      "name" : "EpamInsightsPage_SearchFunctionalityCheck",
+      "uid" : "ca2da5ba295fbb69",
+      "parentUid" : "c34accbb05d22f0b371aa99400ebb58a",
+      "status" : "failed",
+      "time" : {
+        "start" : 1729456639349,
+        "stop" : 1729456639383,
+        "duration" : 34
+      },
+      "flaky" : false,
+      "newFailed" : false,
+      "parameters" : [ ]
+    }, {
+      "name" : "EpamInsightsPage_FindButtonRedirectCheck",
+      "uid" : "79f08c7eff526bae",
+      "parentUid" : "c34accbb05d22f0b371aa99400ebb58a",
+      "status" : "failed",
+      "time" : {
+        "start" : 1729456639349,
+        "stop" : 1729456639377,
+        "duration" : 28
+      },
+      "flaky" : false,
+      "newFailed" : false,
+      "parameters" : [ ]
+    } ],
+    "uid" : "c34accbb05d22f0b371aa99400ebb58a"
+  }, {
+    "name" : "EpamWebTests.PageTests.Tests",
+    "children" : [ {
+      "name" : "EpamHomepage_HamburgerMenu",
+      "uid" : "21f467cf331d4849",
+      "parentUid" : "a3953765a911fd4f015c6d0e4ddb5236",
+      "status" : "failed",
+      "time" : {
+        "start" : 1729456639350,
+        "stop" : 1729456639377,
+        "duration" : 27
+      },
+      "flaky" : false,
+      "newFailed" : false,
+      "parameters" : [ ]
+    }, {
+      "name" : "EpamHomepage_TitleCheck",
+      "uid" : "f3451cfdcbfa541",
+      "parentUid" : "a3953765a911fd4f015c6d0e4ddb5236",
+      "status" : "failed",
+      "time" : {
+        "start" : 1729456639350,
+        "stop" : 1729456639378,
+        "duration" : 28
+      },
+      "flaky" : false,
+      "newFailed" : false,
+      "parameters" : [ ]
+    } ],
+    "uid" : "a3953765a911fd4f015c6d0e4ddb5236"
+  } ],
+  "name" : "suites"
+}
