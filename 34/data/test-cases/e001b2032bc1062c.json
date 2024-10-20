@@ -1,0 +1,82 @@
+{
+  "uid" : "e001b2032bc1062c",
+  "name" : "EpamInsightsPage_SearchFunctionalityCheck",
+  "fullName" : "EpamWebTests.PageTests.InsightsPageTests.EpamInsightsPage_SearchFunctionalityCheck",
+  "historyId" : "EpamWebTests.PageTests.InsightsPageTests.EpamInsightsPage_SearchFunctionalityCheck",
+  "time" : {
+    "start" : 1729459063146,
+    "stop" : 1729459070185,
+    "duration" : 7039
+  },
+  "status" : "passed",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ ],
+  "afterStages" : [ ],
+  "labels" : [ {
+    "name" : "suite",
+    "value" : "EpamWebTests.PageTests.InsightsPageTests"
+  }, {
+    "name" : "testClass",
+    "value" : "EpamWebTests.PageTests.InsightsPageTests"
+  }, {
+    "name" : "package",
+    "value" : "EpamWebTests.PageTests.InsightsPageTests"
+  }, {
+    "name" : "resultFormat",
+    "value" : "trx"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ ],
+    "history" : {
+      "statistic" : {
+        "failed" : 3,
+        "broken" : 0,
+        "skipped" : 0,
+        "passed" : 1,
+        "unknown" : 0,
+        "total" : 4
+      },
+      "items" : [ {
+        "uid" : "ff16ca42dad43103",
+        "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/33//#testresult/ff16ca42dad43103",
+        "status" : "failed",
+        "statusDetails" : "OneTimeSetUp: System.ArgumentException : The path must be absolute. (Parameter 'root')",
+        "time" : {
+          "start" : 1729457048194,
+          "stop" : 1729457048228,
+          "duration" : 34
+        }
+      }, {
+        "uid" : "ca2da5ba295fbb69",
+        "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/32//#testresult/ca2da5ba295fbb69",
+        "status" : "failed",
+        "statusDetails" : "OneTimeSetUp: System.ArgumentException : The path must be absolute. (Parameter 'root')",
+        "time" : {
+          "start" : 1729456639349,
+          "stop" : 1729456639383,
+          "duration" : 34
+        }
+      }, {
+        "uid" : "1082275b8d519767",
+        "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/30//#testresult/1082275b8d519767",
+        "status" : "failed",
+        "statusDetails" : "OneTimeSetUp: System.ArgumentException : The path must be absolute. (Parameter 'root')",
+        "time" : {
+          "start" : 1729456287169,
+          "stop" : 1729456287213,
+          "duration" : 44
+        }
+      } ]
+    },
+    "tags" : [ ]
+  },
+  "source" : "e001b2032bc1062c.json",
+  "parameterValues" : [ ]
+}
