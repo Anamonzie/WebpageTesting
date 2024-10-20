@@ -8,10 +8,11 @@ namespace EpamWeb.Config
 
         private static IConfigurationRoot LoadConfiguration()
         {
-            var absolutePath = @"C:/Users/PC/Desktop/EPAM/Internship/Code/WebpageTesting/EpamWebTests/Config";
+            var basePath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "Config");
+            Console.WriteLine($"Base path for configuration: {basePath}");
 
             return new ConfigurationBuilder()
-                .SetBasePath(absolutePath)
+                .SetBasePath(basePath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
                 .Build();
         }
