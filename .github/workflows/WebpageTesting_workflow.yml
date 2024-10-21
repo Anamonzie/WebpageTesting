@@ -15,6 +15,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
+    - name: Print a secret
+      run: echo "My secret value is ${{ secrets.SECRET_EXAMPLE }}"
     
     - name: Setup .NET    
       uses: actions/setup-dotnet@v4
