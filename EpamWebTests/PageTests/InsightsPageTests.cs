@@ -5,6 +5,7 @@ using Allure.NUnit;
 using Allure.NUnit.Attributes;
 using EpamWeb.Utils;
 using EpamWeb.Config;
+using Allure.Net.Commons;
 
 namespace EpamWebTests.PageTests
 {
@@ -44,6 +45,8 @@ namespace EpamWebTests.PageTests
         [AllureName("Insights Page Search Functionality Check")]
         [AllureDescription("Verifies that the search functionality on the EPAM Insights page works as expected.")]
         [AllureTag("Search", "InsightsPage")]
+        [Category("Smoke")]
+        [AllureSeverity(SeverityLevel.critical)]
         public async Task EpamInsightsPage_SearchFunctionalityCheck()
         {
             // Arrange
@@ -63,6 +66,8 @@ namespace EpamWebTests.PageTests
         [AllureName("Insights Page Find Button Redirect Check")]
         [AllureDescription("Checks if the 'Find' button redirects to the correct page.")]
         [AllureTag("Redirect", "InsightsPage")]
+        [Category("Smoke")]
+        [AllureSeverity(SeverityLevel.normal)]
         public async Task EpamInsightsPage_FindButtonRedirectCheck()
         {
             // Arrange
@@ -81,11 +86,6 @@ namespace EpamWebTests.PageTests
         [TearDown]
         public async Task GlobalTearDown()
         {
-            if (context != null)
-            {
-                await context.CloseAsync();
-            }
-
             if (browser.Value != null)
             {
                 await browser.Value.CloseAsync();

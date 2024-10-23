@@ -44,7 +44,9 @@ public class Tests
     [Test]
     [AllureName("EPAM Homepage Title Check")]
     [AllureDescription("Checks if the title of the EPAM homepage is as expected.")]
-    [AllureSeverity(SeverityLevel.critical)]
+    [Category("Smoke")]
+    [AllureTag("HamburgerMenu")]
+    [AllureSeverity(SeverityLevel.minor)]
     public async Task EpamHomepage_TitleCheck()
     {
         // Arrange
@@ -63,7 +65,9 @@ public class Tests
     [Test]
     [AllureName("EPAM Homepage Hamburger Menu Check")]
     [AllureDescription("Checks if the hamburger menu items are as expected.")]
-    [AllureTag("Smoke", "HamburgerMenu")]
+    [Category("Regression")]
+    [AllureTag("HamburgerMenu")]
+    [AllureSeverity(SeverityLevel.critical)]
     public async Task EpamHomepage_HamburgerMenu()
     {
         // Arrange
@@ -83,11 +87,6 @@ public class Tests
     [TearDown]
     public async Task GlobalTearDown()
     {
-        if (context != null)
-        {
-            await context.CloseAsync();
-        }
-
         if (browser.Value != null)
         {
             await browser.Value.CloseAsync();
