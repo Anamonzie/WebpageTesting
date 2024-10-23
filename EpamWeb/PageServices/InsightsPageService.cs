@@ -15,7 +15,6 @@ namespace EpamWeb.PageServices
         }
 
         ///  * METHODS * ///
-
         public async Task NavigateToUrlAsync(string url)
         {
             await page.GotoAsync(url);

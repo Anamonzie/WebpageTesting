@@ -14,7 +14,7 @@ namespace EpamWebTests.PageTests;
 [AllureSuite("EPAM Homepage Tests")]
 public class Tests
 {
-    private static IBrowserFactory factory;
+    private static IBrowserFactory browserFactory;
     private IPageFactory pageFactory;
     private IServiceFactory serviceFactory;
     private static IConfigurationManager configurationManager;
@@ -27,13 +27,13 @@ public class Tests
     public static void GlobalSetup()
     {
         configurationManager = new ConfigurationManager();
-        factory = BrowserFactory.Instance(configurationManager);
+        browserFactory = BrowserFactory.Instance(configurationManager);
     }
 
     [SetUp]
     public async Task Setup()
     {
-        browser.Value = await factory.GetBrowser();
+        browser.Value = await browserFactory.GetBrowser();
         context = await browser.Value.NewContextAsync();
         page = await context.NewPageAsync();
 
@@ -83,6 +83,11 @@ public class Tests
     [TearDown]
     public async Task GlobalTearDown()
     {
+        if (context != null)
+        {
+            await context.CloseAsync();
+        }
+
         if (browser.Value != null)
         {
             await browser.Value.CloseAsync();
