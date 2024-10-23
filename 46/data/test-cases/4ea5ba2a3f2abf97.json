@@ -1,0 +1,71 @@
+{
+  "uid" : "4ea5ba2a3f2abf97",
+  "name" : "EpamHomepage_TitleCheck",
+  "fullName" : "EpamWebTests.PageTests.Tests.EpamHomepage_TitleCheck",
+  "historyId" : "EpamWebTests.PageTests.Tests.EpamHomepage_TitleCheck",
+  "time" : {
+    "start" : 1729708265533,
+    "stop" : 1729708269724,
+    "duration" : 4191
+  },
+  "status" : "passed",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ ],
+  "afterStages" : [ ],
+  "labels" : [ {
+    "name" : "suite",
+    "value" : "EpamWebTests.PageTests.Tests"
+  }, {
+    "name" : "testClass",
+    "value" : "EpamWebTests.PageTests.Tests"
+  }, {
+    "name" : "package",
+    "value" : "EpamWebTests.PageTests.Tests"
+  }, {
+    "name" : "resultFormat",
+    "value" : "trx"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ ],
+    "history" : {
+      "statistic" : {
+        "failed" : 1,
+        "broken" : 0,
+        "skipped" : 0,
+        "passed" : 2,
+        "unknown" : 0,
+        "total" : 3
+      },
+      "items" : [ {
+        "uid" : "49d7349b76b2bc65",
+        "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/45//#testresult/49d7349b76b2bc65",
+        "status" : "passed",
+        "time" : {
+          "start" : 1729708076754,
+          "stop" : 1729708095225,
+          "duration" : 18471
+        }
+      }, {
+        "uid" : "67e7aa21ea75e008",
+        "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/44//#testresult/67e7aa21ea75e008",
+        "status" : "failed",
+        "statusDetails" : "Microsoft.Playwright.PlaywrightException : net::ERR_ABORTED at https://www.epam.com/\nCall log:\n  - navigating to \"https://www.epam.com/\", waiting until \"load\"",
+        "time" : {
+          "start" : 1729706146147,
+          "stop" : 1729706147900,
+          "duration" : 1753
+        }
+      } ]
+    },
+    "tags" : [ ]
+  },
+  "source" : "4ea5ba2a3f2abf97.json",
+  "parameterValues" : [ ]
+}
