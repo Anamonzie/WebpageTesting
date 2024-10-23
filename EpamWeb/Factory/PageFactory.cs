@@ -5,11 +5,22 @@ namespace EpamWeb.Factory
 {
     public class PageFactory : IPageFactory
     {
+        private static readonly ThreadLocal<PageFactory?> threadLocalInstance = new();
         private readonly IPage page;
 
-        public PageFactory(IPage page)
+        private PageFactory(IPage page)
         {
             this.page = page;
+        }
+
+        public static IPageFactory Instance(IPage page)
+        {
+            if (threadLocalInstance.Value == null)
+            {
+                threadLocalInstance.Value = new PageFactory(page);
+            }
+
+            return threadLocalInstance.Value;
         }
 
         public IHomepage CreateHomepage()
@@ -23,4 +34,3 @@ namespace EpamWeb.Factory
         }
     }
 }
-

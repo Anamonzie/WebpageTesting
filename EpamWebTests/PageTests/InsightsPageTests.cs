@@ -34,11 +34,10 @@ namespace EpamWebTests.PageTests
         {
             browser.Value = await factory.GetBrowser();
             context = await browser.Value.NewContextAsync();
-
             page = await context.NewPageAsync();
 
-            pageFactory = new PageFactory(page);
-            serviceFactory = new ServiceFactory(pageFactory, page);
+            pageFactory = PageFactory.Instance(page);
+            serviceFactory = ServiceFactory.Instance(pageFactory, page);
         }
 
         [Test]
@@ -58,7 +57,6 @@ namespace EpamWebTests.PageTests
 
             // Assert
             result.Should().Contain(TestData.SearchInput);
-
         }
 
         [Test]
