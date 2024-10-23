@@ -1,0 +1,41 @@
+[ {
+  "uid" : "c0b5d91dfbde7c57",
+  "name" : "EpamHomepage_HamburgerMenu",
+  "time" : {
+    "start" : 1729701895633,
+    "stop" : 1729701906026,
+    "duration" : 10393
+  },
+  "status" : "failed",
+  "severity" : "normal"
+}, {
+  "uid" : "81959e07655f11a2",
+  "name" : "EpamInsightsPage_FindButtonRedirectCheck",
+  "time" : {
+    "start" : 1729701895633,
+    "stop" : 1729701910384,
+    "duration" : 14751
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "737dbc61f2467e83",
+  "name" : "EpamInsightsPage_SearchFunctionalityCheck",
+  "time" : {
+    "start" : 1729701895633,
+    "stop" : 1729701911259,
+    "duration" : 15626
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "eadf2fed62fe0d88",
+  "name" : "EpamHomepage_TitleCheck",
+  "time" : {
+    "start" : 1729701895636,
+    "stop" : 1729701909765,
+    "duration" : 14129
+  },
+  "status" : "passed",
+  "severity" : "normal"
+} ]
