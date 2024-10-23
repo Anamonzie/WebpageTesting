@@ -20,3 +20,5 @@
 - allure serve - how it works
 - Allure attributes - to investigate
 - Allure side-menu sections (overview, categories, suities, timelines, behaviours, packages)
+
+** changes from a local new_feature branch **
