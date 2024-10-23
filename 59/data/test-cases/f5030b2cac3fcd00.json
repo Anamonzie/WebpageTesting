@@ -1,0 +1,41 @@
+{
+  "uid" : "f5030b2cac3fcd00",
+  "name" : "EpamInsightsPage_FindButtonRedirectCheck",
+  "fullName" : "EpamWebTests.PageTests.InsightsPageTests.EpamInsightsPage_FindButtonRedirectCheck",
+  "historyId" : "EpamWebTests.PageTests.InsightsPageTests.EpamInsightsPage_FindButtonRedirectCheck",
+  "time" : {
+    "start" : 1729717252642,
+    "stop" : 1729717257999,
+    "duration" : 5357
+  },
+  "status" : "passed",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ ],
+  "afterStages" : [ ],
+  "labels" : [ {
+    "name" : "suite",
+    "value" : "EpamWebTests.PageTests.InsightsPageTests"
+  }, {
+    "name" : "testClass",
+    "value" : "EpamWebTests.PageTests.InsightsPageTests"
+  }, {
+    "name" : "package",
+    "value" : "EpamWebTests.PageTests.InsightsPageTests"
+  }, {
+    "name" : "resultFormat",
+    "value" : "trx"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ ],
+    "tags" : [ ]
+  },
+  "source" : "f5030b2cac3fcd00.json",
+  "parameterValues" : [ ]
+}

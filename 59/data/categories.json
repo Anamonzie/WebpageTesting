@@ -1,0 +1,26 @@
+{
+  "uid" : "4b4757e66a1912dae1a509f688f20b0f",
+  "children" : [ {
+    "name" : "Product defects",
+    "children" : [ {
+      "name" : "Microsoft.Playwright.PlaywrightException : net::ERR_ABORTED at https://www.epam.com/\nCall log:\n  - navigating to \"https://www.epam.com/\", waiting until \"load\"",
+      "children" : [ {
+        "name" : "EpamHomepage_HamburgerMenu",
+        "uid" : "957227ffdcb40902",
+        "parentUid" : "8df708393d45ef29e58c0e0577f8083e",
+        "status" : "failed",
+        "time" : {
+          "start" : 1729717252643,
+          "stop" : 1729717254403,
+          "duration" : 1760
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "8df708393d45ef29e58c0e0577f8083e"
+    } ],
+    "uid" : "8fb3a91ba5aaf9de24cc8a92edc82b5d"
+  } ],
+  "name" : "categories"
+}
