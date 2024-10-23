@@ -48,8 +48,7 @@ jobs:
       run: dotnet build EpamWebTests/EpamWebTests.sln --no-restore
           
     - name: Run Playwright Tests
-- name: Run Playwright Tests
-  run: dotnet test EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory ${{ github.workspace }}/allure-results --filter "Category=\"Smoke\""
+      run: dotnet test EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory ${{ github.workspace }}/allure-results --filter "Category==${{ github.event.inputs.category }}"
 
     - name: Load test report history
       uses: actions/checkout@v4
