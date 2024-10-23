@@ -4,25 +4,36 @@ namespace EpamWeb.Config
 {
     public class ConfigurationManager : IConfigurationManager
     {
-        private readonly IConfiguration configuration;
+        private static readonly Lazy<IConfigurationRoot> configuration = new(LoadConfiguration);
 
-        public ConfigurationManager(IConfiguration configuration)
+        public ConfigurationManager() { }
+
+        private static IConfigurationRoot LoadConfiguration()
         {
-            this.configuration = configuration;
+            var basePath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "Config");
+            Console.WriteLine($"Base path for configuration: {basePath}");
+
+            return new ConfigurationBuilder()
+                .SetBasePath(basePath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+                .Build();
+        }
+
+        public static IConfigurationRoot GetFullConfiguration()
+        {
+            return configuration.Value;
         }
 
         public Configuration GetBrowserConfig()
         {
             var config = new Configuration();
-
-            configuration.GetSection("BrowserSettings").Bind(config.BrowserSettings);
-            
+            GetFullConfiguration().GetSection("BrowserSettings").Bind(config.BrowserSettings);
             return config;
         }
 
         public class Configuration
         {
-            public BrowserSettings? BrowserSettings { get; set; }
+            public BrowserSettings? BrowserSettings { get; set; } = new BrowserSettings();
         }
 
         public class BrowserSettings

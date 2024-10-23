@@ -23,10 +23,10 @@ public class Tests
     private IBrowserContext context;
     private IPage page;
 
-    [OneTimeSetUp] 
+    [OneTimeSetUp]
     public static void GlobalSetup()
     {
-        configurationManager = new ConfigurationManager(ConfigurationLoader.GetConfiguration());
+        configurationManager = new ConfigurationManager();
         factory = BrowserFactory.Instance(configurationManager);
     }
 
@@ -38,7 +38,7 @@ public class Tests
         page = await context.NewPageAsync();
 
         pageFactory = new PageFactory(page);
-        serviceFactory = new ServiceFactory(pageFactory, page);        
+        serviceFactory = new ServiceFactory(pageFactory, page);
     }
 
     [Test]
@@ -90,4 +90,3 @@ public class Tests
         }
     }
 }
-

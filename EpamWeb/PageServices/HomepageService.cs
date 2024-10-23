@@ -21,7 +21,7 @@ namespace EpamWeb.PageServices
             await page.GotoAsync(url);
         }
 
-         public async Task<string> GetPageTitleAsync()
+        public async Task<string> GetPageTitleAsync()
         {
             return await page.TitleAsync();
         }

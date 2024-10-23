@@ -25,8 +25,7 @@ namespace EpamWebTests.PageTests
         [OneTimeSetUp]
         public static void GlobalSetup()
         {
-            var configuration = ConfigurationLoader.GetConfiguration();
-            configurationManager = new ConfigurationManager(configuration);
+            configurationManager = new ConfigurationManager();
             factory = BrowserFactory.Instance(configurationManager);
         }
 
