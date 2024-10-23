@@ -49,7 +49,8 @@ jobs:
           
     - name: Run Playwright Tests
       run: dotnet test EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory ${{ github.workspace }}/allure-results --filter "Category==${{ inputs.category }}"
-
+           echo "${{ inputs.category }}"
+      
     - name: Load test report history
       uses: actions/checkout@v4
       if: always()
