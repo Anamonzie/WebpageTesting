@@ -2,22 +2,24 @@
 
 ## Corrections:
 
-- move ConfigurationManager to separate folder
-- add IConfigurationManager  abstraction for ConfigurationManager 
-- page factory move to the factory
-- separate factories for services and pages, make service factory dependent on page factory
-- need to change configuration file reading only once
-- look at the examples how to exclude inner objects from comparison
-- move appsetting to test proj
-- move page tests to separate folder
-- build allure report locally with allure cli tool and then proceed with the ci/cd
-- 'restore' command in yaml file
+- Need to get rid of the static in ConfigurationLoader
+- Combine configurationLoader and Manager, but be sure that configuraiton is read only once
+- Create factories as singletons
+
+- Have all code in one solution, under different projects
+- To move project to the one solution, polish code for example of customAssertyions to have test form
+
+## Additional tasks:
 
 
 ## New information to get: 
 
-- github documentation build-in secrets and variables
-- custom secrets and variables, how to set it 
-- add one variable or secret and print the value in the console during workflow execution
-- read about how to set environmental varibles in yaml file
-- read about setting up a working directory from the yam file
+- configure the repository to have branch and pull requests, and having at least one reviewer
+- to define list of test categories, mark tests with test categories
+- update workflow dispatcher to run tests with different categories
+- if we need to call base implementation with adding logging on top of this, how it can be implemented in c#
+- type casting(main ways and differences)
+
+- allure serve - how it works
+- Allure attributes - to investigate
+- Allure side-menu sections (overview, categories, suities, timelines, behaviours, packages)
