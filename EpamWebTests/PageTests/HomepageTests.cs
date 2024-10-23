@@ -26,8 +26,7 @@ public class Tests
     [OneTimeSetUp] 
     public static void GlobalSetup()
     {
-        var configuration = ConfigurationLoader.GetConfiguration();
-        configurationManager = new ConfigurationManager(configuration);
+        configurationManager = new ConfigurationManager(ConfigurationLoader.GetConfiguration());
         factory = BrowserFactory.Instance(configurationManager);
     }
 

@@ -4,7 +4,7 @@ namespace EpamWeb.Config
 {
     public static class ConfigurationLoader
     {
-        private static readonly Lazy<IConfigurationRoot> _configuration = new Lazy<IConfigurationRoot>(LoadConfiguration);
+        private static readonly Lazy<IConfigurationRoot> configuration = new(LoadConfiguration);
 
         private static IConfigurationRoot LoadConfiguration()
         {
@@ -19,7 +19,7 @@ namespace EpamWeb.Config
 
         public static IConfigurationRoot GetConfiguration()
         {
-            return _configuration.Value;
+            return configuration.Value;
         }
     }
 }
