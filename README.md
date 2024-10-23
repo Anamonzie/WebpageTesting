@@ -11,9 +11,6 @@
 
 ## Additional tasks:
 
-
-## New information to get: 
-
 - configure the repository to have branch and pull requests, and having at least one reviewer
 - to define list of test categories, mark tests with test categories
 - update workflow dispatcher to run tests with different categories
