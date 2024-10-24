@@ -1,30 +1,3 @@
 [ {
-  "buildOrder" : 59,
-  "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/59/",
-  "reportName" : "Allure Report with history",
-  "data" : {
-    "duration" : 7736
-  }
-}, {
-  "buildOrder" : 58,
-  "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/58/",
-  "reportName" : "Allure Report with history",
-  "data" : { }
-}, {
-  "buildOrder" : 56,
-  "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/56/",
-  "reportName" : "Allure Report with history",
-  "data" : { }
-}, {
-  "buildOrder" : 55,
-  "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/55/",
-  "reportName" : "Allure Report with history",
-  "data" : { }
-}, {
-  "buildOrder" : 54,
-  "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/54/",
-  "reportName" : "Allure Report with history",
-  "data" : { }
-}, {
   "data" : { }
 } ]
