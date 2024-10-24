@@ -6,16 +6,16 @@ namespace EpamWeb.Factory
     public class BrowserFactory : IBrowserFactory
     {
         private static readonly ThreadLocal<IBrowser> threadLocalBrowser = new();
-        private static BrowserFactory? instance;
+        //private static BrowserFactory? instance;
         private readonly IConfigurationManager configurationManager;
+        private static readonly Lazy<BrowserFactory> instance = new(() => new BrowserFactory(ConfigurationManager.Instance()));
 
         private BrowserFactory(IConfigurationManager configurationManager)
         {
             this.configurationManager = configurationManager;
         }
 
-        public static BrowserFactory Instance(IConfigurationManager configurationManager)
-                    => instance ??= new BrowserFactory(configurationManager);
+        public static BrowserFactory Instance => instance.Value;
 
         public async Task<IBrowser> GetBrowser()
         {

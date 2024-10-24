@@ -4,17 +4,30 @@ namespace EpamWeb.Config
 {
     public class ConfigurationManager : IConfigurationManager
     {
-        private static ConfigurationManager? instance;
         private readonly IConfigurationRoot configuration;
+        private static ConfigurationManager? instance;
+        private static readonly object lockObject = new();
 
-        // Private constructor ensures it can't be instantiated externally
         private ConfigurationManager()
         {
             configuration = LoadConfiguration();
         }
 
-        // Singleton instance getter, returned as IConfigurationManager
-        public static IConfigurationManager Instance => instance ??= new ConfigurationManager();
+        public static IConfigurationManager Instance()
+        {
+            if (instance == null)
+            {
+                lock (lockObject)
+                {
+                    if (instance == null)
+                    {
+                        instance = new ConfigurationManager();
+                    }
+                }
+            }
+
+            return instance;
+        }
 
         private IConfigurationRoot LoadConfiguration()
         {
@@ -27,7 +40,6 @@ namespace EpamWeb.Config
                 .Build();
         }
 
-        // Access the configuration
         public IConfigurationRoot GetFullConfiguration()
         {
             return configuration;

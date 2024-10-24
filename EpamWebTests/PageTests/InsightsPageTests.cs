@@ -17,7 +17,7 @@ namespace EpamWebTests.PageTests
         private static IBrowserFactory browserFactory;
         private IPageFactory pageFactory;
         private IServiceFactory serviceFactory;
-        private static IConfigurationManager configurationManager;
+        //private static IConfigurationManager configurationManager;
 
         private static readonly ThreadLocal<IBrowser> browser = new();
         private IBrowserContext context;
@@ -26,8 +26,8 @@ namespace EpamWebTests.PageTests
         [OneTimeSetUp]
         public static void GlobalSetup()
         {
-            configurationManager = ConfigurationManager.Instance; // Use the singleton instance
-            browserFactory = BrowserFactory.Instance(configurationManager); // Pass it to the BrowserFactory
+            //configurationManager = ConfigurationManager.Instance(); // Use the singleton instance
+            browserFactory = BrowserFactory.Instance; // Pass it to the BrowserFactory
         }
 
         [SetUp]
