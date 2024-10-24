@@ -4,11 +4,19 @@ namespace EpamWeb.Config
 {
     public class ConfigurationManager : IConfigurationManager
     {
-        private static readonly Lazy<IConfigurationRoot> configuration = new(LoadConfiguration);
+        private static ConfigurationManager? instance;
+        private readonly IConfigurationRoot configuration;
 
-        public ConfigurationManager() { }
+        // Private constructor ensures it can't be instantiated externally
+        private ConfigurationManager()
+        {
+            configuration = LoadConfiguration();
+        }
 
-        private static IConfigurationRoot LoadConfiguration()
+        // Singleton instance getter, returned as IConfigurationManager
+        public static IConfigurationManager Instance => instance ??= new ConfigurationManager();
+
+        private IConfigurationRoot LoadConfiguration()
         {
             var basePath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "Config");
             Console.WriteLine($"Base path for configuration: {basePath}");
@@ -19,15 +27,17 @@ namespace EpamWeb.Config
                 .Build();
         }
 
-        public static IConfigurationRoot GetFullConfiguration()
+        // Access the configuration
+        public IConfigurationRoot GetFullConfiguration()
         {
-            return configuration.Value;
+            return configuration;
         }
 
+        // Example method to get specific browser config
         public Configuration GetBrowserConfig()
         {
             var config = new Configuration();
-            GetFullConfiguration().GetSection("BrowserSettings").Bind(config.BrowserSettings);
+            configuration.GetSection("BrowserSettings").Bind(config.BrowserSettings);
             return config;
         }
 

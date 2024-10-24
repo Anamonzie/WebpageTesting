@@ -5,7 +5,19 @@ VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EpamWebTests", "EpamWebTests.csproj", "{5F0A1887-BF57-4B81-81BB-2F80E502480E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EpamWeb", "..\EpamWeb\EpamWeb.csproj", "{F1B6EE6D-CD98-46D1-9933-5014312B85D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EpamWeb", "..\EpamWeb\EpamWeb.csproj", "{F1B6EE6D-CD98-46D1-9933-5014312B85D1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Theory_inPractice", "..\..\..\..\..\..\source\repos\Theory_inPractice\Theory_inPractice\Theory_inPractice.csproj", "{E04CD53B-2BD5-4C70-BD08-AA2C32FABBC5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheoryInPractice.Tests", "..\..\..\..\..\..\source\repos\Theory_inPractice\TheoryInPractice.Tests\TheoryInPractice.Tests.csproj", "{6F9CB7B4-B774-422C-8BEF-DE932BA60793}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EpamWebProj", "EpamWebProj", "{BC892E30-6089-416B-AABA-36A38B379346}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CustomAssertionTask", "CustomAssertionTask", "{6602293B-6D81-4A88-84FB-558CD0BB42BC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BaseMethodLogging", "BaseMethodLogging", "{07BBB77D-3616-4E28-A379-B0F242EAAB54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseMethod_Logging", "..\BaseMethod_Logging\BaseMethod_Logging.csproj", "{F88563BB-BCF8-4403-8BF5-7150FD36CED7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +33,28 @@ Global
 		{F1B6EE6D-CD98-46D1-9933-5014312B85D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1B6EE6D-CD98-46D1-9933-5014312B85D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1B6EE6D-CD98-46D1-9933-5014312B85D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E04CD53B-2BD5-4C70-BD08-AA2C32FABBC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E04CD53B-2BD5-4C70-BD08-AA2C32FABBC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E04CD53B-2BD5-4C70-BD08-AA2C32FABBC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E04CD53B-2BD5-4C70-BD08-AA2C32FABBC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F9CB7B4-B774-422C-8BEF-DE932BA60793}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F9CB7B4-B774-422C-8BEF-DE932BA60793}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F9CB7B4-B774-422C-8BEF-DE932BA60793}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F9CB7B4-B774-422C-8BEF-DE932BA60793}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F88563BB-BCF8-4403-8BF5-7150FD36CED7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F88563BB-BCF8-4403-8BF5-7150FD36CED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F88563BB-BCF8-4403-8BF5-7150FD36CED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F88563BB-BCF8-4403-8BF5-7150FD36CED7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5F0A1887-BF57-4B81-81BB-2F80E502480E} = {BC892E30-6089-416B-AABA-36A38B379346}
+		{F1B6EE6D-CD98-46D1-9933-5014312B85D1} = {BC892E30-6089-416B-AABA-36A38B379346}
+		{E04CD53B-2BD5-4C70-BD08-AA2C32FABBC5} = {6602293B-6D81-4A88-84FB-558CD0BB42BC}
+		{6F9CB7B4-B774-422C-8BEF-DE932BA60793} = {6602293B-6D81-4A88-84FB-558CD0BB42BC}
+		{F88563BB-BCF8-4403-8BF5-7150FD36CED7} = {07BBB77D-3616-4E28-A379-B0F242EAAB54}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B9192FA2-3C8F-4158-BE78-AF1F94A9705B}

@@ -7,11 +7,11 @@ namespace EpamWeb.Factory
     {
         private static readonly ThreadLocal<IBrowser> threadLocalBrowser = new();
         private static BrowserFactory? instance;
-        private readonly IConfigurationManager _configurationManager;
+        private readonly IConfigurationManager configurationManager;
 
         private BrowserFactory(IConfigurationManager configurationManager)
         {
-            _configurationManager = configurationManager;
+            this.configurationManager = configurationManager;
         }
 
         public static BrowserFactory Instance(IConfigurationManager configurationManager)
@@ -21,7 +21,7 @@ namespace EpamWeb.Factory
         {
             if (threadLocalBrowser.Value == null)
             {
-                var config = _configurationManager.GetBrowserConfig();
+                var config = configurationManager.GetBrowserConfig();
                 var browserType = config.BrowserSettings?.DefaultBrowser ?? "chrome";
                 var playwright = await Playwright.CreateAsync();
 
