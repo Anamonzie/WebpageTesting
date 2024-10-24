@@ -1,0 +1,80 @@
+{
+  "uid" : "c373f6e285e3ee3c",
+  "name" : "EpamInsightsPage_SearchFunctionalityCheck",
+  "fullName" : "EpamWebTests.PageTests.InsightsPageTests.EpamInsightsPage_SearchFunctionalityCheck",
+  "historyId" : "EpamWebTests.PageTests.InsightsPageTests.EpamInsightsPage_SearchFunctionalityCheck",
+  "time" : {
+    "start" : 1729790585325,
+    "stop" : 1729790591880,
+    "duration" : 6555
+  },
+  "status" : "passed",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ ],
+  "afterStages" : [ ],
+  "labels" : [ {
+    "name" : "suite",
+    "value" : "EpamWebTests.PageTests.InsightsPageTests"
+  }, {
+    "name" : "testClass",
+    "value" : "EpamWebTests.PageTests.InsightsPageTests"
+  }, {
+    "name" : "package",
+    "value" : "EpamWebTests.PageTests.InsightsPageTests"
+  }, {
+    "name" : "resultFormat",
+    "value" : "trx"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ ],
+    "history" : {
+      "statistic" : {
+        "failed" : 1,
+        "broken" : 0,
+        "skipped" : 0,
+        "passed" : 3,
+        "unknown" : 0,
+        "total" : 4
+      },
+      "items" : [ {
+        "uid" : "1d01e98394f98d35",
+        "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/71//#testresult/1d01e98394f98d35",
+        "status" : "passed",
+        "time" : {
+          "start" : 1729790431754,
+          "stop" : 1729790439659,
+          "duration" : 7905
+        }
+      }, {
+        "uid" : "d5591c46e858927b",
+        "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/70//#testresult/d5591c46e858927b",
+        "status" : "failed",
+        "statusDetails" : "Microsoft.Playwright.PlaywrightException : net::ERR_ABORTED at https://www.epam.com/insights\nCall log:\n  - navigating to \"https://www.epam.com/insights\", waiting until \"load\"",
+        "time" : {
+          "start" : 1729790169055,
+          "stop" : 1729790170764,
+          "duration" : 1709
+        }
+      }, {
+        "uid" : "b749f669a9a6d379",
+        "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/68//#testresult/b749f669a9a6d379",
+        "status" : "passed",
+        "time" : {
+          "start" : 1729789256358,
+          "stop" : 1729789263870,
+          "duration" : 7512
+        }
+      } ]
+    },
+    "tags" : [ ]
+  },
+  "source" : "c373f6e285e3ee3c.json",
+  "parameterValues" : [ ]
+}
