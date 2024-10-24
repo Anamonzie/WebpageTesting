@@ -66,7 +66,7 @@ namespace EpamWebTests.PageTests
         [AllureName("Insights Page Find Button Redirect Check")]
         [AllureDescription("Checks if the 'Find' button redirects to the correct page.")]
         [AllureTag("Redirect", "InsightsPage")]
-        [Category("Smoke")]
+        [Category("Regression")]
         [AllureSeverity(SeverityLevel.normal)]
         public async Task EpamInsightsPage_FindButtonRedirectCheck()
         {
