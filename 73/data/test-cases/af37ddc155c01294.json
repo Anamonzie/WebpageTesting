@@ -1,0 +1,95 @@
+{
+  "uid" : "af37ddc155c01294",
+  "name" : "EpamInsightsPage_SearchFunctionalityCheck",
+  "fullName" : "EpamWebTests.PageTests.InsightsPageTests.EpamInsightsPage_SearchFunctionalityCheck",
+  "historyId" : "EpamWebTests.PageTests.InsightsPageTests.EpamInsightsPage_SearchFunctionalityCheck",
+  "time" : {
+    "start" : 1729794137907,
+    "stop" : 1729794146518,
+    "duration" : 8611
+  },
+  "status" : "failed",
+  "statusMessage" : "Microsoft.Playwright.PlaywrightException : net::ERR_ABORTED at https://www.epam.com/insights\nCall log:\n  - navigating to \"https://www.epam.com/insights\", waiting until \"load\"",
+  "statusTrace" : "   at Microsoft.Playwright.Transport.Connection.InnerSendMessageToServerAsync[T](ChannelOwner object, String method, Dictionary`2 dictionary, Boolean keepNulls) in /_/src/Playwright/Transport/Connection.cs:line 206\n   at Microsoft.Playwright.Transport.Connection.WrapApiCallAsync[T](Func`1 action, Boolean isInternal) in /_/src/Playwright/Transport/Connection.cs:line 535\n   at Microsoft.Playwright.Core.Frame.GotoAsync(String url, FrameGotoOptions options) in /_/src/Playwright/Core/Frame.cs:line 793\n   at EpamWeb.PageServices.InsightsPageService.NavigateToUrlAsync(String url) in /home/runner/work/WebpageTesting/WebpageTesting/EpamWeb/PageServices/InsightsPageService.cs:line 20\n   at EpamWebTests.PageTests.InsightsPageTests.EpamInsightsPage_SearchFunctionalityCheck() in /home/runner/work/WebpageTesting/WebpageTesting/EpamWebTests/PageTests/InsightsPageTests.cs:line 54\n   at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.BlockUntilCompleted()\n   at NUnit.Framework.Internal.MessagePumpStrategy.NoMessagePumpStrategy.WaitForCompletion(AwaitAdapter awaiter)\n   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await[TResult](Func`1 invoke)\n   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(Func`1 invoke)\n   at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)\n   at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)\n   at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.<>c__DisplayClass1_0.<Execute>b__0()\n   at NUnit.Framework.Internal.Commands.DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)\n",
+  "flaky" : true,
+  "newFailed" : true,
+  "beforeStages" : [ ],
+  "afterStages" : [ ],
+  "labels" : [ {
+    "name" : "suite",
+    "value" : "EpamWebTests.PageTests.InsightsPageTests"
+  }, {
+    "name" : "testClass",
+    "value" : "EpamWebTests.PageTests.InsightsPageTests"
+  }, {
+    "name" : "package",
+    "value" : "EpamWebTests.PageTests.InsightsPageTests"
+  }, {
+    "name" : "resultFormat",
+    "value" : "trx"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ {
+      "name" : "Product defects",
+      "matchedStatuses" : [ ],
+      "flaky" : false
+    } ],
+    "history" : {
+      "statistic" : {
+        "failed" : 2,
+        "broken" : 0,
+        "skipped" : 0,
+        "passed" : 3,
+        "unknown" : 0,
+        "total" : 5
+      },
+      "items" : [ {
+        "uid" : "c373f6e285e3ee3c",
+        "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/72//#testresult/c373f6e285e3ee3c",
+        "status" : "passed",
+        "time" : {
+          "start" : 1729790585325,
+          "stop" : 1729790591880,
+          "duration" : 6555
+        }
+      }, {
+        "uid" : "1d01e98394f98d35",
+        "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/71//#testresult/1d01e98394f98d35",
+        "status" : "passed",
+        "time" : {
+          "start" : 1729790431754,
+          "stop" : 1729790439659,
+          "duration" : 7905
+        }
+      }, {
+        "uid" : "d5591c46e858927b",
+        "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/70//#testresult/d5591c46e858927b",
+        "status" : "failed",
+        "statusDetails" : "Microsoft.Playwright.PlaywrightException : net::ERR_ABORTED at https://www.epam.com/insights\nCall log:\n  - navigating to \"https://www.epam.com/insights\", waiting until \"load\"",
+        "time" : {
+          "start" : 1729790169055,
+          "stop" : 1729790170764,
+          "duration" : 1709
+        }
+      }, {
+        "uid" : "b749f669a9a6d379",
+        "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/68//#testresult/b749f669a9a6d379",
+        "status" : "passed",
+        "time" : {
+          "start" : 1729789256358,
+          "stop" : 1729789263870,
+          "duration" : 7512
+        }
+      } ]
+    },
+    "tags" : [ ]
+  },
+  "source" : "af37ddc155c01294.json",
+  "parameterValues" : [ ]
+}

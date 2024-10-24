@@ -1,0 +1,57 @@
+{
+  "uid" : "ab17fc5a4eb3bca4b216b548c7f9fcbc",
+  "children" : [ {
+    "name" : "EpamHomepage_TitleCheck",
+    "uid" : "b8b0aab70b58ee24",
+    "parentUid" : "ab17fc5a4eb3bca4b216b548c7f9fcbc",
+    "status" : "passed",
+    "time" : {
+      "start" : 1729794137907,
+      "stop" : 1729794149574,
+      "duration" : 11667
+    },
+    "flaky" : false,
+    "newFailed" : false,
+    "parameters" : [ ]
+  }, {
+    "name" : "EpamInsightsPage_FindButtonRedirectCheck",
+    "uid" : "ae1088c031929d5b",
+    "parentUid" : "ab17fc5a4eb3bca4b216b548c7f9fcbc",
+    "status" : "passed",
+    "time" : {
+      "start" : 1729794137906,
+      "stop" : 1729794150636,
+      "duration" : 12730
+    },
+    "flaky" : false,
+    "newFailed" : false,
+    "parameters" : [ ]
+  }, {
+    "name" : "EpamInsightsPage_SearchFunctionalityCheck",
+    "uid" : "af37ddc155c01294",
+    "parentUid" : "ab17fc5a4eb3bca4b216b548c7f9fcbc",
+    "status" : "failed",
+    "time" : {
+      "start" : 1729794137907,
+      "stop" : 1729794146518,
+      "duration" : 8611
+    },
+    "flaky" : true,
+    "newFailed" : true,
+    "parameters" : [ ]
+  }, {
+    "name" : "EpamHomepage_HamburgerMenu",
+    "uid" : "42b7c0c1dd309d0f",
+    "parentUid" : "ab17fc5a4eb3bca4b216b548c7f9fcbc",
+    "status" : "passed",
+    "time" : {
+      "start" : 1729794137906,
+      "stop" : 1729794150502,
+      "duration" : 12596
+    },
+    "flaky" : false,
+    "newFailed" : false,
+    "parameters" : [ ]
+  } ],
+  "name" : "timeline"
+}
