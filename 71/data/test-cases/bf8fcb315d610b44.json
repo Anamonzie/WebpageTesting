@@ -1,0 +1,70 @@
+{
+  "uid" : "bf8fcb315d610b44",
+  "name" : "EpamInsightsPage_FindButtonRedirectCheck",
+  "fullName" : "EpamWebTests.PageTests.InsightsPageTests.EpamInsightsPage_FindButtonRedirectCheck",
+  "historyId" : "EpamWebTests.PageTests.InsightsPageTests.EpamInsightsPage_FindButtonRedirectCheck",
+  "time" : {
+    "start" : 1729790431754,
+    "stop" : 1729790437228,
+    "duration" : 5474
+  },
+  "status" : "passed",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ ],
+  "afterStages" : [ ],
+  "labels" : [ {
+    "name" : "suite",
+    "value" : "EpamWebTests.PageTests.InsightsPageTests"
+  }, {
+    "name" : "testClass",
+    "value" : "EpamWebTests.PageTests.InsightsPageTests"
+  }, {
+    "name" : "package",
+    "value" : "EpamWebTests.PageTests.InsightsPageTests"
+  }, {
+    "name" : "resultFormat",
+    "value" : "trx"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ ],
+    "history" : {
+      "statistic" : {
+        "failed" : 0,
+        "broken" : 0,
+        "skipped" : 0,
+        "passed" : 3,
+        "unknown" : 0,
+        "total" : 3
+      },
+      "items" : [ {
+        "uid" : "252af534c32c21ff",
+        "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/70//#testresult/252af534c32c21ff",
+        "status" : "passed",
+        "time" : {
+          "start" : 1729790169055,
+          "stop" : 1729790173552,
+          "duration" : 4497
+        }
+      }, {
+        "uid" : "5d40eb635e30ff16",
+        "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/68//#testresult/5d40eb635e30ff16",
+        "status" : "passed",
+        "time" : {
+          "start" : 1729789256356,
+          "stop" : 1729789262049,
+          "duration" : 5693
+        }
+      } ]
+    },
+    "tags" : [ ]
+  },
+  "source" : "bf8fcb315d610b44.json",
+  "parameterValues" : [ ]
+}
