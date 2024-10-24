@@ -50,6 +50,9 @@ jobs:
     - name: Check Network Connectivity
       run: timeout 30s ping -c 4 www.epam.com || echo "Ping failed or timed out"
 
+    - name: Check Network Connectivity
+      run: timeout 30s ping -c 4 www.facebook.com || echo "Ping failed or timed out"
+
     - name: Run Playwright Tests
       run: dotnet test EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory ${{ github.workspace }}/allure-results 
       #--filter "Category==${{ inputs.category }}"
