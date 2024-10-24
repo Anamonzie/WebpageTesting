@@ -25,9 +25,9 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.1" />
-    <PackageReference Include="Microsoft.Playwright" Version="1.47.0" />
-    <PackageReference Include="Microsoft.Playwright.NUnit" Version="1.47.0" />
-    <PackageReference Include="Microsoft.Playwright.TestAdapter" Version="1.47.0" />
+    <PackageReference Include="Microsoft.Playwright" Version="1.48.0" />
+    <PackageReference Include="Microsoft.Playwright.NUnit" Version="1.48.0" />
+    <PackageReference Include="Microsoft.Playwright.TestAdapter" Version="1.48.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NUnit" Version="4.2.2" />
     <PackageReference Include="NUnit.Allure" Version="1.2.1.1" />
