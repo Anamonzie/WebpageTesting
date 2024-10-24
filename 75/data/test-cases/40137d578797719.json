@@ -1,0 +1,41 @@
+{
+  "uid" : "40137d578797719",
+  "name" : "EpamInsightsPage_SearchFunctionalityCheck",
+  "fullName" : "EpamWebTests.PageTests.InsightsPageTests.EpamInsightsPage_SearchFunctionalityCheck",
+  "historyId" : "EpamWebTests.PageTests.InsightsPageTests.EpamInsightsPage_SearchFunctionalityCheck",
+  "time" : {
+    "start" : 1729800525503,
+    "stop" : 1729800531520,
+    "duration" : 6017
+  },
+  "status" : "passed",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ ],
+  "afterStages" : [ ],
+  "labels" : [ {
+    "name" : "suite",
+    "value" : "EpamWebTests.PageTests.InsightsPageTests"
+  }, {
+    "name" : "testClass",
+    "value" : "EpamWebTests.PageTests.InsightsPageTests"
+  }, {
+    "name" : "package",
+    "value" : "EpamWebTests.PageTests.InsightsPageTests"
+  }, {
+    "name" : "resultFormat",
+    "value" : "trx"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ ],
+    "tags" : [ ]
+  },
+  "source" : "40137d578797719.json",
+  "parameterValues" : [ ]
+}

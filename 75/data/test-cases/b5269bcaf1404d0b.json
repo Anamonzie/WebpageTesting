@@ -1,0 +1,47 @@
+{
+  "uid" : "b5269bcaf1404d0b",
+  "name" : "EpamInsightsPage_FindButtonRedirectCheck",
+  "fullName" : "EpamWebTests.PageTests.InsightsPageTests.EpamInsightsPage_FindButtonRedirectCheck",
+  "historyId" : "EpamWebTests.PageTests.InsightsPageTests.EpamInsightsPage_FindButtonRedirectCheck",
+  "time" : {
+    "start" : 1729800525502,
+    "stop" : 1729800531133,
+    "duration" : 5631
+  },
+  "status" : "failed",
+  "statusMessage" : "Expected string to be \"Search Our Website | EPAM\" with a length of 25, but \"\" has a length of 0, differs near \"\" (index 0).",
+  "statusTrace" : "   at FluentAssertions.Execution.LateBoundTestFramework.Throw(String message)\n   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)\n   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)\n   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)\n   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)\n   at FluentAssertions.Primitives.StringEqualityValidator.ValidateAgainstLengthDifferences()\n   at FluentAssertions.Primitives.StringValidator.Validate()\n   at FluentAssertions.Primitives.StringAssertions`1.Be(String expected, String because, Object[] becauseArgs)\n   at EpamWebTests.PageTests.InsightsPageTests.EpamInsightsPage_FindButtonRedirectCheck() in /home/runner/work/WebpageTesting/WebpageTesting/EpamWebTests/PageTests/InsightsPageTests.cs:line 80\n   at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.BlockUntilCompleted()\n   at NUnit.Framework.Internal.MessagePumpStrategy.NoMessagePumpStrategy.WaitForCompletion(AwaitAdapter awaiter)\n   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await[TResult](Func`1 invoke)\n   at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(Func`1 invoke)\n   at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)\n   at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)\n   at NUnit.Framework.Internal.Commands.BeforeAndAfterTestCommand.<>c__DisplayClass1_0.<Execute>b__0()\n   at NUnit.Framework.Internal.Commands.DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)\n\n",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ ],
+  "afterStages" : [ ],
+  "labels" : [ {
+    "name" : "suite",
+    "value" : "EpamWebTests.PageTests.InsightsPageTests"
+  }, {
+    "name" : "testClass",
+    "value" : "EpamWebTests.PageTests.InsightsPageTests"
+  }, {
+    "name" : "package",
+    "value" : "EpamWebTests.PageTests.InsightsPageTests"
+  }, {
+    "name" : "resultFormat",
+    "value" : "trx"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ {
+      "name" : "Product defects",
+      "matchedStatuses" : [ ],
+      "flaky" : false
+    } ],
+    "tags" : [ ]
+  },
+  "source" : "b5269bcaf1404d0b.json",
+  "parameterValues" : [ ]
+}
