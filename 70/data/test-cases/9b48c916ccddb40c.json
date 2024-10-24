@@ -1,0 +1,61 @@
+{
+  "uid" : "9b48c916ccddb40c",
+  "name" : "EpamHomepage_HamburgerMenu",
+  "fullName" : "EpamWebTests.PageTests.Tests.EpamHomepage_HamburgerMenu",
+  "historyId" : "EpamWebTests.PageTests.Tests.EpamHomepage_HamburgerMenu",
+  "time" : {
+    "start" : 1729790169057,
+    "stop" : 1729790173791,
+    "duration" : 4734
+  },
+  "status" : "passed",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ ],
+  "afterStages" : [ ],
+  "labels" : [ {
+    "name" : "suite",
+    "value" : "EpamWebTests.PageTests.Tests"
+  }, {
+    "name" : "testClass",
+    "value" : "EpamWebTests.PageTests.Tests"
+  }, {
+    "name" : "package",
+    "value" : "EpamWebTests.PageTests.Tests"
+  }, {
+    "name" : "resultFormat",
+    "value" : "trx"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ ],
+    "history" : {
+      "statistic" : {
+        "failed" : 0,
+        "broken" : 0,
+        "skipped" : 0,
+        "passed" : 2,
+        "unknown" : 0,
+        "total" : 2
+      },
+      "items" : [ {
+        "uid" : "53eab78892b1ac4a",
+        "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/68//#testresult/53eab78892b1ac4a",
+        "status" : "passed",
+        "time" : {
+          "start" : 1729789256358,
+          "stop" : 1729789261726,
+          "duration" : 5368
+        }
+      } ]
+    },
+    "tags" : [ ]
+  },
+  "source" : "9b48c916ccddb40c.json",
+  "parameterValues" : [ ]
+}

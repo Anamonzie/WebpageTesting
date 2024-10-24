@@ -1,0 +1,43 @@
+{
+  "uid" : "4b4757e66a1912dae1a509f688f20b0f",
+  "children" : [ {
+    "name" : "Product defects",
+    "children" : [ {
+      "name" : "Microsoft.Playwright.PlaywrightException : net::ERR_ABORTED at https://www.epam.com/insights\nCall log:\n  - navigating to \"https://www.epam.com/insights\", waiting until \"load\"",
+      "children" : [ {
+        "name" : "EpamInsightsPage_SearchFunctionalityCheck",
+        "uid" : "d5591c46e858927b",
+        "parentUid" : "3f588e0a5bcd799872dac477220f98ca",
+        "status" : "failed",
+        "time" : {
+          "start" : 1729790169055,
+          "stop" : 1729790170764,
+          "duration" : 1709
+        },
+        "flaky" : false,
+        "newFailed" : true,
+        "parameters" : [ ]
+      } ],
+      "uid" : "3f588e0a5bcd799872dac477220f98ca"
+    }, {
+      "name" : "Microsoft.Playwright.PlaywrightException : net::ERR_ABORTED at https://www.epam.com/\nCall log:\n  - navigating to \"https://www.epam.com/\", waiting until \"load\"",
+      "children" : [ {
+        "name" : "EpamHomepage_TitleCheck",
+        "uid" : "730a41bbb492c245",
+        "parentUid" : "8df708393d45ef29e58c0e0577f8083e",
+        "status" : "failed",
+        "time" : {
+          "start" : 1729790169055,
+          "stop" : 1729790170764,
+          "duration" : 1709
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "8df708393d45ef29e58c0e0577f8083e"
+    } ],
+    "uid" : "8fb3a91ba5aaf9de24cc8a92edc82b5d"
+  } ],
+  "name" : "categories"
+}
