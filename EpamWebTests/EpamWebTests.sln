@@ -7,10 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EpamWebTests", "EpamWebTest
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EpamWeb", "..\EpamWeb\EpamWeb.csproj", "{F1B6EE6D-CD98-46D1-9933-5014312B85D1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Theory_inPractice", "..\..\..\..\..\..\source\repos\Theory_inPractice\Theory_inPractice\Theory_inPractice.csproj", "{E04CD53B-2BD5-4C70-BD08-AA2C32FABBC5}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheoryInPractice.Tests", "..\..\..\..\..\..\source\repos\Theory_inPractice\TheoryInPractice.Tests\TheoryInPractice.Tests.csproj", "{6F9CB7B4-B774-422C-8BEF-DE932BA60793}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EpamWebProj", "EpamWebProj", "{BC892E30-6089-416B-AABA-36A38B379346}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CustomAssertionTask", "CustomAssertionTask", "{6602293B-6D81-4A88-84FB-558CD0BB42BC}"
