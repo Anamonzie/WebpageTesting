@@ -1,0 +1,62 @@
+{
+  "uid" : "71de4be843a0b66d",
+  "name" : "EpamHomepage_HamburgerMenu",
+  "fullName" : "EpamWebTests.PageTests.Tests.EpamHomepage_HamburgerMenu",
+  "historyId" : "EpamWebTests.PageTests.Tests.EpamHomepage_HamburgerMenu",
+  "time" : {
+    "start" : 1729800767740,
+    "stop" : 1729800773940,
+    "duration" : 6200
+  },
+  "status" : "passed",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ ],
+  "afterStages" : [ ],
+  "labels" : [ {
+    "name" : "suite",
+    "value" : "EpamWebTests.PageTests.Tests"
+  }, {
+    "name" : "testClass",
+    "value" : "EpamWebTests.PageTests.Tests"
+  }, {
+    "name" : "package",
+    "value" : "EpamWebTests.PageTests.Tests"
+  }, {
+    "name" : "resultFormat",
+    "value" : "trx"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ ],
+    "history" : {
+      "statistic" : {
+        "failed" : 1,
+        "broken" : 0,
+        "skipped" : 0,
+        "passed" : 1,
+        "unknown" : 0,
+        "total" : 2
+      },
+      "items" : [ {
+        "uid" : "7e229614d8360238",
+        "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/75//#testresult/7e229614d8360238",
+        "status" : "failed",
+        "statusDetails" : "Microsoft.Playwright.PlaywrightException : net::ERR_ABORTED at https://www.epam.com/\nCall log:\n  - navigating to \"https://www.epam.com/\", waiting until \"load\"",
+        "time" : {
+          "start" : 1729800525503,
+          "stop" : 1729800527144,
+          "duration" : 1641
+        }
+      } ]
+    },
+    "tags" : [ ]
+  },
+  "source" : "71de4be843a0b66d.json",
+  "parameterValues" : [ ]
+}
