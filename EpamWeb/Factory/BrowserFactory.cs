@@ -6,7 +6,6 @@ namespace EpamWeb.Factory
     public class BrowserFactory : IBrowserFactory
     {
         private static readonly ThreadLocal<IBrowser> threadLocalBrowser = new();
-        //private static BrowserFactory? instance;
         private readonly IConfigurationManager configurationManager;
         private static readonly Lazy<BrowserFactory> instance = new(() => new BrowserFactory(ConfigurationManager.Instance()));
 

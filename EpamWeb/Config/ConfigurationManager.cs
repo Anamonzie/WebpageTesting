@@ -45,7 +45,6 @@ namespace EpamWeb.Config
             return configuration;
         }
 
-        // Example method to get specific browser config
         public Configuration GetBrowserConfig()
         {
             var config = new Configuration();

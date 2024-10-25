@@ -17,7 +17,6 @@ public class Tests
     private static IBrowserFactory browserFactory;
     private IPageFactory pageFactory;
     private IServiceFactory serviceFactory;
-    //private static IConfigurationManager configurationManager;
 
     private static readonly ThreadLocal<IBrowser> browser = new();
     private IBrowserContext context;
@@ -26,8 +25,7 @@ public class Tests
     [OneTimeSetUp]
     public static void GlobalSetup()
     {
-        //configurationManager = ConfigurationManager.Instance(); // Use the singleton instance
-        browserFactory = BrowserFactory.Instance;  // Pass it to the BrowserFactory
+        browserFactory = BrowserFactory.Instance;  
     }
 
     [SetUp]
