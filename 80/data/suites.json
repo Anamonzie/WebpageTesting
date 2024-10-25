@@ -1,0 +1,22 @@
+{
+  "uid" : "98d3104e051c652961429bf95fa0b5d6",
+  "children" : [ {
+    "name" : "EpamWebTests.PageTests.InsightsPageTests",
+    "children" : [ {
+      "name" : "EpamInsightsPage_FindButtonRedirectCheck",
+      "uid" : "48199037067a5fd6",
+      "parentUid" : "c34accbb05d22f0b371aa99400ebb58a",
+      "status" : "passed",
+      "time" : {
+        "start" : 1729843368078,
+        "stop" : 1729843371701,
+        "duration" : 3623
+      },
+      "flaky" : false,
+      "newFailed" : false,
+      "parameters" : [ ]
+    } ],
+    "uid" : "c34accbb05d22f0b371aa99400ebb58a"
+  } ],
+  "name" : "suites"
+}
