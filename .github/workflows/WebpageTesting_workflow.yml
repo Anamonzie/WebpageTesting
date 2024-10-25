@@ -9,11 +9,12 @@ on:
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
-  #  inputs:
-    #  category:
-    #    description: 'Test category to run'
-    #    required: false
-    #    default: 'all'
+    inputs:
+      category:
+        description: 'Test category to run'
+        required: false
+        default: 'all'
+        
 jobs:
   build:
     runs-on: ubuntu-latest
