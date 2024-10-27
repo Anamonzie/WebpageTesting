@@ -2,23 +2,19 @@
 
 ## Corrections:
 
-- Need to get rid of the static in ConfigurationLoader
-- Combine configurationLoader and Manager, but be sure that configuraiton is read only once
-- Create factories as singletons
+- Add logging to your solution - Serilog library
+- Add video recording - playwright feature (it is out of the box feature, read about how to use it)
+- Add screenshots  - playwright feature (it is out of the box feature, read about how to use it)
+- Need to have artifacts - logs, screenshots and videos attached to each to each tests in the allure report
 
-- Have all code in one solution, under different projects
-- To move project to the one solution, polish code for example of customAssertyions to have test form
+- Need to check default playwright timeouts and maybe it should be increased
 
-## Additional tasks:
+- Explain why we need to check on null twice in ConfigurationManager
+- Read about Lazy class itselt and how it works
+- Read about builder pattern and how to use it and when
 
-- configure the repository to have branch and pull requests, and having at least one reviewer
-- to define list of test categories, mark tests with test categories
-- update workflow dispatcher to run tests with different categories
-- if we need to call base implementation with adding logging on top of this, how it can be implemented in c#
-- type casting(main ways and differences)
+- Factory will return an instance of the builder and you will build the model in the test
 
-- allure serve - how it works
-- Allure attributes - to investigate
-- Allure side-menu sections (overview, categories, suities, timelines, behaviours, packages)
-
-** changes from a local new_feature branch **
+- You need to try to run tests from command line. Mark tests with different categories and run tests from command line using different categories
+- Check official documentation if it is possible to extent categories
+- Debug an issue with allure attributes
