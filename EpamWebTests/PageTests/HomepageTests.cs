@@ -63,11 +63,11 @@ public class Tests
     [AllureSeverity(SeverityLevel.minor)]
     public async Task EpamHomepage_TitleCheck()
     {
-        AllureApi.SetSeverity(SeverityLevel.critical);
-        AllureApi.SetOwner("John Doe");
-        AllureApi.AddLink("Website", "https://dev.example.com/");
-        AllureApi.AddIssue("UI-123");
-        AllureApi.AddTmsItem("TMS-456");
+        //AllureApi.SetSeverity(SeverityLevel.critical);
+        //AllureApi.SetOwner("John Doe");
+        //AllureApi.AddLink("Website", "https://dev.example.com/");
+        //AllureApi.AddIssue("UI-123");
+        //AllureApi.AddTmsItem("TMS-456");
         
         // Arrange
         const string expectedTitle = TestData.ExpectedHomepageTitle;
