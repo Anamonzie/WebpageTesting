@@ -1,0 +1,43 @@
+{
+  "uid" : "4b4757e66a1912dae1a509f688f20b0f",
+  "children" : [ {
+    "name" : "Product defects",
+    "children" : [ {
+      "name" : "Microsoft.Playwright.TargetClosedException : Target page, context or browser has been closed\nCall log:\n  - navigating to \"https://www.epam.com/insights\", waiting until \"load\"",
+      "children" : [ {
+        "name" : "EpamInsightsPage_FindButtonRedirectCheck",
+        "uid" : "1800f69ea6383f0d",
+        "parentUid" : "11bbd860caba3952bd2c986d4ce25604",
+        "status" : "failed",
+        "time" : {
+          "start" : 1730147716099,
+          "stop" : 1730147730861,
+          "duration" : 14762
+        },
+        "flaky" : true,
+        "newFailed" : true,
+        "parameters" : [ ]
+      } ],
+      "uid" : "11bbd860caba3952bd2c986d4ce25604"
+    }, {
+      "name" : "Microsoft.Playwright.PlaywrightException : net::ERR_ABORTED at https://www.epam.com/\nCall log:\n  - navigating to \"https://www.epam.com/\", waiting until \"load\"",
+      "children" : [ {
+        "name" : "EpamHomepage_HamburgerMenu",
+        "uid" : "5890d67fda72af22",
+        "parentUid" : "8df708393d45ef29e58c0e0577f8083e",
+        "status" : "failed",
+        "time" : {
+          "start" : 1730147716099,
+          "stop" : 1730147729209,
+          "duration" : 13110
+        },
+        "flaky" : true,
+        "newFailed" : true,
+        "parameters" : [ ]
+      } ],
+      "uid" : "8df708393d45ef29e58c0e0577f8083e"
+    } ],
+    "uid" : "8fb3a91ba5aaf9de24cc8a92edc82b5d"
+  } ],
+  "name" : "categories"
+}
