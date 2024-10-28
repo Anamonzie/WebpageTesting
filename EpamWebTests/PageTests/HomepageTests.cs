@@ -1,3 +1,4 @@
+using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
 using EpamWeb.Factory;
@@ -45,7 +46,7 @@ public class Tests
 
         //setting up context to record videos
         context = await browser.Value.NewContextAsync(new BrowserNewContextOptions
-        {            
+        {
             RecordVideoDir = "videos/",
             RecordVideoSize = new RecordVideoSize { Width = 1280, Height = 720 }
         });
@@ -102,20 +103,35 @@ public class Tests
     [TearDown]
     public async Task GlobalTearDown()
     {
-        await page.ScreenshotAsync(new()
+        if (page != null && !page.IsClosed)
         {
-            Path = "screenshot.png",
-            FullPage = true,
-        });
+            // Capture a screenshot before closing
+            var screenshotsDirectory = Path.Combine("Screenshots", TestContext.CurrentContext.Test.Name);
+            Directory.CreateDirectory(screenshotsDirectory);
+            var screenshotPath = Path.Combine(screenshotsDirectory, $"screenshot_{DateTime.UtcNow:yyyyMMdd_HHmmss}.png");
 
-        await page.CloseAsync();
-        await context.CloseAsync();
+            await page.ScreenshotAsync(new()
+            {
+                Path = screenshotPath,
+                FullPage = true,
+            });
 
-        if (browser.Value != null)
-        {
-            await browser.Value.CloseAsync();
-            browser.Value = null;
+            AllureApi.AddAttachment("Screenshot", "image/png", screenshotPath);
+
+            await page.CloseAsync();
         }
+
+        if (context != null)
+        {
+            await context.CloseAsync();
+
+            var path = await page.Video.PathAsync();
+
+            var videoPath = Path.Combine("videos", path);
+            AllureApi.AddAttachment("Test Video", "video/webm", videoPath);
+        }
+
+        // No need to close the browser in TearDown; this will be handled in OneTimeTearDown if necessary
     }
 
     [OneTimeTearDown]

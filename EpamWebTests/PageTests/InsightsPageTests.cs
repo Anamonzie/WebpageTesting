@@ -99,25 +99,43 @@ namespace EpamWebTests.PageTests
         [TearDown]
         public async Task GlobalTearDown()
         {
-            await page.ScreenshotAsync(new()
+            if (page != null && !page.IsClosed)
             {
-                Path = "screenshot.png",
-                FullPage = true,
-            });
+                // Capture a screenshot before closing
+                var screenshotsDirectory = Path.Combine("Screenshots", TestContext.CurrentContext.Test.Name);
+                Directory.CreateDirectory(screenshotsDirectory);                
+                var screenshotPath = Path.Combine(screenshotsDirectory, $"screenshot_{DateTime.UtcNow:yyyyMMdd_HHmmss}.png");
+                
+                await page.ScreenshotAsync(new()
+                {
+                    Path = screenshotPath,
+                    FullPage = true,
+                });
 
-            await page.CloseAsync();
-            await context.CloseAsync();
+                AllureApi.AddAttachment("Screenshot", "image/png", screenshotPath);
 
-            if (browser.Value != null)
-            {
-                await browser.Value.CloseAsync();
-                browser.Value = null;
+                await page.CloseAsync();
             }
+
+            if (context != null)
+            {
+                await context.CloseAsync();
+
+                var path = await page.Video.PathAsync();
+
+                var videoPath = Path.Combine("videos", path);
+                AllureApi.AddAttachment("Test Video", "video/webm", videoPath);
+            }
+
+            // No need to close the browser in TearDown; this will be handled in OneTimeTearDown if necessary
         }
 
         [OneTimeTearDown]
         public void TearDownLogging()
         {
+            //var logFilePath = "./logs/test-log.txt";
+            //AllureApi.AddAttachment("Execution Log", "text/plain", logFilePath);
+
             Log.CloseAndFlush();
         }
     }
