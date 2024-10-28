@@ -41,9 +41,15 @@ namespace EpamWebTests.PageTests
         public async Task Setup()
         {
             browser.Value = await browserFactory.GetBrowser();
-            context = await browser.Value.NewContextAsync();
-            page = await context.NewPageAsync();
 
+            //setting up context to record videos
+            context = await browser.Value.NewContextAsync( new BrowserNewContextOptions
+            {
+                RecordVideoDir = "videos/",
+                RecordVideoSize = new RecordVideoSize { Width = 1280, Height = 720 }
+            });
+
+            page = await context.NewPageAsync();
             pageFactory =  PageFactory.Instance(page);
             serviceFactory = ServiceFactory.Instance(pageFactory, page);
         }
@@ -93,13 +99,20 @@ namespace EpamWebTests.PageTests
         [TearDown]
         public async Task GlobalTearDown()
         {
+            await page.ScreenshotAsync(new()
+            {
+                Path = "screenshot.png",
+                FullPage = true,
+            });
+
+            await page.CloseAsync();
+            await context.CloseAsync();
+
             if (browser.Value != null)
             {
                 await browser.Value.CloseAsync();
                 browser.Value = null;
             }
-
-            await context.CloseAsync();
         }
 
         [OneTimeTearDown]
