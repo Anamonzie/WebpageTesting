@@ -41,9 +41,15 @@ namespace EpamWebTests.PageTests
         public async Task Setup()
         {
             browser.Value = await browserFactory.GetBrowser();
-            context = await browser.Value.NewContextAsync();
-            page = await context.NewPageAsync();
 
+            context = await browser.Value.NewContextAsync( new BrowserNewContextOptions
+            {
+                RecordVideoDir = "videos/",
+                RecordVideoSize = new RecordVideoSize { Width = 1280, Height = 720 }
+            });
+            Log.Information("Video recording initialized for context. (Insigts Page Tests)");
+
+            page = await context.NewPageAsync();
             pageFactory =  PageFactory.Instance(page);
             serviceFactory = ServiceFactory.Instance(pageFactory, page);
         }
@@ -58,15 +64,22 @@ namespace EpamWebTests.PageTests
         {
             // Arrange
             var insightsPageService = serviceFactory.CreateInsightsPageService();
+
+            Log.Information("Navigating to EPAM insights page. (Insigts Page Tests: Search Check)");
             await insightsPageService.NavigateToUrlAsync(Constants.EpamInsightsPageUrl);
 
             // Act
             await insightsPageService.InputTextInSearchFieldAsync();
+            Log.Information("Inputted text in search field. (Insigts Page Tests: Search Check)");
+
             await insightsPageService.ClickFindButtonAsync();
+            Log.Information("Clicked Find Button. (Insigts Page Tests: Search Check)");
+
             var result = await insightsPageService.GetSearchResultTextAsync();
 
             // Assert
             result.Should().Contain(TestData.SearchInput);
+            Log.Information($"Checking page title; expected: {await insightsPageService.GetPageTitleAsync()}, actual: {result}. (Insigts Page Tests: Search Check)");
         }
 
         [Test]
@@ -80,6 +93,8 @@ namespace EpamWebTests.PageTests
             // Arrange
             var insightsPageService = serviceFactory.CreateInsightsPageService();
             await insightsPageService.NavigateToUrlAsync(Constants.EpamInsightsPageUrl);
+            Log.Information("Navigating to EPAM insights page. (Insigts Page Tests: Find Button Check)");
+
             const string expectedTitle = TestData.ExpectedSearchPageTitle;
 
             // Act
@@ -88,24 +103,61 @@ namespace EpamWebTests.PageTests
 
             // Assert
             result.Should().Be(expectedTitle);
+            Log.Information($"Checking page title; expected: {expectedTitle}, actual: {result}. (Insigts Page Tests: Find Button Check)");
         }
 
         [TearDown]
         public async Task GlobalTearDown()
         {
-            if (browser.Value != null)
+            if (page != null && !page.IsClosed)
             {
-                await browser.Value.CloseAsync();
-                browser.Value = null;
+                // Capture a screenshot before closing
+                var screenshotsDirectory = Path.Combine("Screenshots", TestContext.CurrentContext.Test.Name);
+                Directory.CreateDirectory(screenshotsDirectory);                
+                var screenshotPath = Path.Combine(screenshotsDirectory, $"screenshot_{DateTime.UtcNow:yyyyMMdd_HHmmss}.png");
+                Log.Information($"Captured screenshot at {screenshotPath}. (Insigts Page Tests)");
+
+                await page.ScreenshotAsync(new()
+                {
+                    Path = screenshotPath,
+                    FullPage = true,
+                });
+
+                AllureApi.AddAttachment("Screenshot", "image/png", screenshotPath);
+
+                await page.CloseAsync();
             }
 
-            await context.CloseAsync();
+            if (context != null)
+            {
+                await context.CloseAsync();
+
+                var path = await page.Video.PathAsync();
+
+                var videoPath = Path.Combine("videos", path);
+                AllureApi.AddAttachment("Test Video", "video/webm", videoPath);
+
+                Log.Information($"Test video saved at {videoPath}. (Insigts Page Tests)");
+                Log.Information("Page and context closed after test. (Insigts Page Tests)");
+            }
         }
 
         [OneTimeTearDown]
         public void TearDownLogging()
         {
+            Log.Information("All resources disposed; closing browser instance. (Insigts Page Tests)");
+
             Log.CloseAndFlush();
+
+            ////var logDirectory = new DirectoryInfo("./logs");
+            ////var latestLogFile = logDirectory.GetFiles("test-log*.txt")
+            ////                                .OrderByDescending(f => f.LastWriteTime)
+            ////                                .FirstOrDefault();
+
+            ////if (latestLogFile != null && latestLogFile.Exists)
+            ////{
+            ////    AllureApi.AddAttachment("Test Logs", "text/txt", latestLogFile.FullName);
+            ////}
         }
     }
 }

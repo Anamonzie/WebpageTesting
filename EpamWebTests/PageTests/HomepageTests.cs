@@ -1,3 +1,4 @@
+using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
 using EpamWeb.Factory;
@@ -41,9 +42,15 @@ public class Tests
     public async Task Setup()
     {
         browser.Value = await browserFactory.GetBrowser();
-        context = await browser.Value.NewContextAsync();
+
+        context = await browser.Value.NewContextAsync(new BrowserNewContextOptions
+        {
+            RecordVideoDir = "videos/",
+            RecordVideoSize = new RecordVideoSize { Width = 1280, Height = 720 }
+        });
+        Log.Information("Video recording initialized for context. (Homepage Tests)");
+
         page = await context.NewPageAsync();
-        
         pageFactory = PageFactory.Instance(page);
         serviceFactory = ServiceFactory.Instance(pageFactory, page);
     }
@@ -61,12 +68,14 @@ public class Tests
 
         var homepageService = serviceFactory.CreateHomepageService();
         await homepageService.NavigateToUrlAsync(Constants.EpamHomepageUrl);
+        Log.Information("Navigating to EPAM homepage. (Homepage Tests: Title Check)");
 
         // Act
         var result = await homepageService.GetPageTitleAsync();
 
         // Assert
         result.Should().Be(expectedTitle);
+        Log.Information($"Checking page title; expected: {expectedTitle}, actual: {result}. (Homepage Tests: Title Check)");
     }
 
     [Test]
@@ -82,30 +91,69 @@ public class Tests
 
         var homepageService = serviceFactory.CreateHomepageService();
         await homepageService.NavigateToUrlAsync(Constants.EpamHomepageUrl);
+        Log.Information("Navigating to EPAM homepage. (Homepage Tests: Hamburger Menu)");
 
         // Act
         await homepageService.ClickHamburgerMenuAsync();
+        Log.Information("Clicked on Hamburger Menu. (Homepage Tests: Hamburger Menu)");
+
         var actualItems = await homepageService.GetHamburgerMenuListItemsAsync();
 
         // Assert
         actualItems.Should().BeEquivalentTo(expectedItems);
+        Log.Information($"Menu items are: {string.Join(", ", expectedItems)}. (Homepage Tests: Hamburger Menu)");
     }
 
     [TearDown]
-    public async Task GlobalTearDown()
+    public async Task TearDown()
     {
-        if (browser.Value != null)
+        if (page != null && !page.IsClosed)
         {
-            await browser.Value.CloseAsync();
-            browser.Value = null;
+            var screenshotsDirectory = Path.Combine("Screenshots", TestContext.CurrentContext.Test.Name);
+            Directory.CreateDirectory(screenshotsDirectory);
+            var screenshotPath = Path.Combine(screenshotsDirectory, $"screenshot_{DateTime.UtcNow:yyyyMMdd_HHmmss}.png");
+            Log.Information($"Captured screenshot at {screenshotPath}. (Homepage Tests)");
+            
+            await page.ScreenshotAsync(new()
+            {
+                Path = screenshotPath,
+                FullPage = true,
+            });
+
+            AllureApi.AddAttachment("Screenshot", "image/png", screenshotPath);
+
+            await page.CloseAsync();
         }
 
-        await context.CloseAsync();
+        if (context != null)
+        {
+            await context.CloseAsync();
+
+            var path = await page.Video.PathAsync();
+
+            var videoPath = Path.Combine("videos", path);
+            AllureApi.AddAttachment("Test Video", "video/webm", videoPath);
+
+            Log.Information($"Test video saved at {videoPath}. (Homepage Tests)");
+            Log.Information("Page and context closed after test. (Homepage Tests)");
+        }
     }
 
     [OneTimeTearDown]
     public void TearDownLogging()
     {
+        Log.Information("All resources disposed; closing browser instance. (Homepage Tests)");
+
         Log.CloseAndFlush();
+
+        ////var logDirectory = new DirectoryInfo("./logs");
+        ////var latestLogFile = logDirectory.GetFiles("test-log*.txt")
+        ////                                .OrderByDescending(f => f.LastWriteTime)
+        ////                                .FirstOrDefault();
+
+        ////if (latestLogFile != null && latestLogFile.Exists)
+        ////{
+        ////    AllureApi.AddAttachment("Test Logs", "text/txt", latestLogFile.FullName);
+        ////}
     }
 }
