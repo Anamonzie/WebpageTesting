@@ -1,11 +1,11 @@
-﻿using EpamWeb.Factory;
-using Microsoft.Playwright;
-using FluentAssertions;
+﻿using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
+using EpamWeb.Factory;
 using EpamWeb.Utils;
-using EpamWeb.Config;
-using Allure.Net.Commons;
+using FluentAssertions;
+using Microsoft.Playwright;
+using Serilog;
 
 namespace EpamWebTests.PageTests
 {
@@ -25,7 +25,16 @@ namespace EpamWebTests.PageTests
         [OneTimeSetUp]
         public static void GlobalSetup()
         {
+            Log.Logger = new LoggerConfiguration()
+            .WriteTo.File("./logs/test-log.txt",
+                              rollingInterval: RollingInterval.Day, // Creates a new log file each day
+                              outputTemplate: "{Timestamp:HH:mm} [{Level}] ({ThreadId}) {Message}{NewLine}{Exception}")
+            .Enrich.WithThreadId()
+            .CreateLogger();
+
+            Log.Information("Trying to instantiate a browser...");
             browserFactory = BrowserFactory.Instance;
+            Log.Information("Browser instantiated.");
         }
 
         [SetUp]
@@ -89,6 +98,14 @@ namespace EpamWebTests.PageTests
                 await browser.Value.CloseAsync();
                 browser.Value = null;
             }
+
+            await context.CloseAsync();
+        }
+
+        [OneTimeTearDown]
+        public void TearDownLogging()
+        {
+            Log.CloseAndFlush();
         }
     }
 }
