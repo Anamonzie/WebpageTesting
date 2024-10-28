@@ -1,0 +1,69 @@
+{
+  "uid" : "83edc06c07f9ae9e47eb6dd1b683e4e2",
+  "children" : [ {
+    "name" : "EpamWebTests.PageTests",
+    "children" : [ {
+      "name" : "InsightsPageTests",
+      "children" : [ {
+        "name" : "EpamInsightsPage_SearchFunctionalityCheck",
+        "uid" : "d614392765b2b990",
+        "parentUid" : "51864abcad0585edbe091469b391bccb",
+        "status" : "passed",
+        "time" : {
+          "start" : 1730149622825,
+          "stop" : 1730149630426,
+          "duration" : 7601
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "EpamInsightsPage_FindButtonRedirectCheck",
+        "uid" : "4a8b0e2dd6bd9d7f",
+        "parentUid" : "51864abcad0585edbe091469b391bccb",
+        "status" : "failed",
+        "time" : {
+          "start" : 1730149622825,
+          "stop" : 1730149627493,
+          "duration" : 4668
+        },
+        "flaky" : true,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "51864abcad0585edbe091469b391bccb"
+    }, {
+      "name" : "Tests",
+      "children" : [ {
+        "name" : "EpamHomepage_TitleCheck",
+        "uid" : "86f2792c86db0137",
+        "parentUid" : "e4d9218d49a935086f1b5e77626f579b",
+        "status" : "failed",
+        "time" : {
+          "start" : 1730149622825,
+          "stop" : 1730149626730,
+          "duration" : 3905
+        },
+        "flaky" : false,
+        "newFailed" : true,
+        "parameters" : [ ]
+      }, {
+        "name" : "EpamHomepage_HamburgerMenu",
+        "uid" : "37a307e2804e0b6d",
+        "parentUid" : "e4d9218d49a935086f1b5e77626f579b",
+        "status" : "failed",
+        "time" : {
+          "start" : 1730149622825,
+          "stop" : 1730149660377,
+          "duration" : 37552
+        },
+        "flaky" : true,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "e4d9218d49a935086f1b5e77626f579b"
+    } ],
+    "uid" : "EpamWebTests.PageTests"
+  } ],
+  "name" : "packages"
+}
