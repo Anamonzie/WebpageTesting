@@ -81,7 +81,6 @@ public class Tests
     [AllureSeverity(SeverityLevel.minor)]
     public async Task EpamHomepage_TitleCheck()
     {
-
         // Arrange
         const string expectedTitle = TestData.ExpectedHomepageTitle;
 
