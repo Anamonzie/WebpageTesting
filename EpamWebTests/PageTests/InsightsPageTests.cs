@@ -92,8 +92,9 @@ namespace EpamWebTests.PageTests
         {
             // Arrange
             var insightsPageService = serviceFactory.CreateInsightsPageService();
-            await insightsPageService.NavigateToUrlAsync(Constants.EpamInsightsPageUrl);
+
             Log.Information("Navigating to EPAM insights page. (Insigts Page Tests: Find Button Check)");
+            await insightsPageService.NavigateToUrlAsync(Constants.EpamInsightsPageUrl);
 
             const string expectedTitle = TestData.ExpectedSearchPageTitle;
 
@@ -145,19 +146,17 @@ namespace EpamWebTests.PageTests
         [OneTimeTearDown]
         public void TearDownLogging()
         {
-            Log.Information("All resources disposed; closing browser instance. (Insigts Page Tests)");
-
             Log.CloseAndFlush();
 
-            ////var logDirectory = new DirectoryInfo("./logs");
-            ////var latestLogFile = logDirectory.GetFiles("test-log*.txt")
-            ////                                .OrderByDescending(f => f.LastWriteTime)
-            ////                                .FirstOrDefault();
+            var logDirectory = new DirectoryInfo("./logs");
+            var latestLogFile = logDirectory.GetFiles("test-log*.txt")
+                                            .OrderByDescending(f => f.LastWriteTime)
+                                            .FirstOrDefault();
 
-            ////if (latestLogFile != null && latestLogFile.Exists)
-            ////{
-            ////    AllureApi.AddAttachment("Test Logs", "text/txt", latestLogFile.FullName);
-            ////}
+            if (latestLogFile != null && latestLogFile.Exists)
+            {
+                AllureApi.AddAttachment("Test Logs", "text/plain", File.ReadAllText(latestLogFile.FullName));
+            }
         }
     }
 }

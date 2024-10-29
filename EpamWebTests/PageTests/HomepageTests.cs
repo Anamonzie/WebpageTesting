@@ -63,12 +63,6 @@ public class Tests
     [AllureSeverity(SeverityLevel.minor)]
     public async Task EpamHomepage_TitleCheck()
     {
-        //AllureApi.SetSeverity(SeverityLevel.critical);
-        //AllureApi.SetOwner("John Doe");
-        //AllureApi.AddLink("Website", "https://dev.example.com/");
-        //AllureApi.AddIssue("UI-123");
-        //AllureApi.AddTmsItem("TMS-456");
-        
         // Arrange
         const string expectedTitle = TestData.ExpectedHomepageTitle;
 
@@ -148,18 +142,16 @@ public class Tests
     [OneTimeTearDown]
     public void TearDownLogging()
     {
-        Log.Information("All resources disposed; closing browser instance. (Homepage Tests)");
-
         Log.CloseAndFlush();
 
-        ////var logDirectory = new DirectoryInfo("./logs");
-        ////var latestLogFile = logDirectory.GetFiles("test-log*.txt")
-        ////                                .OrderByDescending(f => f.LastWriteTime)
-        ////                                .FirstOrDefault();
+        var logDirectory = new DirectoryInfo("./logs");
+        var latestLogFile = logDirectory.GetFiles("test-log*.txt")
+                                        .OrderByDescending(f => f.LastWriteTime)
+                                        .FirstOrDefault();
 
-        ////if (latestLogFile != null && latestLogFile.Exists)
-        ////{
-        ////    AllureApi.AddAttachment("Test Logs", "text/txt", latestLogFile.FullName);
-        ////}
+        if (latestLogFile != null && latestLogFile.Exists)
+        {
+            AllureApi.AddAttachment("Test Logs", "text/plain", File.ReadAllText(latestLogFile.FullName));
+        }
     }
 }
