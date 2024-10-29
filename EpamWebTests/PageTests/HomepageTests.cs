@@ -56,6 +56,24 @@ public class Tests
     }
 
     [Test]
+    public async Task Google_TitleCheck()
+    {
+
+        // Arrange
+        const string expectedTitle = "Google";
+
+        var homepageService = serviceFactory.CreateHomepageService();
+        await homepageService.NavigateToUrlAsync(Constants.GooglePageUrl);
+
+        // Act
+        var result = await homepageService.GetPageTitleAsync();
+
+        // Assert
+        result.Should().Be("Google");
+        //Log.Information($"Checking page title; expected: {"Google"}, actual: {result}. (Homepage Tests: Title Check)");
+    }
+
+    [Test]
     [AllureName("EPAM Homepage Title Check")]
     [AllureDescription("Checks if the title of the EPAM homepage is as expected.")]
     [Category("Integration")]
@@ -112,7 +130,7 @@ public class Tests
         {
             var screenshotsDirectory = Path.Combine("Screenshots", TestContext.CurrentContext.Test.Name);
             Directory.CreateDirectory(screenshotsDirectory);
-            var screenshotPath = Path.Combine(screenshotsDirectory, $"screenshot_{DateTime.UtcNow:yyyyMMdd_HHmmss}.png");
+            var screenshotPath = Path.Combine(screenshotsDirectory, $"screenshot_{DateTime.UtcNow:MMdd_HHmm}.png");
             Log.Information($"Captured screenshot at {screenshotPath}. (Homepage Tests)");
             
             await page.ScreenshotAsync(new()
@@ -141,7 +159,7 @@ public class Tests
     }
 
     [OneTimeTearDown]
-    public void TearDownLogging()
+    public static void TearDownLogging()
     {
         Log.CloseAndFlush();
 

@@ -31,7 +31,7 @@ namespace EpamWeb.Factory
                         {
                             Channel = "chrome",
                             Headless = true,
-                            Timeout = 10000
+                            Timeout = 30000
                         });
                         break;
                     case "firefox":
@@ -39,7 +39,7 @@ namespace EpamWeb.Factory
                         {
                             Channel = "firefox",
                             Headless = true,
-                            Timeout = 10000
+                            Timeout = 30000
                         });
                         break;
                     default:
