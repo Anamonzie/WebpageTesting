@@ -140,7 +140,7 @@ public class Tests
     }
 
     [OneTimeTearDown]
-    public void TearDownLogging()
+    public static void TearDownLogging()
     {
         Log.CloseAndFlush();
 
