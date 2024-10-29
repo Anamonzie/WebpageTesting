@@ -144,7 +144,7 @@ namespace EpamWebTests.PageTests
         }
 
         [OneTimeTearDown]
-        public void TearDownLogging()
+        public static void TearDownLogging()
         {
             Log.CloseAndFlush();
 
