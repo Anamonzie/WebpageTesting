@@ -19,7 +19,7 @@ public class Tests
     private IPageFactory pageFactory;
     private IServiceFactory serviceFactory;
 
-    private static readonly ThreadLocal<IBrowser> browser = new();
+    private IBrowser browserInstance;
     private IBrowserContext context;
     private IPage page;
 
@@ -41,9 +41,9 @@ public class Tests
     [SetUp]
     public async Task Setup()
     {
-        browser.Value = await browserFactory.GetBrowser();
+        browserInstance = await browserFactory.GetBrowser();
 
-        context = await browser.Value.NewContextAsync(new BrowserNewContextOptions
+        context = await browserInstance.NewContextAsync(new BrowserNewContextOptions
         {
             RecordVideoDir = "videos/",
             RecordVideoSize = new RecordVideoSize { Width = 1280, Height = 720 }
@@ -53,24 +53,6 @@ public class Tests
         page = await context.NewPageAsync();
         pageFactory = PageFactory.Instance(page);
         serviceFactory = ServiceFactory.Instance(pageFactory, page);
-    }
-
-    [Test]
-    public async Task Google_TitleCheck()
-    {
-
-        // Arrange
-        const string expectedTitle = "Google";
-
-        var homepageService = serviceFactory.CreateHomepageService();
-        await homepageService.NavigateToUrlAsync(Constants.GooglePageUrl);
-
-        // Act
-        var result = await homepageService.GetPageTitleAsync();
-
-        // Assert
-        result.Should().Be("Google");
-        //Log.Information($"Checking page title; expected: {"Google"}, actual: {result}. (Homepage Tests: Title Check)");
     }
 
     [Test]
@@ -154,6 +136,11 @@ public class Tests
 
             Log.Information($"Test video saved at {videoPath}. (Homepage Tests)");
             Log.Information("Page and context closed after test. (Homepage Tests)");
+        }
+
+        if (browserInstance != null)
+        {
+            await browserInstance.DisposeAsync();
         }
     }
 

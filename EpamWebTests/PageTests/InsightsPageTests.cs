@@ -18,7 +18,7 @@ namespace EpamWebTests.PageTests
         private IPageFactory pageFactory;
         private IServiceFactory serviceFactory;
 
-        private static readonly ThreadLocal<IBrowser> browser = new();
+        private IBrowser browserInstance;
         private IBrowserContext context;
         private IPage page;
 
@@ -40,9 +40,9 @@ namespace EpamWebTests.PageTests
         [SetUp]
         public async Task Setup()
         {
-            browser.Value = await browserFactory.GetBrowser();
+            browserInstance = await browserFactory.GetBrowser();
 
-            context = await browser.Value.NewContextAsync( new BrowserNewContextOptions
+            context = await browserInstance.NewContextAsync(new BrowserNewContextOptions
             {
                 RecordVideoDir = "videos/",
                 RecordVideoSize = new RecordVideoSize { Width = 1280, Height = 720 }
@@ -112,7 +112,6 @@ namespace EpamWebTests.PageTests
         {
             if (page != null && !page.IsClosed)
             {
-                // Capture a screenshot before closing
                 var screenshotsDirectory = Path.Combine("Screenshots", TestContext.CurrentContext.Test.Name);
                 Directory.CreateDirectory(screenshotsDirectory);                
                 var screenshotPath = Path.Combine(screenshotsDirectory, $"screenshot_{DateTime.UtcNow:MMdd_HHmm}.png");
@@ -140,6 +139,11 @@ namespace EpamWebTests.PageTests
 
                 Log.Information($"Test video saved at {videoPath}. (Insigts Page Tests)");
                 Log.Information("Page and context closed after test. (Insigts Page Tests)");
+            }
+
+            if (browserInstance != null)
+            {
+                await browserInstance.DisposeAsync();
             }
         }
 
