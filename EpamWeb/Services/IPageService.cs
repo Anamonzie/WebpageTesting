@@ -1,4 +1,4 @@
-﻿namespace EpamWeb.PageServices
+﻿namespace EpamWeb.Services
 {
     public interface IPageService
     {

@@ -7,5 +7,6 @@ namespace EpamWeb.Pages
         ILocator HamburgerButton { get; }
         ILocator HamburgerButtonNavigation { get; }
         ILocator HamburgerMenuItems { get; }
+        ILocator CookiesAcceptButton {  get; }
     }
 }

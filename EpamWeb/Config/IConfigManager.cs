@@ -1,11 +1,12 @@
 ﻿using Microsoft.Extensions.Configuration;
-using static EpamWeb.Config.ConfigurationManager;
+using static EpamWeb.Config.ConfigManager;
 
 namespace EpamWeb.Config
 {
-    public interface IConfigurationManager
+    public interface IConfigManager
     {
         IConfigurationRoot GetFullConfiguration();
         Configuration GetBrowserConfig();
+        IConfigurationSection GetSerilogConfig();
     }
 }

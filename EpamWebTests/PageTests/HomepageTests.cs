@@ -1,11 +1,11 @@
-using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
+using EpamWeb.Attachments;
 using EpamWeb.Factory;
+using EpamWeb.Services;
 using EpamWeb.Utils;
 using FluentAssertions;
 using Microsoft.Playwright;
-using Serilog;
 using SeverityLevel = Allure.Net.Commons.SeverityLevel;
 
 namespace EpamWebTests.PageTests;
@@ -13,46 +13,50 @@ namespace EpamWebTests.PageTests;
 [AllureNUnit]
 [TestFixture]
 [AllureSuite("EPAM Homepage Tests")]
-public class Tests
+public class Tests : BaseTest
 {
-    private static IBrowserFactory browserFactory;
+    private static readonly ThreadLocal<IBrowser> browser = new();
+
     private IPageFactory pageFactory;
     private IServiceFactory serviceFactory;
-
-    private IBrowser browserInstance;
     private IBrowserContext context;
     private IPage page;
 
-    [OneTimeSetUp]
-    public static void GlobalSetup()
-    {
-        Log.Logger = new LoggerConfiguration()
-        .WriteTo.File("./logs/test-log.txt",
-                          rollingInterval: RollingInterval.Day, // Creates a new log file each day
-                          outputTemplate: "{Timestamp:HH:mm} [{Level}] ({ThreadId}) {Message}{NewLine}{Exception}")
-        .Enrich.WithThreadId()
-        .CreateLogger();
-
-        Log.Information("Trying to instantiate a browser...");
-        browserFactory = BrowserFactory.Instance;
-        Log.Information("Browser instantiated.");
-    }
+    private MediaCaptureService mediaCaptureService;
 
     [SetUp]
     public async Task Setup()
     {
-        browserInstance = await browserFactory.GetBrowser();
+        logger.Info("setting up test context");
 
-        context = await browserInstance.NewContextAsync(new BrowserNewContextOptions
-        {
-            RecordVideoDir = "videos/",
-            RecordVideoSize = new RecordVideoSize { Width = 1280, Height = 720 }
-        });
-        Log.Information("Video recording initialized for context. (Homepage Tests)");
+        mediaCaptureService = new MediaCaptureService(logger);
+        browser.Value ??= await browserFactory.GetBrowser();
+
+        //context = await browser.Value.NewContextAsync();
+        context = await browser.Value.NewContextAsync(MediaCaptureService.StartVideoRecordingAsync());
 
         page = await context.NewPageAsync();
         pageFactory = PageFactory.Instance(page);
-        serviceFactory = ServiceFactory.Instance(pageFactory, page);
+        serviceFactory = ServiceFactory.Instance(pageFactory, page, logger);
+    }
+
+    [Test]
+    [AllureName("Google Title Check")]
+    [AllureDescription("Checks the title to see if network error persists with Google as well.")]
+    [AllureSeverity(SeverityLevel.minor)]
+    public async Task Google_NetworkConnectionCheck()
+    {
+        // Arrange
+        const string expectedTitle = TestData.ExpectedGoogleTitle;
+
+        await page.GotoAsync(Constants.GoogleUrl);
+
+        // Act
+        var result = await page.TitleAsync();
+
+        // Assert
+        result.Should().Be(expectedTitle);
+        logger.Info($"Checking page title; expected: {expectedTitle}, actual: {result}. (Google Tests: Title Check)");
     }
 
     [Test]
@@ -68,14 +72,15 @@ public class Tests
 
         var homepageService = serviceFactory.CreateHomepageService();
         await homepageService.NavigateToUrlAsync(Constants.EpamHomepageUrl);
-        Log.Information("Navigating to EPAM homepage. (Homepage Tests: Title Check)");
 
         // Act
+        await homepageService.ClickAcceptAllCookies();
+
         var result = await homepageService.GetPageTitleAsync();
 
         // Assert
         result.Should().Be(expectedTitle);
-        Log.Information($"Checking page title; expected: {expectedTitle}, actual: {result}. (Homepage Tests: Title Check)");
+        logger.Info($"Checking page title; expected: {expectedTitle}, actual: {result}. (Homepage Tests: Title Check)");
     }
 
     [Test]
@@ -91,17 +96,15 @@ public class Tests
 
         var homepageService = serviceFactory.CreateHomepageService();
         await homepageService.NavigateToUrlAsync(Constants.EpamHomepageUrl);
-        Log.Information("Navigating to EPAM homepage. (Homepage Tests: Hamburger Menu)");
 
         // Act
+        await homepageService.ClickAcceptAllCookies();
         await homepageService.ClickHamburgerMenuAsync();
-        Log.Information("Clicked on Hamburger Menu. (Homepage Tests: Hamburger Menu)");
-
         var actualItems = await homepageService.GetHamburgerMenuListItemsAsync();
 
         // Assert
         actualItems.Should().BeEquivalentTo(expectedItems);
-        Log.Information($"Menu items are: {string.Join(", ", expectedItems)}. (Homepage Tests: Hamburger Menu)");
+        logger.Info($"Menu items are: {string.Join(", ", expectedItems)}");
     }
 
     [TearDown]
@@ -109,54 +112,20 @@ public class Tests
     {
         if (page != null && !page.IsClosed)
         {
-            var screenshotsDirectory = Path.Combine("Screenshots", TestContext.CurrentContext.Test.Name);
-            Directory.CreateDirectory(screenshotsDirectory);
-            var screenshotPath = Path.Combine(screenshotsDirectory, $"screenshot_{DateTime.UtcNow:MMdd_HHmm}.png");
-            Log.Information($"Captured screenshot at {screenshotPath}. (Homepage Tests)");
-            
-            await page.ScreenshotAsync(new()
-            {
-                Path = screenshotPath,
-                FullPage = true,
-            });
+            var screenshotPath = await mediaCaptureService.CaptureScreenshot(page);
+            await AllureAttachmentManager.AddScreenshotAttachment(screenshotPath);
 
-            AllureApi.AddAttachment("Screenshot", "image/png", screenshotPath);
-
-            await page.CloseAsync();
+            await context.CloseAsync();
+            await AllureAttachmentManager.AddVideoAttachment(page);
         }
 
         if (context != null)
         {
             await context.CloseAsync();
-
-            var path = await page.Video.PathAsync();
-
-            var videoPath = Path.Combine("videos", path);
-            AllureApi.AddAttachment("Test Video", "video/webm", videoPath);
-
-            Log.Information($"Test video saved at {videoPath}. (Homepage Tests)");
-            Log.Information("Page and context closed after test. (Homepage Tests)");
         }
 
-        if (browserInstance != null)
-        {
-            await browserInstance.DisposeAsync();
-        }
-    }
-
-    [OneTimeTearDown]
-    public static void TearDownLogging()
-    {
-        Log.CloseAndFlush();
-
-        var logDirectory = new DirectoryInfo("./logs");
-        var latestLogFile = logDirectory.GetFiles("test-log*.txt")
-                                        .OrderByDescending(f => f.LastWriteTime)
-                                        .FirstOrDefault();
-
-        if (latestLogFile != null && latestLogFile.Exists)
-        {
-            AllureApi.AddAttachment("Test Logs", "text/plain", File.ReadAllText(latestLogFile.FullName));
-        }
+        // logger.Info("Page and context closed after test. (Homepage Tests)");
+        // logger.CloseAndFlush();
+        ////AllureAttachmentManager.AttachLogToAllure();
     }
 }

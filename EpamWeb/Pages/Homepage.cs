@@ -16,5 +16,8 @@ namespace EpamWeb.Pages
             page
             .Locator("li.hamburger-menu__item")
             .GetByRole(AriaRole.Link);
+
+        public ILocator CookiesAcceptButton => page.Locator("#onetrust-accept-btn-handler");
+
     }
 }

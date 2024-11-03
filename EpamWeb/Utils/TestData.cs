@@ -16,5 +16,7 @@ namespace EpamWeb.Utils
         public const string ExpectedInsightsPageTitle = "Discover our Latest Insights | EPAM";
         public const string ExpectedSearchPageTitle = "Search Our Website | EPAM";
         public const string SearchInput = "Cloud";
+
+        public const string ExpectedGoogleTitle = "Google";
     }
 }

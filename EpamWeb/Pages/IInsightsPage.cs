@@ -7,5 +7,6 @@ namespace EpamWeb.Pages
         ILocator FindButton { get; }
         ILocator SearchField { get; }
         ILocator SearchResult { get; }
+        ILocator CookiesAcceptButton { get; }
     }
 }

@@ -1,34 +1,17 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Serilog;
 
 namespace EpamWeb.Config
 {
-    public class ConfigurationManager : IConfigurationManager
+    public class ConfigManager : IConfigManager
     {
+        private static readonly Lazy<ConfigManager> instance = new(() => new ConfigManager());
         private readonly IConfigurationRoot configuration;
-        private static ConfigurationManager? instance;
-        private static readonly object lockObject = new();
 
-        private ConfigurationManager()
+        private ConfigManager()
         {
             configuration = LoadConfiguration();
         }
-
-        public static IConfigurationManager Instance()
-        {
-            if (instance == null)
-            {
-                lock (lockObject)
-                {
-                    if (instance == null)
-                    {
-                        instance = new ConfigurationManager();
-                    }
-                }
-            }
-
-            return instance;
-        }
+        public static ConfigManager Instance => instance.Value;
 
         private IConfigurationRoot LoadConfiguration()
         {
@@ -44,6 +27,13 @@ namespace EpamWeb.Config
         public IConfigurationRoot GetFullConfiguration()
         {
             return configuration;
+        }
+
+        public IConfigurationSection GetSerilogConfig()
+        {
+            var serilogSection = configuration.GetSection("Serilog");
+            Console.WriteLine($"Serilog Section Found: {serilogSection.Exists()}"); // Check if section exists
+            return serilogSection;
         }
 
         public Configuration GetBrowserConfig()

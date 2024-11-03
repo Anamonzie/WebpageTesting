@@ -12,5 +12,7 @@ namespace EpamWeb.Pages
         public ILocator SearchField => page.GetByPlaceholder("Cybersecurity");
 
         public ILocator SearchResult => page.GetByRole(AriaRole.Heading, new() { Name = "results for" });
+
+        public ILocator CookiesAcceptButton => page.Locator("#onetrust-accept-btn-handler");
     }
 }

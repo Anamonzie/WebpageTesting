@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EpamWeb.PageServices
+﻿namespace EpamWeb.Services
 {
     public interface IHomepageService : IPageService
     {
         Task ClickHamburgerMenuAsync();
         Task<List<string>> GetHamburgerMenuListItemsAsync();
+        Task ClickAcceptAllCookies();
     }
 }
