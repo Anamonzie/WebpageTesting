@@ -37,7 +37,7 @@ jobs:
       run: npx playwright install-deps
       
     - name: Install dependencies
-      run: dotnet restore EpamWebTests/EpamWebTests.sln
+      run: dotnet restore EpamWebProject/EpamWebTests/EpamWebTests.sln
 
     - name: Install Playwright Browsers
       run: npx playwright install
@@ -46,21 +46,14 @@ jobs:
       run: mkdir -p allure-results allure-history
       
     - name: Build the project
-      run: dotnet build EpamWebTests/EpamWebTests.sln --no-restore
-      
-    - name: Test HTTP Connectivity to EPAM
-      run: curl -Is https://www.epam.com/ || echo "HTTP request to EPAM failed"
-    
-    - name: Test HTTP Connectivity to Facebook
-      run: curl -Is https://www.facebook.com/ || echo "HTTP request to Facebook failed"
-
+      run: dotnet build EpamWebProject/EpamWebTests/EpamWebTests.sln --no-restore
 
     - name: Run Playwright Tests
       run: |
         if [ "${{ github.event.inputs.category }}" == "all" ] || [ -z "${{ github.event.inputs.category }}" ]; then
-          dotnet test EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory ${{ github.workspace }}/allure-results
+          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory ${{ github.workspace }}/allure-results
         else
-          dotnet test EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory ${{ github.workspace }}/allure-results --filter "Category=${{ github.event.inputs.category }}"
+          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory ${{ github.workspace }}/allure-results --filter "Category=${{ github.event.inputs.category }}"
         fi
       
     - name: Load test report history
