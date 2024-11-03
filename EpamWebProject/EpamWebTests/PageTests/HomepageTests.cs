@@ -117,13 +117,13 @@ public class Tests : BaseTest
 
             await context.CloseAsync();
             await AllureAttachmentManager.AddVideoAttachment(page);
+
         }
 
         if (context != null)
         {
             await context.CloseAsync();
         }
-
         // logger.Info("Page and context closed after test. (Homepage Tests)");
         // logger.CloseAndFlush();
         ////AllureAttachmentManager.AttachLogToAllure();
