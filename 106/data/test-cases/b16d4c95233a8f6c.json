@@ -1,0 +1,41 @@
+{
+  "uid" : "b16d4c95233a8f6c",
+  "name" : "EpamHomepage_HamburgerMenu",
+  "fullName" : "EpamWebTests.PageTests.Tests.EpamHomepage_HamburgerMenu",
+  "historyId" : "EpamWebTests.PageTests.Tests.EpamHomepage_HamburgerMenu",
+  "time" : {
+    "start" : 1730667102477,
+    "stop" : 1730667124863,
+    "duration" : 22386
+  },
+  "status" : "passed",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ ],
+  "afterStages" : [ ],
+  "labels" : [ {
+    "name" : "suite",
+    "value" : "EpamWebTests.PageTests.Tests"
+  }, {
+    "name" : "testClass",
+    "value" : "EpamWebTests.PageTests.Tests"
+  }, {
+    "name" : "package",
+    "value" : "EpamWebTests.PageTests.Tests"
+  }, {
+    "name" : "resultFormat",
+    "value" : "trx"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ ],
+    "tags" : [ ]
+  },
+  "source" : "b16d4c95233a8f6c.json",
+  "parameterValues" : [ ]
+}

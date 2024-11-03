@@ -1,0 +1,41 @@
+{
+  "uid" : "4b26ef387369949e",
+  "name" : "Google_NetworkConnectionCheck",
+  "fullName" : "EpamWebTests.PageTests.Tests.Google_NetworkConnectionCheck",
+  "historyId" : "EpamWebTests.PageTests.Tests.Google_NetworkConnectionCheck",
+  "time" : {
+    "start" : 1730667102478,
+    "stop" : 1730667117369,
+    "duration" : 14891
+  },
+  "status" : "passed",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ ],
+  "afterStages" : [ ],
+  "labels" : [ {
+    "name" : "suite",
+    "value" : "EpamWebTests.PageTests.Tests"
+  }, {
+    "name" : "testClass",
+    "value" : "EpamWebTests.PageTests.Tests"
+  }, {
+    "name" : "package",
+    "value" : "EpamWebTests.PageTests.Tests"
+  }, {
+    "name" : "resultFormat",
+    "value" : "trx"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ ],
+    "tags" : [ ]
+  },
+  "source" : "4b26ef387369949e.json",
+  "parameterValues" : [ ]
+}
