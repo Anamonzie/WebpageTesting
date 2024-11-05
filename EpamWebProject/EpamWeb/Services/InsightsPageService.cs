@@ -24,14 +24,38 @@ namespace EpamWeb.Services
             try
             {
                 logger.Info("Navigating to EPAM insights page");
+
                 await page.GotoAsync(url, new PageGotoOptions
                 {
                     Timeout = 60000,
+                    WaitUntil = WaitUntilState.NetworkIdle
                 });
             }
             catch (Exception ex)
             {
                 logger.Error($"Failed to navigate to {url}", ex);
+                throw;
+            }
+        }
+
+        public async Task NavigateToUrlAndAcceptCookiesAsync(string url)
+        {
+            try
+            {
+                logger.Info("Navigating to EPAM insights page");
+
+                await page.GotoAsync(url, new PageGotoOptions
+                {
+                    Timeout = 60000,
+                    WaitUntil = WaitUntilState.NetworkIdle
+                });
+
+                logger.Info("Clicking on 'Accept All' cookies button");
+                await insightsPage.CookiesAcceptButton.ClickAsync();
+            }
+            catch (Exception ex)
+            {
+                logger.Error($"Failed to navigate to {url} and accept cookies", ex);
                 throw;
             }
         }
@@ -47,19 +71,6 @@ namespace EpamWeb.Services
             {
                 logger.Error("Failed to get page title", ex);
                 throw;
-            }
-        }
-
-        public async Task ClickAcceptAllCookies()
-        {
-            try
-            {
-                logger.Info("Clicking on 'Accept All' cookies button");
-                await insightsPage.CookiesAcceptButton.ClickAsync();
-            }
-            catch (Exception ex)
-            {
-                logger.Error("Failed to click on 'Accept All' cookies button", ex);
             }
         }
 

@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace EpamWeb.Services
 {
-    public class MediaCaptureService
+    public class MediaCaptureService : IMediaCaptureService
     {
         private readonly ILoggerManager logger;
 
@@ -30,7 +30,7 @@ namespace EpamWeb.Services
             return screenshotPath;
         }
 
-        public static BrowserNewContextOptions StartVideoRecordingAsync()
+        public BrowserNewContextOptions StartVideoRecordingAsync()
         {
             //logger.Info("Initializing video recording for the browser context.");
 

@@ -22,7 +22,8 @@ public class Tests : BaseTest
     private IBrowserContext context;
     private IPage page;
 
-    private MediaCaptureService mediaCaptureService;
+    private IMediaCaptureService mediaCaptureService;
+    private IAllureAttachmentManager allureAttachmentManager;
 
     [SetUp]
     public async Task Setup()
@@ -30,10 +31,11 @@ public class Tests : BaseTest
         logger.Info("setting up test context");
 
         mediaCaptureService = new MediaCaptureService(logger);
-        browser.Value ??= await browserFactory.GetBrowser();
+        allureAttachmentManager = new AllureAttachmentManager();
 
+        browser.Value ??= await browserFactory.GetBrowser();
         //context = await browser.Value.NewContextAsync();
-        context = await browser.Value.NewContextAsync(MediaCaptureService.StartVideoRecordingAsync());
+        context = await browser.Value.NewContextAsync(mediaCaptureService.StartVideoRecordingAsync());
 
         page = await context.NewPageAsync();
         pageFactory = PageFactory.Instance(page);
@@ -71,11 +73,9 @@ public class Tests : BaseTest
         const string expectedTitle = TestData.ExpectedHomepageTitle;
 
         var homepageService = serviceFactory.CreateHomepageService();
-        await homepageService.NavigateToUrlAsync(Constants.EpamHomepageUrl);
+        await homepageService.NavigateToUrlAndAcceptCookiesAsync(Constants.EpamHomepageUrl);
 
         // Act
-        await homepageService.ClickAcceptAllCookies();
-
         var result = await homepageService.GetPageTitleAsync();
 
         // Assert
@@ -95,10 +95,9 @@ public class Tests : BaseTest
         var expectedItems = TestData.ExpectedHamburgerMenuItems;
 
         var homepageService = serviceFactory.CreateHomepageService();
-        await homepageService.NavigateToUrlAsync(Constants.EpamHomepageUrl);
+        await homepageService.NavigateToUrlAndAcceptCookiesAsync(Constants.EpamHomepageUrl);
 
         // Act
-        await homepageService.ClickAcceptAllCookies();
         await homepageService.ClickHamburgerMenuAsync();
         var actualItems = await homepageService.GetHamburgerMenuListItemsAsync();
 
@@ -113,17 +112,16 @@ public class Tests : BaseTest
         if (page != null && !page.IsClosed)
         {
             var screenshotPath = await mediaCaptureService.CaptureScreenshot(page);
-            await AllureAttachmentManager.AddScreenshotAttachment(screenshotPath);
+            await allureAttachmentManager.AddScreenshotAttachment(screenshotPath);
 
             await context.CloseAsync();
-            await AllureAttachmentManager.AddVideoAttachment(page);
-
+            await allureAttachmentManager.AddVideoAttachment(page);
         }
 
-        if (context != null)
-        {
-            await context.CloseAsync();
-        }
+        //if (context != null)
+        //{
+        //    await context.CloseAsync();
+        //}
         // logger.Info("Page and context closed after test. (Homepage Tests)");
         // logger.CloseAndFlush();
         ////AllureAttachmentManager.AttachLogToAllure();

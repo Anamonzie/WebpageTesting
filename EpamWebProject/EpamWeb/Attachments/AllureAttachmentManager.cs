@@ -3,16 +3,16 @@ using Microsoft.Playwright;
 
 namespace EpamWeb.Attachments
 {
-    public static class AllureAttachmentManager
+    public class AllureAttachmentManager : IAllureAttachmentManager
     {
         private static readonly object logLock = new();
 
-        public async static Task AddScreenshotAttachment(string screenshotPath)
+        public async Task AddScreenshotAttachment(string screenshotPath)
         {
             await Task.Run(() => AllureApi.AddAttachment("Screenshot", "image/png", screenshotPath));
         }
 
-        public async static Task AddVideoAttachment(IPage page)
+        public async Task AddVideoAttachment(IPage page)
         {
             if (page.Video != null)
             {
@@ -23,7 +23,7 @@ namespace EpamWeb.Attachments
             }
         }
 
-        public static void AttachLogToAllure()
+        public void AttachLogToAllure()
         {
             lock (logLock) // Ensure only one thread can access this block at a time
             {

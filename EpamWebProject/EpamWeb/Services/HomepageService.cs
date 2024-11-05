@@ -24,14 +24,38 @@ namespace EpamWeb.Services
             try
             {
                 logger.Info($"Navigating to {url}");
+
                 await page.GotoAsync(url, new PageGotoOptions
                 {
-                    Timeout = 60000
+                    Timeout = 60000,
+                    WaitUntil = WaitUntilState.NetworkIdle
                 });
             }
             catch (Exception ex)
             {
                 logger.Error($"Failed to navigate to {url}", ex);
+                throw;
+            }
+        }
+
+        public async Task NavigateToUrlAndAcceptCookiesAsync(string url)
+        {
+            try
+            {
+                logger.Info("Navigating to EPAM insights page");
+
+                await page.GotoAsync(url, new PageGotoOptions
+                {
+                    Timeout = 60000,
+                    WaitUntil = WaitUntilState.NetworkIdle
+                });
+
+                logger.Info("Clicking on 'Accept All' cookies button");
+                await homepage.CookiesAcceptButton.ClickAsync();
+            }
+            catch (Exception ex)
+            {
+                logger.Error($"Failed to navigate to {url} and accept cookies", ex);
                 throw;
             }
         }

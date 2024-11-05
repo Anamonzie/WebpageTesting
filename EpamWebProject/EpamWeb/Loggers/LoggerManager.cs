@@ -1,5 +1,6 @@
 ﻿using EpamWeb.Config;
 using Serilog;
+using Serilog.Context;
 
 
 namespace EpamWeb.Loggers
@@ -58,7 +59,6 @@ namespace EpamWeb.Loggers
 
             var configuredLogger = new LoggerConfiguration()
                 .MinimumLevel.Information()
-                //.Enrich.WithProperty("TestName", TestContext.CurrentContext.Test.Name)
                 .WriteTo.File((Path.Combine(logDirectory, "log-.txt")),
                     rollingInterval: RollingInterval.Day,
                     rollOnFileSizeLimit: true,

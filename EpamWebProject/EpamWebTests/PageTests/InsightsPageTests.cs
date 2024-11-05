@@ -22,7 +22,8 @@ namespace EpamWebTests.PageTests
         private IBrowserContext context;
         private IPage page;
 
-        private MediaCaptureService mediaCaptureService;
+        private IMediaCaptureService mediaCaptureService;
+        private IAllureAttachmentManager allureAttachmentManager;
 
         [SetUp]
         public async Task Setup()
@@ -30,10 +31,11 @@ namespace EpamWebTests.PageTests
             logger.Info("setting up test context");
 
             mediaCaptureService = new MediaCaptureService(logger);
-            browser.Value = await browserFactory.GetBrowser();
+            allureAttachmentManager = new AllureAttachmentManager();
 
+            browser.Value = await browserFactory.GetBrowser();
             //context = await browser.Value.NewContextAsync();
-            context = await browser.Value.NewContextAsync(MediaCaptureService.StartVideoRecordingAsync());
+            context = await browser.Value.NewContextAsync(mediaCaptureService.StartVideoRecordingAsync());
 
             page = await context.NewPageAsync();
             pageFactory = PageFactory.Instance(page);
@@ -51,10 +53,9 @@ namespace EpamWebTests.PageTests
             // Arrange
             var insightsPageService = serviceFactory.CreateInsightsPageService();
 
-            await insightsPageService.NavigateToUrlAsync(Constants.EpamInsightsPageUrl);
+            await insightsPageService.NavigateToUrlAndAcceptCookiesAsync(Constants.EpamInsightsPageUrl);
 
             // Act
-            await insightsPageService.ClickAcceptAllCookies();
             await insightsPageService.InputTextInSearchFieldAsync();
             await insightsPageService.ClickFindButtonAsync();
 
@@ -62,7 +63,7 @@ namespace EpamWebTests.PageTests
 
             // Assert
             result.Should().Contain(TestData.SearchInput);
-            logger.Info($"Checking page title; expected: {await insightsPageService.GetPageTitleAsync()}, actual: {result}. (Insights Page Tests: Search Check)");
+            logger.Info($"Checking page title; expected to contain: {TestData.SearchInput}, actual: {result}. (Insights Page Tests: Search Check)");
         }
 
         [Test]
@@ -75,13 +76,12 @@ namespace EpamWebTests.PageTests
         {
             // Arrange
             var insightsPageService = serviceFactory.CreateInsightsPageService();
-            await insightsPageService.NavigateToUrlAsync(Constants.EpamInsightsPageUrl);
+            await insightsPageService.NavigateToUrlAndAcceptCookiesAsync(Constants.EpamInsightsPageUrl);
             const string expectedTitle = TestData.ExpectedSearchPageTitle;
 
             // Act
-            await insightsPageService.ClickAcceptAllCookies();
-
             await insightsPageService.ClickFindButtonAsync();
+            await Task.Delay(TimeSpan.FromSeconds(2)); // 2-second delay - temporal check
             var result = await insightsPageService.GetPageTitleAsync();
 
             // Assert
@@ -95,10 +95,10 @@ namespace EpamWebTests.PageTests
             if (page != null && !page.IsClosed)
             {
                 var screenshotPath = await mediaCaptureService.CaptureScreenshot(page);
-                await AllureAttachmentManager.AddScreenshotAttachment(screenshotPath);
+                await allureAttachmentManager.AddScreenshotAttachment(screenshotPath);
 
                 await context.CloseAsync();
-                await AllureAttachmentManager.AddVideoAttachment(page);
+                await allureAttachmentManager.AddVideoAttachment(page);
             }
 
             //if (page != null && !page.IsClosed)

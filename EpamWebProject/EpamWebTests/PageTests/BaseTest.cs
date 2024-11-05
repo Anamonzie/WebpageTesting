@@ -1,5 +1,4 @@
-﻿using EpamWeb.Attachments;
-using EpamWeb.Factory;
+﻿using EpamWeb.Factory;
 using EpamWeb.Loggers;
 
 namespace EpamWebTests.PageTests
@@ -14,6 +13,13 @@ namespace EpamWebTests.PageTests
         {
             browserFactory = BrowserFactory.Instance;
             logger = LoggerManager.Instance;
+        }
+
+        [OneTimeTearDown]
+        public void GlobalTearDown()
+        {
+            //logger.CloseAndFlush();
+            //AllureAttachmentManager.AttachLogToAllure();
         }
     }
 }
