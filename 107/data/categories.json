@@ -1,0 +1,39 @@
+{
+  "uid" : "4b4757e66a1912dae1a509f688f20b0f",
+  "children" : [ {
+    "name" : "Product defects",
+    "children" : [ {
+      "name" : "Microsoft.Playwright.TargetClosedException : Target page, context or browser has been closed",
+      "children" : [ {
+        "name" : "EpamHomepage_HamburgerMenu",
+        "uid" : "943e881d4bdadc63",
+        "parentUid" : "2d283cd6e96e512aaf544af50047ddc6",
+        "status" : "failed",
+        "time" : {
+          "start" : 1730915803250,
+          "stop" : 1730915819483,
+          "duration" : 16233
+        },
+        "flaky" : false,
+        "newFailed" : true,
+        "parameters" : [ ]
+      }, {
+        "name" : "EpamHomepage_TitleCheck",
+        "uid" : "10d004d95c8f09a9",
+        "parentUid" : "2d283cd6e96e512aaf544af50047ddc6",
+        "status" : "failed",
+        "time" : {
+          "start" : 1730915803251,
+          "stop" : 1730915818687,
+          "duration" : 15436
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "2d283cd6e96e512aaf544af50047ddc6"
+    } ],
+    "uid" : "8fb3a91ba5aaf9de24cc8a92edc82b5d"
+  } ],
+  "name" : "categories"
+}
