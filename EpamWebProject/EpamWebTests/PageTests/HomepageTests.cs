@@ -8,6 +8,7 @@ using EpamWeb.Services;
 using EpamWeb.Utils;
 using FluentAssertions;
 using Microsoft.Playwright;
+using System.Collections.Concurrent;
 using SeverityLevel = Allure.Net.Commons.SeverityLevel;
 
 namespace EpamWebTests.PageTests;
@@ -18,13 +19,13 @@ namespace EpamWebTests.PageTests;
 public class Tests : BaseTest
 {
     private static readonly ThreadLocal<IBrowser> browser = new();
+    private static readonly ConcurrentDictionary<string, IPage> Pages = new();
 
     private ILoggerManager logger;
     private IPageFactory pageFactory;
     private IServiceFactory serviceFactory;
     private IBrowserContext context;
     private IPage page;
-
 
     private IMediaCaptureService mediaCaptureService;
     private IAllureAttachmentManager allureAttachmentManager;
@@ -41,7 +42,10 @@ public class Tests : BaseTest
 
         browser.Value ??= await browserFactory.GetBrowser();
         context = await browser.Value.NewContextAsync(mediaCaptureService.StartVideoRecordingAsync());
+        
         page = await context.NewPageAsync();
+        Pages[TestContext.CurrentContext.Test.Name] = page;
+
         pageFactory = PageFactory.Instance(page);
         serviceFactory = ServiceFactory.Instance(pageFactory, page, logger);
     }
@@ -54,11 +58,12 @@ public class Tests : BaseTest
     {
         // Arrange
         const string expectedTitle = TestData.ExpectedGoogleTitle;
+        var testPage = Pages[TestContext.CurrentContext.Test.Name];
 
-        await page.GotoAsync(Constants.GoogleUrl);
+        await testPage.GotoAsync(ConstantData.GoogleUrl);
 
         // Act
-        var result = await page.TitleAsync();
+        var result = await testPage.TitleAsync();
 
         // Assert
         result.Should().Be(expectedTitle);
@@ -75,9 +80,10 @@ public class Tests : BaseTest
     {
         // Arrange
         const string expectedTitle = TestData.ExpectedHomepageTitle;
+        var testPage = Pages[TestContext.CurrentContext.Test.Name];
 
-        var homepageService = serviceFactory.CreateHomepageService();
-        await homepageService.NavigateToUrlAndAcceptCookiesAsync(Constants.EpamHomepageUrl);
+        var homepageService = serviceFactory.CreateHomepageService(testPage);
+        await homepageService.NavigateToUrlAndAcceptCookiesAsync(ConstantData.EpamHomepageUrl);
 
         // Act
         var result = await homepageService.GetPageTitleAsync();
@@ -97,9 +103,10 @@ public class Tests : BaseTest
     {
         // Arrange
         var expectedItems = TestData.ExpectedHamburgerMenuItems;
+        var testPage = Pages[TestContext.CurrentContext.Test.Name];
 
-        var homepageService = serviceFactory.CreateHomepageService();
-        await homepageService.NavigateToUrlAndAcceptCookiesAsync(Constants.EpamHomepageUrl);
+        var homepageService = serviceFactory.CreateHomepageService(testPage);
+        await homepageService.NavigateToUrlAndAcceptCookiesAsync(ConstantData.EpamHomepageUrl);
 
         // Act
         await homepageService.ClickHamburgerMenuAsync();
@@ -113,18 +120,20 @@ public class Tests : BaseTest
     [TearDown]
     public async Task TearDown()
     {
-        if (page != null && !page.IsClosed)
+        var testName = TestContext.CurrentContext.Test.Name;
+
+        if (Pages.TryRemove(testName, out var testPage) && !testPage.IsClosed)
         {
             var screenshotPath = await mediaCaptureService.CaptureScreenshot(page);
             await allureAttachmentManager.AddScreenshotAttachment(screenshotPath);
 
-            await context.CloseAsync();
+            await testPage.CloseAsync();
+            await testPage.Context.CloseAsync();
             await allureAttachmentManager.AddVideoAttachment(page);
         }
 
         logger.CloseAndFlush();
 
-        var testName = TestContext.CurrentContext.Test.Name;
         var logDirectory = Path.Combine(AppContext.BaseDirectory, "logs", $"{testName}");
         var logFilePath = Path.Combine(logDirectory, $"{testName}-log.txt");
 

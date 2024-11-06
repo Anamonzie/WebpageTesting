@@ -21,41 +21,85 @@ namespace EpamWeb.Services
 
         public async Task NavigateToUrlAsync(string url)
         {
-            try
-            {
-                logger.Info($"Navigating to {url}");
+            const int maxRetries = 3;
+            const int retryDelayMs = 2000;
+            int attempt = 0;
 
-                await page.GotoAsync(url, new PageGotoOptions
-                {
-                    Timeout = 60000,
-                });
-            }
-            catch (Exception ex)
+            while (true)
             {
-                logger.Error($"Failed to navigate to {url}", ex);
-                throw;
+                try
+                {
+                    logger.Info($"Navigating to {url} (Attempt {attempt + 1}/{maxRetries})");
+
+                    await page.GotoAsync(url, new PageGotoOptions
+                    {
+                        Timeout = 60000,
+                    });
+
+                    logger.Info($"Successfully navigated to {url}.");
+                    return; // Exit immediately on successful navigation
+                }
+                catch (PlaywrightException ex) when (ex.Message.Contains("net::ERR_ABORTED"))
+                {
+                    attempt++;
+                    logger.Warn($"Navigation to {url} failed with 'net::ERR_ABORTED'. Retrying {attempt}/{maxRetries}...");
+
+                    if (attempt >= maxRetries)
+                    {
+                        logger.Error($"Failed to navigate to {url} after {maxRetries} attempts due to net::ERR_ABORTED.", ex);
+                        throw;
+                    }
+
+                    await Task.Delay(retryDelayMs); // Wait before retrying
+                }
+                catch (Exception ex)
+                {
+                    logger.Error($"An unexpected error occurred while navigating to {url}.", ex);
+                    throw;
+                }
             }
         }
 
         public async Task NavigateToUrlAndAcceptCookiesAsync(string url)
         {
-            try
-            {
-                logger.Info("Navigating to EPAM insights page");
+            const int maxRetries = 3;
+            const int retryDelayMs = 2000;
+            int attempt = 0;
 
-                await page.GotoAsync(url, new PageGotoOptions
+            while (true)
+            {
+                try
                 {
-                    Timeout = 60000,
-                    WaitUntil = WaitUntilState.NetworkIdle
-                });
+                    logger.Info("Navigating to EPAM insights page");
 
-                logger.Info("Clicking on 'Accept All' cookies button");
-                await homepage.CookiesAcceptButton.ClickAsync();
-            }
-            catch (Exception ex)
-            {
-                logger.Error($"Failed to navigate to {url} and accept cookies", ex);
-                throw;
+                    await page.GotoAsync(url, new PageGotoOptions
+                    {
+                        WaitUntil = WaitUntilState.NetworkIdle
+                    });
+
+                    logger.Info("Clicking on 'Accept All' cookies button");
+                    await homepage.CookiesAcceptButton.ClickAsync();
+
+                    return;
+                }
+                catch (PlaywrightException ex) when (ex.Message.Contains("net::ERR_ABORTED"))
+                {
+                    attempt++;
+                    logger.Warn($"Navigation to {url} failed with 'net::ERR_ABORTED'. Retrying {attempt}/{maxRetries}...");
+
+                    if (attempt >= maxRetries)
+                    {
+                        logger.Error($"Failed to navigate to {url} after {maxRetries} attempts due to net::ERR_ABORTED.", ex);
+                        throw;
+                    }
+
+                    await Task.Delay(retryDelayMs); // Wait before retrying
+                }
+                catch (Exception ex)
+                {
+                    logger.Error($"An unexpected error occurred while navigating to {url}.", ex);
+                    throw;
+                }
             }
         }
 

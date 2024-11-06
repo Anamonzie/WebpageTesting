@@ -9,6 +9,7 @@ using EpamWeb.Services;
 using EpamWeb.Utils;
 using FluentAssertions;
 using Microsoft.Playwright;
+using System.Collections.Concurrent;
 
 namespace EpamWebTests.PageTests
 {
@@ -18,6 +19,8 @@ namespace EpamWebTests.PageTests
     public class InsightsPageTests : BaseTest
     {
         private static readonly ThreadLocal<IBrowser> browser = new();
+        private static readonly ConcurrentDictionary<string, IPage> Pages = new();
+
 
         private ILoggerManager logger;
         private IPageFactory pageFactory;
@@ -40,7 +43,10 @@ namespace EpamWebTests.PageTests
 
             browser.Value ??= await browserFactory.GetBrowser();
             context = await browser.Value.NewContextAsync(mediaCaptureService.StartVideoRecordingAsync());
+            
             page = await context.NewPageAsync();
+            Pages[TestContext.CurrentContext.Test.Name] = page;
+            
             pageFactory = PageFactory.Instance(page);
             serviceFactory = ServiceFactory.Instance(pageFactory, page, logger);
         }
@@ -54,9 +60,10 @@ namespace EpamWebTests.PageTests
         public async Task EpamInsightsPage_SearchFunctionalityCheck()
         {
             // Arrange
-            var insightsPageService = serviceFactory.CreateInsightsPageService();
+            var testPage = Pages[TestContext.CurrentContext.Test.Name];
+            var insightsPageService = serviceFactory.CreateInsightsPageService(testPage);
 
-            await insightsPageService.NavigateToUrlAndAcceptCookiesAsync(Constants.EpamInsightsPageUrl);
+            await insightsPageService.NavigateToUrlAndAcceptCookiesAsync(ConstantData.EpamInsightsPageUrl);
 
             // Act
             await insightsPageService.InputTextInSearchFieldAsync();
@@ -78,8 +85,10 @@ namespace EpamWebTests.PageTests
         public async Task EpamInsightsPage_FindButtonRedirectCheck()
         {
             // Arrange
-            var insightsPageService = serviceFactory.CreateInsightsPageService();
-            await insightsPageService.NavigateToUrlAndAcceptCookiesAsync(Constants.EpamInsightsPageUrl);
+            var testPage = Pages[TestContext.CurrentContext.Test.Name];
+            var insightsPageService = serviceFactory.CreateInsightsPageService(testPage);
+
+            await insightsPageService.NavigateToUrlAndAcceptCookiesAsync(ConstantData.EpamInsightsPageUrl);
             const string expectedTitle = TestData.ExpectedSearchPageTitle;
 
             // Act
@@ -95,18 +104,20 @@ namespace EpamWebTests.PageTests
         [TearDown]
         public async Task TearDown()
         {
-            if (page != null && !page.IsClosed)
+            var testName = TestContext.CurrentContext.Test.Name;
+
+            if (Pages.TryRemove(testName, out var testPage) && !testPage.IsClosed)
             {
                 var screenshotPath = await mediaCaptureService.CaptureScreenshot(page);
                 await allureAttachmentManager.AddScreenshotAttachment(screenshotPath);
 
-                await context.CloseAsync();
+                await testPage.CloseAsync();
+                await testPage.Context.CloseAsync();
                 await allureAttachmentManager.AddVideoAttachment(page);
             }
 
             logger.CloseAndFlush();
 
-            var testName = TestContext.CurrentContext.Test.Name;
             var logDirectory = Path.Combine(AppContext.BaseDirectory, "logs", $"{testName}");
             var logFilePath = Path.Combine(logDirectory, $"{testName}-log.txt");
 

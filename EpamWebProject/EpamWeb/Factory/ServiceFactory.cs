@@ -9,13 +9,11 @@ namespace EpamWeb.Factory
     {
         private static readonly ThreadLocal<ServiceFactory?> threadLocalInstance = new();
         private readonly IPageFactory pageFactory;
-        private readonly IPage page;
         private readonly ILoggerManager logger;
 
         private ServiceFactory(IPageFactory pageFactory, IPage page, ILoggerManager logger)
         {
             this.pageFactory = pageFactory;
-            this.page = page;
             this.logger = logger;
         }
 
@@ -29,13 +27,13 @@ namespace EpamWeb.Factory
             return threadLocalInstance.Value;
         }
 
-        public IHomepageService CreateHomepageService()
+        public IHomepageService CreateHomepageService(IPage page)
         {
             IHomepage homepage = pageFactory.CreateHomepage();
             return new HomepageService(homepage, page, logger);
         }
 
-        public IInsightsPageService CreateInsightsPageService()
+        public IInsightsPageService CreateInsightsPageService(IPage page)
         {
             IInsightsPage insightsPage = pageFactory.CreateInsightsPage();
             return new InsightsPageService(insightsPage, page, logger);
