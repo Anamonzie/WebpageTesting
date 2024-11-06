@@ -28,7 +28,6 @@ namespace EpamWeb.Services
                 await page.GotoAsync(url, new PageGotoOptions
                 {
                     Timeout = 60000,
-                    WaitUntil = WaitUntilState.NetworkIdle
                 });
             }
             catch (Exception ex)

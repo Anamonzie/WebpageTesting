@@ -32,19 +32,13 @@ namespace EpamWeb.Services
 
         public BrowserNewContextOptions StartVideoRecordingAsync()
         {
-            //logger.Info("Initializing video recording for the browser context.");
-
-            //var context = await browser.NewContextAsync(new BrowserNewContextOptions
-            //{
-            //    RecordVideoDir = "videos/",
-            //    RecordVideoSize = new RecordVideoSize { Width = 1280, Height = 720 }
-            //});
+            var testName = TestContext.CurrentContext.Test.Name;
 
             var browserContextOptions = new BrowserNewContextOptions
             {
                 BypassCSP = true,
                 IgnoreHTTPSErrors = true,
-                RecordVideoDir = "videos/",
+                RecordVideoDir = $"videos/{testName}",
                 RecordVideoSize = new RecordVideoSize { Width = 1280, Height = 720 }
             };
 

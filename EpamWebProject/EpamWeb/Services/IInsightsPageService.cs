@@ -5,6 +5,5 @@
         Task ClickFindButtonAsync();
         Task InputTextInSearchFieldAsync();
         Task<string> GetSearchResultTextAsync();
-        Task ClickAcceptAllCookies();
     }
 }

@@ -2,7 +2,9 @@
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
 using EpamWeb.Attachments;
+using EpamWeb.Config;
 using EpamWeb.Factory;
+using EpamWeb.Loggers;
 using EpamWeb.Services;
 using EpamWeb.Utils;
 using FluentAssertions;
@@ -17,6 +19,7 @@ namespace EpamWebTests.PageTests
     {
         private static readonly ThreadLocal<IBrowser> browser = new();
 
+        private ILoggerManager logger;
         private IPageFactory pageFactory;
         private IServiceFactory serviceFactory;
         private IBrowserContext context;
@@ -28,15 +31,15 @@ namespace EpamWebTests.PageTests
         [SetUp]
         public async Task Setup()
         {
-            logger.Info("setting up test context");
+            logger = new LoggerManager(ConfigManager.Instance);
+            logger.Info("STARTING NEW RUN");
+            logger.Info("Setting up test context");
 
             mediaCaptureService = new MediaCaptureService(logger);
             allureAttachmentManager = new AllureAttachmentManager();
 
-            browser.Value = await browserFactory.GetBrowser();
-            //context = await browser.Value.NewContextAsync();
+            browser.Value ??= await browserFactory.GetBrowser();
             context = await browser.Value.NewContextAsync(mediaCaptureService.StartVideoRecordingAsync());
-
             page = await context.NewPageAsync();
             pageFactory = PageFactory.Instance(page);
             serviceFactory = ServiceFactory.Instance(pageFactory, page, logger);
@@ -101,24 +104,16 @@ namespace EpamWebTests.PageTests
                 await allureAttachmentManager.AddVideoAttachment(page);
             }
 
-            //if (page != null && !page.IsClosed)
-            //{
-            //    await AllureAttachmentManager.AddVideoAttachment(page);
+            logger.CloseAndFlush();
 
-            //    //var screenshotPath = await mediaCaptureService.CaptureScreenshot(page);
-            //    ////await AllureAttachmentManager.AddScreenshotAttachment(screenshotPath);
+            var testName = TestContext.CurrentContext.Test.Name;
+            var logDirectory = Path.Combine(AppContext.BaseDirectory, "logs", $"{testName}");
+            var logFilePath = Path.Combine(logDirectory, $"{testName}-log.txt");
 
-            //    await page.CloseAsync();
-            //}      
-
-            //if (context != null)
-            //{
-            //    await context.CloseAsync();
-            //}
-
-            // logger.Info("Page and context closed after test. (Insights Page Tests)");
-            //logger.CloseAndFlush();
-            //// AllureAttachmentManager.AttachLogToAllure();
+            if (File.Exists(logFilePath))
+            {
+                allureAttachmentManager.AttachLogToAllure(logFilePath);
+            }
         }
     }
 }

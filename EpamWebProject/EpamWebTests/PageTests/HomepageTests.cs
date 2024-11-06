@@ -1,7 +1,9 @@
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
 using EpamWeb.Attachments;
+using EpamWeb.Config;
 using EpamWeb.Factory;
+using EpamWeb.Loggers;
 using EpamWeb.Services;
 using EpamWeb.Utils;
 using FluentAssertions;
@@ -17,10 +19,12 @@ public class Tests : BaseTest
 {
     private static readonly ThreadLocal<IBrowser> browser = new();
 
+    private ILoggerManager logger;
     private IPageFactory pageFactory;
     private IServiceFactory serviceFactory;
     private IBrowserContext context;
     private IPage page;
+
 
     private IMediaCaptureService mediaCaptureService;
     private IAllureAttachmentManager allureAttachmentManager;
@@ -28,15 +32,15 @@ public class Tests : BaseTest
     [SetUp]
     public async Task Setup()
     {
-        logger.Info("setting up test context");
+        logger = new LoggerManager(ConfigManager.Instance);
+        logger.Info("STARTING NEW RUN");
+        logger.Info("Setting up test context");
 
         mediaCaptureService = new MediaCaptureService(logger);
         allureAttachmentManager = new AllureAttachmentManager();
 
         browser.Value ??= await browserFactory.GetBrowser();
-        //context = await browser.Value.NewContextAsync();
         context = await browser.Value.NewContextAsync(mediaCaptureService.StartVideoRecordingAsync());
-
         page = await context.NewPageAsync();
         pageFactory = PageFactory.Instance(page);
         serviceFactory = ServiceFactory.Instance(pageFactory, page, logger);
@@ -118,12 +122,15 @@ public class Tests : BaseTest
             await allureAttachmentManager.AddVideoAttachment(page);
         }
 
-        //if (context != null)
-        //{
-        //    await context.CloseAsync();
-        //}
-        // logger.Info("Page and context closed after test. (Homepage Tests)");
-        // logger.CloseAndFlush();
-        ////AllureAttachmentManager.AttachLogToAllure();
+        logger.CloseAndFlush();
+
+        var testName = TestContext.CurrentContext.Test.Name;
+        var logDirectory = Path.Combine(AppContext.BaseDirectory, "logs", $"{testName}");
+        var logFilePath = Path.Combine(logDirectory, $"{testName}-log.txt");
+
+        if (File.Exists(logFilePath))
+        {
+            allureAttachmentManager.AttachLogToAllure(logFilePath);
+        }
     }
 }

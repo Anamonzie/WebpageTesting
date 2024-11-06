@@ -6,6 +6,6 @@ namespace EpamWeb.Attachments
     {
         Task AddScreenshotAttachment(string screenshotPath);
         Task AddVideoAttachment(IPage page);
-        void AttachLogToAllure();
+        void AttachLogToAllure(string logFilePath);
     }
 }
