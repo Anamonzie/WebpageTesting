@@ -14,7 +14,7 @@ namespace EpamWebTests.PageTests
         }
 
         [OneTimeTearDown]
-        public void GlobalTearDown()
+        public static void GlobalTearDown()
         {
             //logger.CloseAndFlush();
             //AllureAttachmentManager.AttachLogToAllure();
