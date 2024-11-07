@@ -1,0 +1,164 @@
+{
+  "uid" : "cc4d75399adf4633",
+  "name" : "EpamHomepage_HamburgerMenu",
+  "fullName" : "EpamWebTests.PageTests.Tests.EpamHomepage_HamburgerMenu",
+  "historyId" : "EpamWebTests.PageTests.Tests.EpamHomepage_HamburgerMenu",
+  "time" : {
+    "start" : 1731009557289,
+    "stop" : 1731009582085,
+    "duration" : 24796
+  },
+  "status" : "passed",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ ],
+  "testStage" : {
+    "steps" : [ {
+      "name" : "Serilog Section Found: True",
+      "time" : { },
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : false
+    } ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 1,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : true
+  },
+  "afterStages" : [ ],
+  "labels" : [ {
+    "name" : "suite",
+    "value" : "EpamWebTests.PageTests.Tests"
+  }, {
+    "name" : "testClass",
+    "value" : "EpamWebTests.PageTests.Tests"
+  }, {
+    "name" : "package",
+    "value" : "EpamWebTests.PageTests.Tests"
+  }, {
+    "name" : "resultFormat",
+    "value" : "trx"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ ],
+    "history" : {
+      "statistic" : {
+        "failed" : 3,
+        "broken" : 0,
+        "skipped" : 0,
+        "passed" : 8,
+        "unknown" : 0,
+        "total" : 11
+      },
+      "items" : [ {
+        "uid" : "283d4d1b1a6999cc",
+        "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/115//#testresult/283d4d1b1a6999cc",
+        "status" : "passed",
+        "time" : {
+          "start" : 1731008900949,
+          "stop" : 1731008919252,
+          "duration" : 18303
+        }
+      }, {
+        "uid" : "11577573cb064346",
+        "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/114//#testresult/11577573cb064346",
+        "status" : "failed",
+        "statusDetails" : "Microsoft.Playwright.TargetClosedException : Target page, context or browser has been closed\nCall log:\n  - waiting for Locator(\"button.hamburger-menu__button[aria-expanded='false']\")",
+        "time" : {
+          "start" : 1731008830198,
+          "stop" : 1731008849279,
+          "duration" : 19081
+        }
+      }, {
+        "uid" : "cf4cdef99974ad79",
+        "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/113//#testresult/cf4cdef99974ad79",
+        "status" : "failed",
+        "statusDetails" : "Microsoft.Playwright.TargetClosedException : Target page, context or browser has been closed",
+        "time" : {
+          "start" : 1731008290340,
+          "stop" : 1731008307098,
+          "duration" : 16758
+        }
+      }, {
+        "uid" : "78f6db27a8cbdee2",
+        "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/112//#testresult/78f6db27a8cbdee2",
+        "status" : "passed",
+        "time" : {
+          "start" : 1731007618885,
+          "stop" : 1731007637188,
+          "duration" : 18303
+        }
+      }, {
+        "uid" : "447a32c2f1091315",
+        "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/111//#testresult/447a32c2f1091315",
+        "status" : "passed",
+        "time" : {
+          "start" : 1731007431666,
+          "stop" : 1731007450461,
+          "duration" : 18795
+        }
+      }, {
+        "uid" : "b2abc9a6048df704",
+        "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/110//#testresult/b2abc9a6048df704",
+        "status" : "passed",
+        "time" : {
+          "start" : 1731007267240,
+          "stop" : 1731007284408,
+          "duration" : 17168
+        }
+      }, {
+        "uid" : "599dcb4180207617",
+        "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/109//#testresult/599dcb4180207617",
+        "status" : "passed",
+        "time" : {
+          "start" : 1730991655129,
+          "stop" : 1730991678659,
+          "duration" : 23530
+        }
+      }, {
+        "uid" : "8ecf116e460663c",
+        "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/108//#testresult/8ecf116e460663c",
+        "status" : "passed",
+        "time" : {
+          "start" : 1730989745484,
+          "stop" : 1730989762873,
+          "duration" : 17389
+        }
+      }, {
+        "uid" : "943e881d4bdadc63",
+        "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/107//#testresult/943e881d4bdadc63",
+        "status" : "failed",
+        "statusDetails" : "Microsoft.Playwright.TargetClosedException : Target page, context or browser has been closed",
+        "time" : {
+          "start" : 1730915803250,
+          "stop" : 1730915819483,
+          "duration" : 16233
+        }
+      }, {
+        "uid" : "b16d4c95233a8f6c",
+        "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/106//#testresult/b16d4c95233a8f6c",
+        "status" : "passed",
+        "time" : {
+          "start" : 1730667102477,
+          "stop" : 1730667124863,
+          "duration" : 22386
+        }
+      } ]
+    },
+    "tags" : [ ]
+  },
+  "source" : "cc4d75399adf4633.json",
+  "parameterValues" : [ ]
+}
