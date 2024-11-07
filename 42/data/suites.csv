@@ -1,5 +1,0 @@
-"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Wed Oct 23 17:09:55 GMT 2024","Wed Oct 23 17:10:02 GMT 2024","7319","","EpamWebTests.PageTests.InsightsPageTests","","EpamWebTests.PageTests.InsightsPageTests","","EpamInsightsPage_SearchFunctionalityCheck",""
-"passed","Wed Oct 23 17:09:55 GMT 2024","Wed Oct 23 17:10:01 GMT 2024","6169","","EpamWebTests.PageTests.Tests","","EpamWebTests.PageTests.Tests","","EpamHomepage_HamburgerMenu",""
-"passed","Wed Oct 23 17:09:55 GMT 2024","Wed Oct 23 17:10:00 GMT 2024","5366","","EpamWebTests.PageTests.Tests","","EpamWebTests.PageTests.Tests","","EpamHomepage_TitleCheck",""
-"passed","Wed Oct 23 17:09:55 GMT 2024","Wed Oct 23 17:10:01 GMT 2024","6239","","EpamWebTests.PageTests.InsightsPageTests","","EpamWebTests.PageTests.InsightsPageTests","","EpamInsightsPage_FindButtonRedirectCheck",""
