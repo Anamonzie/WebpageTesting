@@ -1,0 +1,82 @@
+{
+  "uid" : "83edc06c07f9ae9e47eb6dd1b683e4e2",
+  "children" : [ {
+    "name" : "EpamWebTests.PageTests",
+    "children" : [ {
+      "name" : "Tests",
+      "children" : [ {
+        "name" : "Google_NetworkConnectionCheck",
+        "uid" : "1f441ab44e666e7",
+        "parentUid" : "e4d9218d49a935086f1b5e77626f579b",
+        "status" : "passed",
+        "time" : {
+          "start" : 1731007431664,
+          "stop" : 1731007438991,
+          "duration" : 7327
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "EpamHomepage_TitleCheck",
+        "uid" : "7d28b4bff721a9d7",
+        "parentUid" : "e4d9218d49a935086f1b5e77626f579b",
+        "status" : "failed",
+        "time" : {
+          "start" : 1731007431666,
+          "stop" : 1731007449816,
+          "duration" : 18150
+        },
+        "flaky" : true,
+        "newFailed" : true,
+        "parameters" : [ ]
+      }, {
+        "name" : "EpamHomepage_HamburgerMenu",
+        "uid" : "447a32c2f1091315",
+        "parentUid" : "e4d9218d49a935086f1b5e77626f579b",
+        "status" : "passed",
+        "time" : {
+          "start" : 1731007431666,
+          "stop" : 1731007450461,
+          "duration" : 18795
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "e4d9218d49a935086f1b5e77626f579b"
+    }, {
+      "name" : "InsightsPageTests",
+      "children" : [ {
+        "name" : "EpamInsightsPage_SearchFunctionalityCheck",
+        "uid" : "6df9981b7ab57395",
+        "parentUid" : "51864abcad0585edbe091469b391bccb",
+        "status" : "failed",
+        "time" : {
+          "start" : 1731007431666,
+          "stop" : 1731007450434,
+          "duration" : 18768
+        },
+        "flaky" : true,
+        "newFailed" : true,
+        "parameters" : [ ]
+      }, {
+        "name" : "EpamInsightsPage_FindButtonRedirectCheck",
+        "uid" : "95570d1e756c7fae",
+        "parentUid" : "51864abcad0585edbe091469b391bccb",
+        "status" : "passed",
+        "time" : {
+          "start" : 1731007431666,
+          "stop" : 1731007446984,
+          "duration" : 15318
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "51864abcad0585edbe091469b391bccb"
+    } ],
+    "uid" : "EpamWebTests.PageTests"
+  } ],
+  "name" : "packages"
+}

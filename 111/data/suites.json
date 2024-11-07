@@ -1,0 +1,78 @@
+{
+  "uid" : "98d3104e051c652961429bf95fa0b5d6",
+  "children" : [ {
+    "name" : "EpamWebTests.PageTests.Tests",
+    "children" : [ {
+      "name" : "Google_NetworkConnectionCheck",
+      "uid" : "1f441ab44e666e7",
+      "parentUid" : "a3953765a911fd4f015c6d0e4ddb5236",
+      "status" : "passed",
+      "time" : {
+        "start" : 1731007431664,
+        "stop" : 1731007438991,
+        "duration" : 7327
+      },
+      "flaky" : false,
+      "newFailed" : false,
+      "parameters" : [ ]
+    }, {
+      "name" : "EpamHomepage_TitleCheck",
+      "uid" : "7d28b4bff721a9d7",
+      "parentUid" : "a3953765a911fd4f015c6d0e4ddb5236",
+      "status" : "failed",
+      "time" : {
+        "start" : 1731007431666,
+        "stop" : 1731007449816,
+        "duration" : 18150
+      },
+      "flaky" : true,
+      "newFailed" : true,
+      "parameters" : [ ]
+    }, {
+      "name" : "EpamHomepage_HamburgerMenu",
+      "uid" : "447a32c2f1091315",
+      "parentUid" : "a3953765a911fd4f015c6d0e4ddb5236",
+      "status" : "passed",
+      "time" : {
+        "start" : 1731007431666,
+        "stop" : 1731007450461,
+        "duration" : 18795
+      },
+      "flaky" : false,
+      "newFailed" : false,
+      "parameters" : [ ]
+    } ],
+    "uid" : "a3953765a911fd4f015c6d0e4ddb5236"
+  }, {
+    "name" : "EpamWebTests.PageTests.InsightsPageTests",
+    "children" : [ {
+      "name" : "EpamInsightsPage_SearchFunctionalityCheck",
+      "uid" : "6df9981b7ab57395",
+      "parentUid" : "c34accbb05d22f0b371aa99400ebb58a",
+      "status" : "failed",
+      "time" : {
+        "start" : 1731007431666,
+        "stop" : 1731007450434,
+        "duration" : 18768
+      },
+      "flaky" : true,
+      "newFailed" : true,
+      "parameters" : [ ]
+    }, {
+      "name" : "EpamInsightsPage_FindButtonRedirectCheck",
+      "uid" : "95570d1e756c7fae",
+      "parentUid" : "c34accbb05d22f0b371aa99400ebb58a",
+      "status" : "passed",
+      "time" : {
+        "start" : 1731007431666,
+        "stop" : 1731007446984,
+        "duration" : 15318
+      },
+      "flaky" : false,
+      "newFailed" : false,
+      "parameters" : [ ]
+    } ],
+    "uid" : "c34accbb05d22f0b371aa99400ebb58a"
+  } ],
+  "name" : "suites"
+}
