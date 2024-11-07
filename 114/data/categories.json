@@ -1,0 +1,43 @@
+{
+  "uid" : "4b4757e66a1912dae1a509f688f20b0f",
+  "children" : [ {
+    "name" : "Product defects",
+    "children" : [ {
+      "name" : "Microsoft.Playwright.TargetClosedException : Target page, context or browser has been closed\nCall log:\n  - waiting for Locator(\"button.hamburger-menu__button[aria-expanded='false']\")",
+      "children" : [ {
+        "name" : "EpamHomepage_HamburgerMenu",
+        "uid" : "11577573cb064346",
+        "parentUid" : "13b178b938aae9b829437c4451fc8d3b",
+        "status" : "failed",
+        "time" : {
+          "start" : 1731008830198,
+          "stop" : 1731008849279,
+          "duration" : 19081
+        },
+        "flaky" : true,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "13b178b938aae9b829437c4451fc8d3b"
+    }, {
+      "name" : "Expected result to be \"Search Our Website | EPAM\" with a length of 25, but \"Discover our Latest Insights | EPAM\" has a length of 35, differs near \"Dis\" (index 0).",
+      "children" : [ {
+        "name" : "EpamInsightsPage_FindButtonRedirectCheck",
+        "uid" : "482032030c769dc8",
+        "parentUid" : "bbfe2b3bd77cc30d75ca21a844306c05",
+        "status" : "failed",
+        "time" : {
+          "start" : 1731008830198,
+          "stop" : 1731008852849,
+          "duration" : 22651
+        },
+        "flaky" : true,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "bbfe2b3bd77cc30d75ca21a844306c05"
+    } ],
+    "uid" : "8fb3a91ba5aaf9de24cc8a92edc82b5d"
+  } ],
+  "name" : "categories"
+}
