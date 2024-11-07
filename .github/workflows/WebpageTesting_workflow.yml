@@ -29,14 +29,6 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
-
-    - name: Cache .nuget packages
-      uses: actions/cache@v3
-      with:
-        path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
-        restore-keys: |
-          ${{ runner.os }}-nuget-
         
     - name: Install Playwright
       run: npm install @playwright/test
@@ -80,6 +72,11 @@ jobs:
         allure_results: ./allure-results  # Path where Allure results are stored
         gh_pages: gh-pages
         allure_history: allure-history
+
+    - name: Copy Allure History
+      run: |
+        cp -r gh-pages/history allure-results/history || echo "No history found to copy."
+
 
     # Publish test report to GitHub Pages
     - name: Publish Allure Test Report
