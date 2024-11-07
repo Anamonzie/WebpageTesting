@@ -1,0 +1,98 @@
+{
+  "uid" : "bbcbb06d6ca02ad7",
+  "name" : "EpamInsightsPage_FindButtonRedirectCheck",
+  "fullName" : "EpamWebTests.PageTests.InsightsPageTests.EpamInsightsPage_FindButtonRedirectCheck",
+  "historyId" : "EpamWebTests.PageTests.InsightsPageTests.EpamInsightsPage_FindButtonRedirectCheck",
+  "time" : {
+    "start" : 1730991655129,
+    "stop" : 1730991676789,
+    "duration" : 21660
+  },
+  "status" : "passed",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ ],
+  "testStage" : {
+    "steps" : [ {
+      "name" : "Serilog Section Found: True",
+      "time" : { },
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : false
+    } ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 1,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : true
+  },
+  "afterStages" : [ ],
+  "labels" : [ {
+    "name" : "suite",
+    "value" : "EpamWebTests.PageTests.InsightsPageTests"
+  }, {
+    "name" : "testClass",
+    "value" : "EpamWebTests.PageTests.InsightsPageTests"
+  }, {
+    "name" : "package",
+    "value" : "EpamWebTests.PageTests.InsightsPageTests"
+  }, {
+    "name" : "resultFormat",
+    "value" : "trx"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ ],
+    "history" : {
+      "statistic" : {
+        "failed" : 0,
+        "broken" : 0,
+        "skipped" : 0,
+        "passed" : 4,
+        "unknown" : 0,
+        "total" : 4
+      },
+      "items" : [ {
+        "uid" : "146d40ebb0c585a8",
+        "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/108//#testresult/146d40ebb0c585a8",
+        "status" : "passed",
+        "time" : {
+          "start" : 1730989745484,
+          "stop" : 1730989758797,
+          "duration" : 13313
+        }
+      }, {
+        "uid" : "32cdeba1fbd1ab05",
+        "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/107//#testresult/32cdeba1fbd1ab05",
+        "status" : "passed",
+        "time" : {
+          "start" : 1730915803248,
+          "stop" : 1730915818189,
+          "duration" : 14941
+        }
+      }, {
+        "uid" : "460f10920b1e492b",
+        "reportUrl" : "https://Anamonzie.github.io/WebpageTesting/106//#testresult/460f10920b1e492b",
+        "status" : "passed",
+        "time" : {
+          "start" : 1730667102477,
+          "stop" : 1730667123292,
+          "duration" : 20815
+        }
+      } ]
+    },
+    "tags" : [ ]
+  },
+  "source" : "bbcbb06d6ca02ad7.json",
+  "parameterValues" : [ ]
+}
