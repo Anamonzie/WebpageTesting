@@ -21,86 +21,60 @@ namespace EpamWeb.Services
 
         public async Task NavigateToUrlAsync(string url)
         {
-            const int maxRetries = 3;
-            const int retryDelayMs = 2000;
-            int attempt = 0;
+            int retryTimes = 3;
+            int retryDelayMs = 2000;
 
-            while (true)
+            for (int i = 0; i < retryTimes; i++)
             {
                 try
                 {
-                    logger.Info($"Navigating to {url} (Attempt {attempt + 1}/{maxRetries})");
-
                     await page.GotoAsync(url, new PageGotoOptions
                     {
-                        Timeout = 60000,
+                        WaitUntil = WaitUntilState.NetworkIdle
                     });
 
                     logger.Info($"Successfully navigated to {url}.");
-                    return; // Exit immediately on successful navigation
+                    break; // Exit immediately on successful navigation
                 }
                 catch (PlaywrightException ex) when (ex.Message.Contains("net::ERR_ABORTED"))
                 {
-                    attempt++;
-                    logger.Warn($"Navigation to {url} failed with 'net::ERR_ABORTED'. Retrying {attempt}/{maxRetries}...");
-
-                    if (attempt >= maxRetries)
-                    {
-                        logger.Error($"Failed to navigate to {url} after {maxRetries} attempts due to net::ERR_ABORTED.", ex);
-                        throw;
-                    }
+                    logger.Warn($"Navigation to {url} failed with 'net::ERR_ABORTED'. Retrying, attempt: {i}");
 
                     await Task.Delay(retryDelayMs); // Wait before retrying
-                }
-                catch (Exception ex)
-                {
-                    logger.Error($"An unexpected error occurred while navigating to {url}.", ex);
-                    throw;
                 }
             }
         }
 
         public async Task NavigateToUrlAndAcceptCookiesAsync(string url)
         {
-            const int maxRetries = 3;
-            const int retryDelayMs = 2000;
-            int attempt = 0;
+            int retryTimes = 3;
+            int retryDelayMs = 2000;
 
-            while (true)
+            for (int i = 0; i < retryTimes; i++)
             {
                 try
                 {
-                    logger.Info("Navigating to EPAM insights page");
-
                     await page.GotoAsync(url, new PageGotoOptions
                     {
                         WaitUntil = WaitUntilState.NetworkIdle
                     });
 
-                    logger.Info("Clicking on 'Accept All' cookies button");
-                    await homepage.CookiesAcceptButton.ClickAsync();
-
-                    return;
+                    logger.Info($"Successfully navigated to {url}.");
+                    break; // Exit immediately on successful navigation
                 }
                 catch (PlaywrightException ex) when (ex.Message.Contains("net::ERR_ABORTED"))
                 {
-                    attempt++;
-                    logger.Warn($"Navigation to {url} failed with 'net::ERR_ABORTED'. Retrying {attempt}/{maxRetries}...");
-
-                    if (attempt >= maxRetries)
-                    {
-                        logger.Error($"Failed to navigate to {url} after {maxRetries} attempts due to net::ERR_ABORTED.", ex);
-                        throw;
-                    }
+                    logger.Warn($"Navigation to {url} failed with 'net::ERR_ABORTED'. Retrying, attempt: {i}");
 
                     await Task.Delay(retryDelayMs); // Wait before retrying
                 }
-                catch (Exception ex)
-                {
-                    logger.Error($"An unexpected error occurred while navigating to {url}.", ex);
-                    throw;
-                }
             }
+            if (await homepage.CookiesAcceptButton.IsVisibleAsync())
+            {
+                logger.Info("Clicking on 'Accept All' cookies button");
+                await homepage.CookiesAcceptButton.ClickAsync();
+            }
+            logger.Info("Cookies button not visible.");
         }
 
         public async Task<string> GetPageTitleAsync()

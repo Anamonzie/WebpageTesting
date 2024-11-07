@@ -1,5 +1,4 @@
 ﻿using EpamWeb.Factory;
-using EpamWeb.Loggers;
 
 namespace EpamWebTests.PageTests
 {
@@ -7,11 +6,11 @@ namespace EpamWebTests.PageTests
     {
         protected static IBrowserFactory browserFactory;
 
+
         [OneTimeSetUp]
         public static void GlobalSetup()
         {
             browserFactory = BrowserFactory.Instance;
-
         }
 
         [OneTimeTearDown]

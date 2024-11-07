@@ -67,7 +67,6 @@ namespace EpamWeb.Loggers
         {
             logger.Information("Closing and flushing logger");
             (logger as IDisposable)?.Dispose();
-            Log.CloseAndFlush();
         }
     }
 }

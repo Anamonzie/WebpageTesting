@@ -42,7 +42,7 @@ public class Tests : BaseTest
 
         browser.Value ??= await browserFactory.GetBrowser();
         context = await browser.Value.NewContextAsync(mediaCaptureService.StartVideoRecordingAsync());
-        
+
         page = await context.NewPageAsync();
         Pages[TestContext.CurrentContext.Test.Name] = page;
 

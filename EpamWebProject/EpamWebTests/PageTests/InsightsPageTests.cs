@@ -21,7 +21,6 @@ namespace EpamWebTests.PageTests
         private static readonly ThreadLocal<IBrowser> browser = new();
         private static readonly ConcurrentDictionary<string, IPage> Pages = new();
 
-
         private ILoggerManager logger;
         private IPageFactory pageFactory;
         private IServiceFactory serviceFactory;
@@ -43,10 +42,10 @@ namespace EpamWebTests.PageTests
 
             browser.Value ??= await browserFactory.GetBrowser();
             context = await browser.Value.NewContextAsync(mediaCaptureService.StartVideoRecordingAsync());
-            
+
             page = await context.NewPageAsync();
             Pages[TestContext.CurrentContext.Test.Name] = page;
-            
+
             pageFactory = PageFactory.Instance(page);
             serviceFactory = ServiceFactory.Instance(pageFactory, page, logger);
         }
@@ -128,3 +127,4 @@ namespace EpamWebTests.PageTests
         }
     }
 }
+
