@@ -3,16 +3,16 @@ using Microsoft.Playwright;
 
 namespace EpamWeb.Attachments
 {
-    public static class AllureAttachmentManager
+    public class AllureAttachmentManager : IAllureAttachmentManager
     {
-        private static readonly object logLock = new();
+        //private static readonly object logLock = new();
 
-        public async static Task AddScreenshotAttachment(string screenshotPath)
+        public async Task AddScreenshotAttachment(string screenshotPath)
         {
             await Task.Run(() => AllureApi.AddAttachment("Screenshot", "image/png", screenshotPath));
         }
 
-        public async static Task AddVideoAttachment(IPage page)
+        public async Task AddVideoAttachment(IPage page)
         {
             if (page.Video != null)
             {
@@ -23,21 +23,18 @@ namespace EpamWeb.Attachments
             }
         }
 
-        public static void AttachLogToAllure()
+        public void AttachLogToAllure(string logFilePath)
         {
-            lock (logLock) // Ensure only one thread can access this block at a time
-            {
-                var logDirectory = new DirectoryInfo("./logs");
-                var latestLogFile = logDirectory.GetFiles("log-*.txt")
-                                                 .OrderByDescending(f => f.LastWriteTime)
-                                                 .FirstOrDefault();
+            AllureApi.AddAttachment("Test Logs", "text/plain", logFilePath);
 
-                if (latestLogFile != null && latestLogFile.Exists)
-                {
-                    var logsPath = latestLogFile.FullName;
-                    AllureApi.AddAttachment("Test Logs", "text/plain", logsPath);
-                }
-            }
+            //lock (logLock) // Ensure only one thread can access this block at a time
+            //{
+            //    if (logFilePath != null && logFilePath.Exists)
+            //    {
+            //        var logsPath = logFilePath.FullName;
+            //        AllureApi.AddAttachment("Test Logs", "text/plain", logsPath);
+            //    }
+            //}
         }
     }
 }

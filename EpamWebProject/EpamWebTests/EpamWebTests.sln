@@ -15,6 +15,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheoryInPractice.Tests", ".
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TheoryinPractice", "TheoryinPractice", "{5C759272-09A5-4FA4-8E02-83831AD3A59B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Covariance_Contravariance", "Covariance_Contravariance", "{08B0F9C2-42AD-44B4-AE22-D04DC6A863A5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovarianceContravariance", "..\..\CovarianceContravariance\CovarianceContravariance.csproj", "{9AE59AC0-9114-4EA8-83C8-ACFF0C6EE20B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +41,10 @@ Global
 		{825DA577-BD56-4533-B906-6761012ABD3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{825DA577-BD56-4533-B906-6761012ABD3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{825DA577-BD56-4533-B906-6761012ABD3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AE59AC0-9114-4EA8-83C8-ACFF0C6EE20B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AE59AC0-9114-4EA8-83C8-ACFF0C6EE20B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AE59AC0-9114-4EA8-83C8-ACFF0C6EE20B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AE59AC0-9114-4EA8-83C8-ACFF0C6EE20B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +54,7 @@ Global
 		{F1B6EE6D-CD98-46D1-9933-5014312B85D1} = {BC892E30-6089-416B-AABA-36A38B379346}
 		{197A7208-9DE4-4632-AF02-FE7AFD8076FB} = {5C759272-09A5-4FA4-8E02-83831AD3A59B}
 		{825DA577-BD56-4533-B906-6761012ABD3E} = {5C759272-09A5-4FA4-8E02-83831AD3A59B}
+		{9AE59AC0-9114-4EA8-83C8-ACFF0C6EE20B} = {08B0F9C2-42AD-44B4-AE22-D04DC6A863A5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B9192FA2-3C8F-4158-BE78-AF1F94A9705B}

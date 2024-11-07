@@ -4,6 +4,5 @@
     {
         Task ClickHamburgerMenuAsync();
         Task<List<string>> GetHamburgerMenuListItemsAsync();
-        Task ClickAcceptAllCookies();
     }
 }

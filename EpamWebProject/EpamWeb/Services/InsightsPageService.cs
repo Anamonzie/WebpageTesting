@@ -17,22 +17,63 @@ namespace EpamWeb.Services
             this.logger = logger;
         }
 
-        ///  * METHODS * ///  
+        /// * METHODS * ///  
 
         public async Task NavigateToUrlAsync(string url)
         {
-            try
+            int retryTimes = 3;
+            int retryDelayMs = 2000;
+
+            for (int i = 0; i < retryTimes; i++)
             {
-                logger.Info("Navigating to EPAM insights page");
-                await page.GotoAsync(url, new PageGotoOptions
+                try
                 {
-                    Timeout = 60000,
-                });
+                    await page.GotoAsync(url, new PageGotoOptions
+                    {
+                        WaitUntil = WaitUntilState.NetworkIdle
+                    });
+
+                    logger.Info($"Successfully navigated to {url}.");
+                    break; // Exit immediately on successful navigation
+                }
+                catch (PlaywrightException ex) when (ex.Message.Contains("net::ERR_ABORTED"))
+                {
+                    logger.Warn($"Navigation to {url} failed with 'net::ERR_ABORTED'. Retrying, attempt: {i}");
+
+                    await Task.Delay(retryDelayMs); // Wait before retrying
+                }
             }
-            catch (Exception ex)
+        }
+
+        public async Task NavigateToUrlAndAcceptCookiesAsync(string url)
+        {
+            int retryTimes = 3;
+            int retryDelayMs = 2000;
+
+            for (int i = 0; i < retryTimes; i++)
             {
-                logger.Error($"Failed to navigate to {url}", ex);
-                throw;
+                try
+                {
+                    await page.GotoAsync(url, new PageGotoOptions
+                    {
+                        WaitUntil = WaitUntilState.NetworkIdle
+                    });
+
+                    logger.Info($"Successfully navigated to {url}.");
+                    break; // Exit immediately on successful navigation
+                }
+                catch (PlaywrightException ex) when (ex.Message.Contains("net::ERR_ABORTED"))
+                {
+                    logger.Warn($"Navigation to {url} failed with 'net::ERR_ABORTED'. Retrying, attempt: {i}");
+
+                    await Task.Delay(retryDelayMs); // Wait before retrying
+                }
+            }
+
+            if (await insightsPage.CookiesAcceptButton.IsVisibleAsync())
+            {
+                logger.Info("Clicking on 'Accept All' cookies button");
+                await insightsPage.CookiesAcceptButton.ClickAsync();
             }
         }
 
@@ -47,19 +88,6 @@ namespace EpamWeb.Services
             {
                 logger.Error("Failed to get page title", ex);
                 throw;
-            }
-        }
-
-        public async Task ClickAcceptAllCookies()
-        {
-            try
-            {
-                logger.Info("Clicking on 'Accept All' cookies button");
-                await insightsPage.CookiesAcceptButton.ClickAsync();
-            }
-            catch (Exception ex)
-            {
-                logger.Error("Failed to click on 'Accept All' cookies button", ex);
             }
         }
 

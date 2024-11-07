@@ -1,42 +1,26 @@
 ﻿using EpamWeb.Config;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel;
+using NUnit.Framework;
 using Serilog;
-
+using Serilog.Context;
 
 namespace EpamWeb.Loggers
 {
     public class LoggerManager : ILoggerManager
     {
-        private static readonly Lazy<LoggerManager> instance = new(() => new LoggerManager(ConfigManager.Instance));
         private readonly IConfigManager configManager;
         private readonly ILogger logger;
-        //private string logPath;
 
-        public static LoggerManager Instance => instance.Value;
-        public ILogger Logger => logger;
-
-        private LoggerManager(IConfigManager configManager)
+        public LoggerManager(IConfigManager configManager, string testName)
         {
             this.configManager = configManager;
-            logger = ConfigureLogger();
+            logger = ConfigureLogger(testName); // Initialize the logger for the first time
         }
 
-        //public string SetLogPath(string logPath)
-        //{
-        //    this.logPath = logPath;
-
-        //    var testName = TestContext.CurrentContext.Test.Name;
-        //    var logDirectory = Path.Combine(AppContext.BaseDirectory, "logs", testName);
-
-        //    if (!Directory.Exists(logDirectory))
-        //    {
-        //        Directory.CreateDirectory(logDirectory);
-        //    }
-
-        //    return logPath;
-        //}
-
-        public ILogger ConfigureLogger()
+        private ILogger ConfigureLogger(string testName)
         {
+            //var testName = TestContext.CurrentContext.Test.Name;
+            var logDirectory = Path.Combine(AppContext.BaseDirectory, "logs", $"{testName}");
             var serilogConfig = configManager.GetSerilogConfig();
 
             if (serilogConfig == null)
@@ -44,57 +28,46 @@ namespace EpamWeb.Loggers
                 throw new InvalidOperationException("Serilog configuration is missing.");
             }
 
-            //var testName = TestContext.CurrentContext.Test.Name;
-
-            var logDirectory = Path.Combine(AppContext.BaseDirectory, "logs");
-
             if (!Directory.Exists(logDirectory))
             {
                 Directory.CreateDirectory(logDirectory);
             }
 
-            //var logFileName = $"./logs/log-.txt";
-            //var currentLogDirectory = SetLogPath(logPath);
+            var logFilePath = Path.Combine(logDirectory, $"{testName}-log.txt");
+            LogContext.PushProperty("TestName", testName);
 
-            var configuredLogger = new LoggerConfiguration()
+            return new LoggerConfiguration()
                 .MinimumLevel.Information()
-                //.Enrich.WithProperty("TestName", TestContext.CurrentContext.Test.Name)
-                .WriteTo.File((Path.Combine(logDirectory, "log-.txt")),
-                    rollingInterval: RollingInterval.Day,
+                .Enrich.WithProperty("TestName", testName)
+                .WriteTo.File(logFilePath,
+                    rollingInterval: RollingInterval.Infinite,
                     rollOnFileSizeLimit: true,
-                    outputTemplate: "{Timestamp:HH:mm} [{Level:u3}] ({ThreadId}) {ProcessId} || {Message}{NewLine}{Exception}")
-                .Enrich.FromLogContext()
+                    outputTemplate: "{Timestamp:dd-MM-yyyy HH:mm} [{Level:u3}] ({ThreadId}) {ProcessId} {TestName} || {Message}{NewLine}{Exception}")
                 .Enrich.WithThreadId()
                 .Enrich.WithProcessId()
+                .Enrich.FromLogContext()
                 .CreateLogger();
-            //.ReadFrom.Configuration(serilogConfig)
-            //.CreateLogger();
-
-            //Log.Logger = configuredLogger; // Set the global logger
-            //configuredLogger.Information("Logger configured successfully."); // Test logging
-
-            return configuredLogger;
         }
 
         public void Info(string message)
         {
-            Logger.Information(message);
+            logger.Information(message);
         }
 
         public void Warn(string message)
         {
-            Logger.Warning(message);
+            logger.Warning(message);
         }
 
         public void Error(string message, Exception ex = null)
         {
-            Logger.Error(ex, message);
+            logger.Error(ex, message);
         }
 
         public void CloseAndFlush()
         {
-            Logger.Information("Closing and flushing logger");
-            Log.CloseAndFlush();
+            logger.Information("Closing and flushing logger");
+            (logger as IDisposable)?.Dispose();
         }
     }
 }
