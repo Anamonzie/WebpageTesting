@@ -20,7 +20,6 @@ public class Tests : BaseTest
 {
     private static readonly ThreadLocal<IBrowser> browser = new();
     private static readonly ConcurrentDictionary<string, IPage> Pages = new();
-    private static readonly ThreadLocal<LoggerManager> ThreadLocalLogger = new(() => new LoggerManager(ConfigManager.Instance));
 
     private ILoggerManager logger;
     private IPageFactory pageFactory;
@@ -34,7 +33,8 @@ public class Tests : BaseTest
     [SetUp]
     public async Task Setup()
     {
-        logger = ThreadLocalLogger.Value;
+        var testName = TestContext.CurrentContext.Test.Name;
+        logger = new LoggerManager(ConfigManager.Instance, testName);
         logger.Info("STARTING NEW RUN");
         logger.Info("Setting up test context");
 
@@ -68,7 +68,7 @@ public class Tests : BaseTest
 
         // Assert
         result.Should().Be(expectedTitle);
-        logger.Info($"Checking page title; expected: {expectedTitle}, actual: {result}. (Google Tests: Title Check)");
+        logger.Info($"Checking page title; expected: {expectedTitle}, actual: {result}.");
     }
 
     [Test]
@@ -91,7 +91,7 @@ public class Tests : BaseTest
 
         // Assert
         result.Should().Be(expectedTitle);
-        logger.Info($"Checking page title; expected: {expectedTitle}, actual: {result}. (Homepage Tests: Title Check)");
+        logger.Info($"Checking page title; expected: {expectedTitle}, actual: {result}.");
     }
 
     [Test]
@@ -142,7 +142,5 @@ public class Tests : BaseTest
         {
             allureAttachmentManager.AttachLogToAllure(logFilePath);
         }
-
-        ThreadLocalLogger.Dispose();
     }
 }

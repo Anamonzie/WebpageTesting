@@ -9,6 +9,7 @@ using EpamWeb.Services;
 using EpamWeb.Utils;
 using FluentAssertions;
 using Microsoft.Playwright;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using System.Collections.Concurrent;
 
 namespace EpamWebTests.PageTests
@@ -20,7 +21,6 @@ namespace EpamWebTests.PageTests
     {
         private static readonly ThreadLocal<IBrowser> browser = new();
         private static readonly ConcurrentDictionary<string, IPage> Pages = new();
-        private static readonly ThreadLocal<LoggerManager> ThreadLocalLogger = new(() => new LoggerManager(ConfigManager.Instance));
 
         private ILoggerManager logger;
         private IPageFactory pageFactory;
@@ -34,7 +34,8 @@ namespace EpamWebTests.PageTests
         [SetUp]
         public async Task Setup()
         {
-            logger = ThreadLocalLogger.Value;
+            var testName = TestContext.CurrentContext.Test.Name;
+            logger = new LoggerManager(ConfigManager.Instance, testName);
             logger.Info("STARTING NEW RUN");
             logger.Info("Setting up test context");
 
@@ -73,7 +74,7 @@ namespace EpamWebTests.PageTests
 
             // Assert
             result.Should().Contain(TestData.SearchInput);
-            logger.Info($"Checking page title; expected to contain: {TestData.SearchInput}, actual: {result}. (Insights Page Tests: Search Check)");
+            logger.Info($"Checking page title; expected to contain: {TestData.SearchInput}, actual: {result}.");
         }
 
         [Test]
@@ -98,7 +99,7 @@ namespace EpamWebTests.PageTests
 
             // Assert
             result.Should().Be(expectedTitle);
-            logger.Info($"Checking page title; expected: {expectedTitle}, actual: {result}. (Insights Page Tests: Find Button Check)");
+            logger.Info($"Checking page title; expected: {expectedTitle}, actual: {result}.");
         }
 
         [TearDown]
@@ -125,9 +126,6 @@ namespace EpamWebTests.PageTests
             {
                 allureAttachmentManager.AttachLogToAllure(logFilePath);
             }
-
-            ThreadLocalLogger.Dispose();
         }
     }
 }
-

@@ -1,6 +1,8 @@
 ﻿using EpamWeb.Config;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using NUnit.Framework;
 using Serilog;
+using Serilog.Context;
 
 namespace EpamWeb.Loggers
 {
@@ -8,26 +10,23 @@ namespace EpamWeb.Loggers
     {
         private readonly IConfigManager configManager;
         private readonly ILogger logger;
-        public Guid UniqueId { get; } = Guid.NewGuid();
 
-        public LoggerManager(IConfigManager configManager)
+        public LoggerManager(IConfigManager configManager, string testName)
         {
             this.configManager = configManager;
-            logger = ConfigureLogger(); // Initialize the logger for the first time
+            logger = ConfigureLogger(testName); // Initialize the logger for the first time
         }
 
-        private ILogger ConfigureLogger()
+        private ILogger ConfigureLogger(string testName)
         {
+            //var testName = TestContext.CurrentContext.Test.Name;
+            var logDirectory = Path.Combine(AppContext.BaseDirectory, "logs", $"{testName}");
             var serilogConfig = configManager.GetSerilogConfig();
+
             if (serilogConfig == null)
             {
                 throw new InvalidOperationException("Serilog configuration is missing.");
             }
-
-            var testName = TestContext.CurrentContext.Test.Name;
-            var testWorkerId = TestContext.CurrentContext.WorkerId;
-            var uniqueId = Guid.NewGuid(); // Unique ID for each test instance
-            var logDirectory = Path.Combine(AppContext.BaseDirectory, "logs", $"{testName}");
 
             if (!Directory.Exists(logDirectory))
             {
@@ -35,16 +34,18 @@ namespace EpamWeb.Loggers
             }
 
             var logFilePath = Path.Combine(logDirectory, $"{testName}-log.txt");
+            LogContext.PushProperty("TestName", testName);
 
             return new LoggerConfiguration()
                 .MinimumLevel.Information()
+                .Enrich.WithProperty("TestName", testName)
                 .WriteTo.File(logFilePath,
                     rollingInterval: RollingInterval.Infinite,
                     rollOnFileSizeLimit: true,
-                    outputTemplate: "{Timestamp:dd-MM-yyyy HH:mm} [{Level:u3}] ({ThreadId}) {ProcessId} || {Message}{NewLine}{Exception}")
-                .Enrich.FromLogContext()
+                    outputTemplate: "{Timestamp:dd-MM-yyyy HH:mm} [{Level:u3}] ({ThreadId}) {ProcessId} {TestName} || {Message}{NewLine}{Exception}")
                 .Enrich.WithThreadId()
                 .Enrich.WithProcessId()
+                .Enrich.FromLogContext()
                 .CreateLogger();
         }
 
