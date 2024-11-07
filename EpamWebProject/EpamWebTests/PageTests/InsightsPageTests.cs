@@ -20,6 +20,7 @@ namespace EpamWebTests.PageTests
     {
         private static readonly ThreadLocal<IBrowser> browser = new();
         private static readonly ConcurrentDictionary<string, IPage> Pages = new();
+        private static readonly ThreadLocal<LoggerManager> ThreadLocalLogger = new(() => new LoggerManager(ConfigManager.Instance));
 
         private ILoggerManager logger;
         private IPageFactory pageFactory;
@@ -33,7 +34,7 @@ namespace EpamWebTests.PageTests
         [SetUp]
         public async Task Setup()
         {
-            logger = new LoggerManager(ConfigManager.Instance);
+            logger = ThreadLocalLogger.Value;
             logger.Info("STARTING NEW RUN");
             logger.Info("Setting up test context");
 
@@ -124,6 +125,8 @@ namespace EpamWebTests.PageTests
             {
                 allureAttachmentManager.AttachLogToAllure(logFilePath);
             }
+
+            ThreadLocalLogger.Dispose();
         }
     }
 }
