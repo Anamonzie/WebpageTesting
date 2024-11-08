@@ -43,7 +43,7 @@ jobs:
       run: npx playwright install
       
     - name: Create Allure Results Directory
-      run: mkdir -p allure-results allure-history
+      run: mkdir -p allure-results 
       
     - name: Build the project
       run: dotnet build EpamWebProject/EpamWebTests/EpamWebTests.sln --no-restore
@@ -51,34 +51,42 @@ jobs:
     - name: Run Playwright Tests
       run: |
         if [ "${{ github.event.inputs.category }}" == "all" ] || [ -z "${{ github.event.inputs.category }}" ]; then
-          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory ${{ github.workspace }}/allure-results
+          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory allure-results
         else
-          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory ${{ github.workspace }}/allure-results --filter "Category=${{ github.event.inputs.category }}"
+          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory allure-results --filter "Category=${{ github.event.inputs.category }}"
         fi
 
-    - name: Load test report history
+   # Pull existing Allure report history from gh-pages
+    - name: Load Allure Report History
       uses: actions/checkout@v4
-      if: always()
-      continue-on-error: true
       with:
         ref: gh-pages
         path: gh-pages
-        
-    # Publish Allure Report
+      if: always()
+
+    # Copy report history into allure-results for consistency in generated reports
+    - name: Copy Allure History
+      run: |
+        mkdir -p allure-results/history
+        if [ -d gh-pages/allure-history ]; then
+          cp -r gh-pages/allure-history/* allure-results/history/
+        fi
+      if: always()
+
+    # Build Allure Report
     - name: Build and Publish Allure Report
       uses: simple-elf/allure-report-action@master
-      if: always()
       with:
         allure_results: allure-results
         gh_pages: gh-pages
-        #allure_report: allure-report
-        allure_history: allure-history
-
-    # Publish test report to GitHub Pages
-    - name: Publish Allure Test Report
+        allure_history: allure-results/history
       if: always()
+
+    # Publish updated Allure report to gh-pages
+    - name: Publish Allure Test Report
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_branch: gh-pages
-        publish_dir: allure-history
+        publish_dir: gh-pages/allure-history
+      if: always()
