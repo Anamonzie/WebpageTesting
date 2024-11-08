@@ -9,7 +9,6 @@ using EpamWeb.Services;
 using EpamWeb.Utils;
 using FluentAssertions;
 using Microsoft.Playwright;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using System.Collections.Concurrent;
 
 namespace EpamWebTests.PageTests
@@ -19,7 +18,9 @@ namespace EpamWebTests.PageTests
     [AllureSuite("Insights Page Tests")]
     public class InsightsPageTests : BaseTest
     {
+        //private static readonly ConcurrentDictionary<string, IBrowser> Browsers = new();
         private static readonly ThreadLocal<IBrowser> browser = new();
+        //private IBrowser browser;
         private static readonly ConcurrentDictionary<string, IPage> Pages = new();
 
         private ILoggerManager logger;
@@ -42,11 +43,17 @@ namespace EpamWebTests.PageTests
             mediaCaptureService = new MediaCaptureService(logger);
             allureAttachmentManager = new AllureAttachmentManager();
 
-            browser.Value ??= await browserFactory.GetBrowser();
-            context = await browser.Value.NewContextAsync(mediaCaptureService.StartVideoRecordingAsync());
+            //if (!Browsers.TryGetValue(testName, out var testBrowser))
+            //{
+            //    testBrowser = await browserFactory.GetBrowser();
+            //    Browsers[testName] = testBrowser;
+            //}
 
+            browser.Value = await browserFactory.GetBrowser();
+            context = await browser.Value.NewContextAsync(mediaCaptureService.StartVideoRecordingAsync());
+            //context = await testBrowser.NewContextAsync(mediaCaptureService.StartVideoRecordingAsync());
             page = await context.NewPageAsync();
-            Pages[TestContext.CurrentContext.Test.Name] = page;
+            Pages[testName] = page;
 
             pageFactory = PageFactory.Instance(page);
             serviceFactory = ServiceFactory.Instance(pageFactory, page, logger);
@@ -117,6 +124,12 @@ namespace EpamWebTests.PageTests
                 await allureAttachmentManager.AddVideoAttachment(page);
             }
 
+            // Close the browser and its context
+            if (browser.Value != null)
+            {
+                await browser.Value.CloseAsync();
+            }
+
             logger.CloseAndFlush();
 
             var logDirectory = Path.Combine(AppContext.BaseDirectory, "logs", $"{testName}");
@@ -127,5 +140,17 @@ namespace EpamWebTests.PageTests
                 allureAttachmentManager.AttachLogToAllure(logFilePath);
             }
         }
+
+        //[OneTimeTearDown]
+        //public async Task OneTimeTearDown()
+        //{
+        //    // Clean up all contexts and browsers after all tests complete
+        //    foreach (var testBrowser in Browsers.Values)
+        //    {
+        //        await testBrowser.CloseAsync();
+        //    }
+
+        //    Browsers.Clear();
+        //}
     }
 }

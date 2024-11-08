@@ -1,4 +1,5 @@
 ﻿using EpamWeb.Factory;
+using Microsoft.Playwright;
 
 namespace EpamWebTests.PageTests
 {
@@ -13,11 +14,6 @@ namespace EpamWebTests.PageTests
             browserFactory = BrowserFactory.Instance;
         }
 
-        [OneTimeTearDown]
-        public static void GlobalTearDown()
-        {
-            //logger.CloseAndFlush();
-            //AllureAttachmentManager.AttachLogToAllure();
-        }
+
     }
 }
