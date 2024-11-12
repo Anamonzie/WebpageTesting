@@ -1,9 +1,7 @@
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
 using EpamWeb.Attachments;
-using EpamWeb.Config;
 using EpamWeb.Factory;
-using EpamWeb.Loggers;
 using EpamWeb.Services;
 using EpamWeb.Utils;
 using FluentAssertions;
@@ -18,16 +16,12 @@ namespace EpamWebTests.PageTests;
 [AllureSuite("EPAM Homepage Tests")]
 public class Tests : BaseTest
 {
-    //private static readonly ConcurrentDictionary<string, IBrowser> Browsers = new();
     private static readonly ThreadLocal<IBrowser> browser = new();
-    //private IBrowser browser;
     private static readonly ConcurrentDictionary<string, IPage> Pages = new();
 
-    private ILoggerManager logger;
     private IPageFactory pageFactory;
     private IServiceFactory serviceFactory;
     private IBrowserContext context;
-    private IPage page;
 
     private IMediaCaptureService mediaCaptureService;
     private IAllureAttachmentManager allureAttachmentManager;
@@ -36,26 +30,19 @@ public class Tests : BaseTest
     public async Task Setup()
     {
         var testName = TestContext.CurrentContext.Test.Name;
-        logger = new LoggerManager(ConfigManager.Instance, testName);
-        logger.Info("STARTING NEW RUN");
-        logger.Info("Setting up test context");
+
+        logger.InitializeLogFilePath(TestContext.CurrentContext.Test.Name);
 
         mediaCaptureService = new MediaCaptureService(logger);
         allureAttachmentManager = new AllureAttachmentManager();
 
-        //if (!Browsers.TryGetValue(testName, out var testBrowser))
-        //{
-        //    testBrowser = await browserFactory.GetBrowser();
-        //    Browsers[testName] = testBrowser;
-        //}
-
         browser.Value = await browserFactory.GetBrowser();
         context = await browser.Value.NewContextAsync(mediaCaptureService.StartVideoRecordingAsync());
-        //context = await testBrowser.NewContextAsync(mediaCaptureService.StartVideoRecordingAsync());
-        page = await context.NewPageAsync();
-        Pages[testName] = page;
 
-        pageFactory = PageFactory.Instance(page);
+        var page = await context.NewPageAsync();
+        Pages[TestContext.CurrentContext.Test.Name] = page;
+
+        pageFactory = new PageFactory(page);
         serviceFactory = ServiceFactory.Instance(pageFactory, page, logger);
     }
 
@@ -76,7 +63,7 @@ public class Tests : BaseTest
 
         // Assert
         result.Should().Be(expectedTitle);
-        logger.Info($"Checking page title; expected: {expectedTitle}, actual: {result}.");
+        logger.Info(TestContext.CurrentContext.Test.Name, $"Checking page title; expected: {expectedTitle}, actual: {result}.");
     }
 
     [Test]
@@ -99,7 +86,7 @@ public class Tests : BaseTest
 
         // Assert
         result.Should().Be(expectedTitle);
-        logger.Info($"Checking page title; expected: {expectedTitle}, actual: {result}.");
+        logger.Info(TestContext.CurrentContext.Test.Name, $"Checking page title; expected: {expectedTitle}, actual: {result}.");
     }
 
     [Test]
@@ -123,7 +110,7 @@ public class Tests : BaseTest
 
         // Assert
         actualItems.Should().BeEquivalentTo(expectedItems);
-        logger.Info($"Menu items are: {string.Join(", ", expectedItems)}");
+        logger.Info(TestContext.CurrentContext.Test.Name, $"Menu items are: {string.Join(", ", expectedItems)}");
     }
 
     [TearDown]
@@ -132,43 +119,25 @@ public class Tests : BaseTest
         var testName = TestContext.CurrentContext.Test.Name;
 
         // Attempt to remove the page for the current test from the dictionary
-        if (Pages.TryRemove(testName, out var testPage) && !testPage.IsClosed)
+        if (Pages.TryRemove(TestContext.CurrentContext.Test.Name, out var testPage) && !testPage.IsClosed)
         {
-            var screenshotPath = await mediaCaptureService.CaptureScreenshot(page);
+            var screenshotPath = await mediaCaptureService.CaptureScreenshot(testPage);
             await allureAttachmentManager.AddScreenshotAttachment(screenshotPath);
 
             await testPage.CloseAsync();
             await testPage.Context.CloseAsync();
 
-            await allureAttachmentManager.AddVideoAttachment(page);
+            await allureAttachmentManager.AddVideoAttachment(testPage);
         }
 
-        // Close the browser and its context
-        if (browser.Value != null)
-        {
-            await browser.Value.CloseAsync();
-        }
+        logger.CloseAndFlush(TestContext.CurrentContext.Test.Name);
 
-        logger.CloseAndFlush();
-
-        var logDirectory = Path.Combine(AppContext.BaseDirectory, "logs", $"{testName}");
-        var logFilePath = Path.Combine(logDirectory, $"{testName}-log.txt");
+        var logDirectory = Path.Combine(AppContext.BaseDirectory, "logs", $"{TestContext.CurrentContext.Test.Name}");
+        var logFilePath = Path.Combine(logDirectory, $"{TestContext.CurrentContext.Test.Name}-log.txt");
 
         if (File.Exists(logFilePath))
         {
             allureAttachmentManager.AttachLogToAllure(logFilePath);
         }
     }
-
-    //[OneTimeTearDown]
-    //public async Task OneTimeTearDown()
-    //{
-    //    // Clean up all contexts and browsers after all tests complete
-    //    foreach (var testBrowser in Browsers.Values)
-    //    {
-    //        await testBrowser.CloseAsync();
-    //    }
-
-    //    Browsers.Clear();
-    //}
 }

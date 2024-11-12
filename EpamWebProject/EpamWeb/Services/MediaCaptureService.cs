@@ -25,7 +25,7 @@ namespace EpamWeb.Services
                 FullPage = true,
             });
 
-            logger.Info($"Captured screenshot at {screenshotPath}, ({TestContext.CurrentContext.Test.Name})");
+            logger.Info(TestContext.CurrentContext.Test.Name, $"Captured screenshot at {screenshotPath}");
 
             return screenshotPath;
         }
