@@ -1,6 +1,7 @@
 ﻿using EpamWeb.Loggers;
 using EpamWeb.Pages;
 using Microsoft.Playwright;
+using NUnit.Framework;
 
 namespace EpamWeb.Services
 {
@@ -33,12 +34,12 @@ namespace EpamWeb.Services
                         WaitUntil = WaitUntilState.NetworkIdle
                     });
 
-                    logger.Info($"Successfully navigated to {url}.");
+                    logger.Info(TestContext.CurrentContext.Test.Name, $"Successfully navigated to {url}.");
                     break; // Exit immediately on successful navigation
                 }
                 catch (PlaywrightException ex) when (ex.Message.Contains("net::ERR_ABORTED"))
                 {
-                    logger.Warn($"Navigation to {url} failed with 'net::ERR_ABORTED'. Retrying, attempt: {i}");
+                    logger.Warn(TestContext.CurrentContext.Test.Name, $"Navigation to {url} failed with 'net::ERR_ABORTED'. Retrying, attempt: {i}");
 
                     await Task.Delay(retryDelayMs); // Wait before retrying
                 }
@@ -59,34 +60,33 @@ namespace EpamWeb.Services
                         WaitUntil = WaitUntilState.NetworkIdle
                     });
 
-                    logger.Info($"Successfully navigated to {url}.");
-                    break; // Exit immediately on successful navigation
+                    logger.Info(TestContext.CurrentContext.Test.Name, $"Successfully navigated to {url}.");
+                    break;
                 }
                 catch (PlaywrightException ex) when (ex.Message.Contains("net::ERR_ABORTED"))
                 {
-                    logger.Warn($"Navigation to {url} failed with 'net::ERR_ABORTED'. Retrying, attempt: {i}");
+                    logger.Warn(TestContext.CurrentContext.Test.Name, $"Navigation to {url} failed with 'net::ERR_ABORTED'. Retrying, attempt: {i}");
 
-                    await Task.Delay(retryDelayMs); // Wait before retrying
+                    await Task.Delay(retryDelayMs); 
                 }
             }
             if (await homepage.CookiesAcceptButton.IsVisibleAsync())
             {
-                logger.Info("Clicking on 'Accept All' cookies button");
+                logger.Info(TestContext.CurrentContext.Test.Name, "Clicking on 'Accept All' cookies button");
                 await homepage.CookiesAcceptButton.ClickAsync();
             }
-            logger.Info("Cookies button not visible.");
         }
 
         public async Task<string> GetPageTitleAsync()
         {
             try
             {
-                logger.Info($"Getting page title");
+                logger.Info(TestContext.CurrentContext.Test.Name, $"Getting page title");
                 return await page.TitleAsync();
             }
             catch (Exception ex)
             {
-                logger.Error("Failed to get page title", ex);
+                logger.Error(TestContext.CurrentContext.Test.Name, "Failed to get page title", ex);
                 throw;
             }
         }
@@ -95,12 +95,12 @@ namespace EpamWeb.Services
         {
             try
             {
-                logger.Info("Clicking on the Hamburger Menu Button");
+                logger.Info(TestContext.CurrentContext.Test.Name, "Clicking on the Hamburger Menu Button");
                 await homepage.HamburgerButton.ClickAsync();
             }
             catch (Exception ex)
             {
-                logger.Error("Failed to click on the Hamburger Menu Button", ex);
+                logger.Error(TestContext.CurrentContext.Test.Name, "Failed to click on the Hamburger Menu Button", ex);
                 throw;
             }
         }
@@ -125,7 +125,7 @@ namespace EpamWeb.Services
             }
             catch (Exception ex)
             {
-                logger.Error("Couldn't get the items from Hamburger Menu list", ex);
+                logger.Error(TestContext.CurrentContext.Test.Name, "Couldn't get the items from Hamburger Menu list", ex);
                 throw;
             }
         }
@@ -134,12 +134,12 @@ namespace EpamWeb.Services
         {
             try
             {
-                logger.Info("Clicking on 'Accept All' cookies button");
+                logger.Info(TestContext.CurrentContext.Test.Name, "Clicking on 'Accept All' cookies button");
                 await homepage.CookiesAcceptButton.ClickAsync();
             }
             catch (Exception ex)
             {
-                logger.Error("Failed to click on 'Accept All' cookies button", ex);
+                logger.Error(TestContext.CurrentContext.Test.Name, "Failed to click on 'Accept All' cookies button", ex);
             }
         }
     }

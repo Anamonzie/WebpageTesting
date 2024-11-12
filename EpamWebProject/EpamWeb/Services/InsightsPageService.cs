@@ -1,6 +1,7 @@
 ﻿using EpamWeb.Loggers;
 using EpamWeb.Pages;
 using Microsoft.Playwright;
+using NUnit.Framework;
 
 namespace EpamWeb.Services
 {
@@ -33,12 +34,12 @@ namespace EpamWeb.Services
                         WaitUntil = WaitUntilState.NetworkIdle
                     });
 
-                    logger.Info($"Successfully navigated to {url}.");
+                    logger.Info(TestContext.CurrentContext.Test.Name, $"Successfully navigated to {url}.");
                     break; // Exit immediately on successful navigation
                 }
                 catch (PlaywrightException ex) when (ex.Message.Contains("net::ERR_ABORTED"))
                 {
-                    logger.Warn($"Navigation to {url} failed with 'net::ERR_ABORTED'. Retrying, attempt: {i}");
+                    logger.Warn(TestContext.CurrentContext.Test.Name, $"Navigation to {url} failed with 'net::ERR_ABORTED'. Retrying, attempt: {i}");
 
                     await Task.Delay(retryDelayMs); // Wait before retrying
                 }
@@ -59,20 +60,20 @@ namespace EpamWeb.Services
                         WaitUntil = WaitUntilState.NetworkIdle
                     });
 
-                    logger.Info($"Successfully navigated to {url}.");
-                    break; // Exit immediately on successful navigation
+                    logger.Info(TestContext.CurrentContext.Test.Name, $"Successfully navigated to {url}.");
+                    break; 
                 }
                 catch (PlaywrightException ex) when (ex.Message.Contains("net::ERR_ABORTED"))
                 {
-                    logger.Warn($"Navigation to {url} failed with 'net::ERR_ABORTED'. Retrying, attempt: {i}");
+                    logger.Warn(TestContext.CurrentContext.Test.Name, $"Navigation to {url} failed with 'net::ERR_ABORTED'. Retrying, attempt: {i}");
 
-                    await Task.Delay(retryDelayMs); // Wait before retrying
+                    await Task.Delay(retryDelayMs);
                 }
             }
 
             if (await insightsPage.CookiesAcceptButton.IsVisibleAsync())
             {
-                logger.Info("Clicking on 'Accept All' cookies button");
+                logger.Info(TestContext.CurrentContext.Test.Name, "Clicking on 'Accept All' cookies button");
                 await insightsPage.CookiesAcceptButton.ClickAsync();
             }
         }
@@ -81,12 +82,12 @@ namespace EpamWeb.Services
         {
             try
             {
-                logger.Info("Getting page title");
+                logger.Info(TestContext.CurrentContext.Test.Name, "Getting page title");
                 return await page.TitleAsync();
             }
             catch (Exception ex)
             {
-                logger.Error("Failed to get page title", ex);
+                logger.Error(TestContext.CurrentContext.Test.Name, "Failed to get page title", ex);
                 throw;
             }
         }
@@ -95,12 +96,12 @@ namespace EpamWeb.Services
         {
             try
             {
-                logger.Info("Clicking on Find button");
+                logger.Info(TestContext.CurrentContext.Test.Name, "Clicking on Find button");
                 await insightsPage.FindButton.ClickAsync();
             }
             catch (Exception ex)
             {
-                logger.Error("Failed to click on Find button", ex);
+                logger.Error(TestContext.CurrentContext.Test.Name, "Failed to click on Find button", ex);
             }
         }
 
@@ -108,12 +109,12 @@ namespace EpamWeb.Services
         {
             try
             {
-                logger.Info("Inputting some text in the search field");
+                logger.Info(TestContext.CurrentContext.Test.Name, "Inputting some text in the search field");
                 await insightsPage.SearchField.FillAsync("Cloud");
             }
             catch (Exception ex)
             {
-                logger.Error("Couldn't input text in search field", ex);
+                logger.Error(TestContext.CurrentContext.Test.Name, "Couldn't input text in search field", ex);
             }
         }
 
@@ -125,7 +126,7 @@ namespace EpamWeb.Services
             }
             catch (Exception ex)
             {
-                logger.Error($"Found {ex}");
+                logger.Error(TestContext.CurrentContext.Test.Name, $"Found {ex}");
                 return string.Empty;
             }
         }

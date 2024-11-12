@@ -1,4 +1,4 @@
-﻿[assembly: LevelOfParallelism(10)]
+﻿[assembly: LevelOfParallelism(20)]
 [assembly: Parallelizable(scope: ParallelScope.All)]
 [assembly: FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
 

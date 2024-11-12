@@ -1,42 +1,52 @@
-﻿using EpamWeb.Config;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel;
-using NUnit.Framework;
-using Serilog;
+﻿using Serilog;
 using Serilog.Context;
+using Serilog.Core;
+using Serilog.Events;
+using System.Collections.Concurrent;
 
 namespace EpamWeb.Loggers
 {
     public class LoggerManager : ILoggerManager
     {
-        private readonly IConfigManager configManager;
-        private readonly ILogger logger;
+        private static readonly Lazy<LoggerManager> instance = new(() => new LoggerManager());
+        private readonly Logger inMemoryLogger;
+        private readonly BlockingCollection<LogEvent> logEvents;
+        private readonly ConcurrentDictionary<string, string> logFilePaths;
 
-        public LoggerManager(IConfigManager configManager, string testName)
+        private LoggerManager()
         {
-            this.configManager = configManager;
-            logger = ConfigureLogger(testName); // Initialize the logger for the first time
+            logEvents = new BlockingCollection<LogEvent>();
+            logFilePaths = new ConcurrentDictionary<string, string>();
+
+            inMemoryLogger = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .WriteTo.Sink(new InMemorySink(logEvents))
+                .Enrich.FromLogContext()
+                .CreateLogger();
         }
 
-        private ILogger ConfigureLogger(string testName)
+        public static LoggerManager Instance => instance.Value;
+
+        public void InitializeLogFilePath(string testName)
         {
-            //var testName = TestContext.CurrentContext.Test.Name;
-            var logDirectory = Path.Combine(AppContext.BaseDirectory, "logs", $"{testName}");
-            var serilogConfig = configManager.GetSerilogConfig();
-
-            if (serilogConfig == null)
-            {
-                throw new InvalidOperationException("Serilog configuration is missing.");
-            }
-
+            var logDirectory = Path.Combine(AppContext.BaseDirectory, "logs", testName);
             if (!Directory.Exists(logDirectory))
             {
                 Directory.CreateDirectory(logDirectory);
             }
 
             var logFilePath = Path.Combine(logDirectory, $"{testName}-log.txt");
-            LogContext.PushProperty("TestName", testName);
+            logFilePaths[testName] = logFilePath;  // Store path for each test
+        }
 
-            return new LoggerConfiguration()
+        public void CloseAndFlush(string testName)
+        {
+            if (!logFilePaths.TryGetValue(testName, out var logFilePath))
+            {
+                throw new InvalidOperationException($"Log file path not found for test: {testName}");
+            }
+
+            using (var fileLogger = new LoggerConfiguration()
                 .MinimumLevel.Information()
                 .Enrich.WithProperty("TestName", testName)
                 .WriteTo.File(logFilePath,
@@ -46,28 +56,49 @@ namespace EpamWeb.Loggers
                 .Enrich.WithThreadId()
                 .Enrich.WithProcessId()
                 .Enrich.FromLogContext()
-                .CreateLogger();
+                .CreateLogger())
+            {
+                foreach (var logEvent in logEvents)
+                {
+                    if (logEvent.Properties.TryGetValue("TestName", out var testNameProperty) &&
+                                            testNameProperty.ToString() == $"\"{testName}\"")  // Only write logs for the specific test
+                    {
+                        fileLogger.Write(logEvent);
+                    }
+                }
+            }
+
+            logFilePaths.TryRemove(testName, out _);  // Clean up after writing the log
         }
 
-        public void Info(string message)
+        public void Info(string testName, string message)
         {
-            logger.Information(message);
+            LogEventWithTestName(testName, LogEventLevel.Information, message);
         }
 
-        public void Warn(string message)
+        public void Warn(string testName, string message)
         {
-            logger.Warning(message);
+            LogEventWithTestName(testName, LogEventLevel.Warning, message);
         }
 
-        public void Error(string message, Exception ex = null)
+        public void Error(string testName, string message, Exception ex = null)
         {
-            logger.Error(ex, message);
+            LogEventWithTestName(testName, LogEventLevel.Error, message, ex);
         }
 
-        public void CloseAndFlush()
+        public void LogEventWithTestName(string testName, LogEventLevel level, string message, Exception ex = null)
         {
-            logger.Information("Closing and flushing logger");
-            (logger as IDisposable)?.Dispose();
+            using (LogContext.PushProperty("TestName", testName))  // Add TestName to the log context
+            {
+                if (ex != null)
+                {
+                    inMemoryLogger.Write(level, ex, message);
+                }
+                else
+                {
+                    inMemoryLogger.Write(level, message);
+                }
+            }
         }
     }
 }
