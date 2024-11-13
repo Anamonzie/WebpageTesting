@@ -46,15 +46,7 @@ namespace EpamWeb.Services
 
         public async Task NavigateToUrlAndAcceptCookiesAsync(string url)
         {
-            await retryPolicy.ExecuteAsync(async () =>
-            {
-                await page.GotoAsync(url, new PageGotoOptions
-                {
-                    WaitUntil = WaitUntilState.NetworkIdle
-                });
-
-                logger.Info(TestContext.CurrentContext.Test.Name, $"Successfully navigated to {url}.");
-            });
+            await NavigateToUrlAsync(url);
 
             if (await insightsPage.CookiesAcceptButton.IsVisibleAsync())
             {

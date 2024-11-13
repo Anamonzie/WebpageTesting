@@ -43,7 +43,7 @@ public class Tests : BaseTest
         Pages[TestContext.CurrentContext.Test.Name] = page;
 
         pageFactory = new PageFactory(page);
-        serviceFactory = ServiceFactory.Instance(pageFactory, page, logger);
+        serviceFactory = ServiceFactory.CreateInstance(pageFactory, page, logger);
     }
 
     [Test]
@@ -110,7 +110,7 @@ public class Tests : BaseTest
 
         // Assert
         actualItems.Should().BeEquivalentTo(expectedItems);
-        logger.Info(TestContext.CurrentContext.Test.Name, $"Menu items are: {string.Join(", ", expectedItems)}");
+        logger.Info(TestContext.CurrentContext.Test.Name, $"Menu items are: {string.Join(", ", actualItems)}");
     }
 
     [TearDown]
