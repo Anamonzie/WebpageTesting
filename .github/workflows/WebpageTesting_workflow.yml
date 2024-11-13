@@ -42,10 +42,8 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install
       
-    - name: Create Allure Results and History Directories
-      run: |
-        mkdir -p ${{ github.workspace }}/allure-results
-        mkdir -p ${{ github.workspace }}/allure-history
+    - name: Create Allure Results Directory
+      run: mkdir -p allure-results allure-history
       
     - name: Build the project
       run: dotnet build EpamWebProject/EpamWebTests/EpamWebTests.sln --no-restore
@@ -71,11 +69,11 @@ jobs:
       uses: simple-elf/allure-report-action@master
       if: always()
       with:
-        allure_results: ${{ github.workspace }}/allure-results
+        allure_results: allure-results
         gh_pages: gh-pages
         #allure_report: allure-report
-        allure_history: ${{ github.workspace }}/allure-history
-        
+        allure_history: allure-history
+
     # Publish test report to GitHub Pages
     - name: Publish Allure Test Report
       if: always()
@@ -90,4 +88,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: allure-results
-        path: ${{ github.workspace }}/allure-results
+        path: allure-results
