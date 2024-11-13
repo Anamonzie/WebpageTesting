@@ -42,8 +42,10 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install
       
-    - name: Create Allure Results Directory
-      run: mkdir -p ${{ github.workspace }}/allure-results ${{ github.workspace }}/allure-history
+    - name: Create Allure Results and History Directories
+      run: |
+        mkdir -p ${{ github.workspace }}/allure-results
+        mkdir -p ${{ github.workspace }}/allure-history
       
     - name: Build the project
       run: dotnet build EpamWebProject/EpamWebTests/EpamWebTests.sln --no-restore
