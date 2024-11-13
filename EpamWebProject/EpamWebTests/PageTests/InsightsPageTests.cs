@@ -43,7 +43,7 @@ namespace EpamWebTests.PageTests
             Pages[TestContext.CurrentContext.Test.Name] = page;
 
             pageFactory = new PageFactory(page);
-            serviceFactory = ServiceFactory.Instance(pageFactory, page, logger);
+            serviceFactory = ServiceFactory.CreateInstance(pageFactory, page, logger);
         }
 
         [Test]

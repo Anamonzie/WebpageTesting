@@ -46,15 +46,7 @@ namespace EpamWeb.Services
 
         public async Task NavigateToUrlAndAcceptCookiesAsync(string url)
         {
-            await retryPolicy.ExecuteAsync(async () =>
-            {
-                await page.GotoAsync(url, new PageGotoOptions
-                {
-                    WaitUntil = WaitUntilState.NetworkIdle
-                });
-
-                logger.Info(TestContext.CurrentContext.Test.Name, $"Successfully navigated to {url}.");
-            });
+            await NavigateToUrlAsync(url);
 
             if (await homepage.CookiesAcceptButton.IsVisibleAsync())
             {
@@ -95,9 +87,7 @@ namespace EpamWeb.Services
         {
             try
             {
-                var menuVisible = homepage.HamburgerButtonNavigation;
-
-                await menuVisible.WaitForAsync(new LocatorWaitForOptions { State = WaitForSelectorState.Visible });
+                await homepage.HamburgerMenuItems.First.WaitForAsync(new LocatorWaitForOptions { State = WaitForSelectorState.Visible });
 
                 var menuItems = await homepage.HamburgerMenuItems.AllAsync();
                 var menuItemsList = new List<string>();
@@ -113,19 +103,6 @@ namespace EpamWeb.Services
             {
                 logger.Error(TestContext.CurrentContext.Test.Name, "Couldn't get the items from Hamburger Menu list", ex);
                 throw;
-            }
-        }
-
-        public async Task ClickAcceptAllCookies()
-        {
-            try
-            {
-                logger.Info(TestContext.CurrentContext.Test.Name, "Clicking on 'Accept All' cookies button");
-                await homepage.CookiesAcceptButton.ClickAsync();
-            }
-            catch (Exception ex)
-            {
-                logger.Error(TestContext.CurrentContext.Test.Name, "Failed to click on 'Accept All' cookies button", ex);
             }
         }
     }

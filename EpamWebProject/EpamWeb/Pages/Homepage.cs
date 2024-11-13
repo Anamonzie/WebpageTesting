@@ -9,13 +9,10 @@ namespace EpamWeb.Pages
         public ILocator HamburgerButton => 
             page.Locator("button.hamburger-menu__button[aria-expanded='false']");
 
-        public ILocator HamburgerButtonNavigation =>
-            page.GetByRole(AriaRole.Navigation, new() { Name = "Main navigation" }).First;
-
         public ILocator HamburgerMenuItems => 
             page
             .Locator("li.hamburger-menu__item")
-            .GetByRole(AriaRole.Link);
+            .GetByRole(AriaRole.Link); //first-level-link (in class name, will also include Industries)
 
         public ILocator CookiesAcceptButton => page.Locator("#onetrust-accept-btn-handler");
 

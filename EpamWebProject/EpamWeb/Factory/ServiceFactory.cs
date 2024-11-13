@@ -7,7 +7,7 @@ namespace EpamWeb.Factory
 {
     public class ServiceFactory : IServiceFactory
     {
-        private static readonly ThreadLocal<ServiceFactory?> threadLocalInstance = new();
+        //private static readonly ThreadLocal<ServiceFactory?> threadLocalInstance = new();
         private readonly IPageFactory pageFactory;
         private readonly ILoggerManager logger;
 
@@ -17,15 +17,20 @@ namespace EpamWeb.Factory
             this.logger = logger;
         }
 
-        public static IServiceFactory Instance(IPageFactory pageFactory, IPage page, ILoggerManager logger)
+        public static IServiceFactory CreateInstance(IPageFactory pageFactory, IPage page, ILoggerManager logger)
         {
-            if (threadLocalInstance.Value == null)
-            {
-                threadLocalInstance.Value = new ServiceFactory(pageFactory, page, logger);
-            }
-
-            return threadLocalInstance.Value;
+            return new ServiceFactory(pageFactory, page, logger);
         }
+
+        //public static IServiceFactory Instance(IPageFactory pageFactory, IPage page, ILoggerManager logger)
+        //{
+        //    if (threadLocalInstance.Value == null)
+        //    {
+        //        threadLocalInstance.Value = new ServiceFactory(pageFactory, page, logger);
+        //    }
+
+        //    return threadLocalInstance.Value;
+        //}
 
         public IHomepageService CreateHomepageService(IPage page)
         {
