@@ -24,7 +24,8 @@ namespace EpamWeb.Services
                 Path = screenshotPath,
                 FullPage = true,
             });
-
+            
+            TestContext.AddTestAttachment(screenshotPath);
             logger.Info(TestContext.CurrentContext.Test.Name, $"Captured screenshot at {screenshotPath}");
 
             return screenshotPath;
