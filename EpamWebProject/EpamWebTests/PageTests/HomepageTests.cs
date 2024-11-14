@@ -50,6 +50,8 @@ public class Tests : BaseTest
     [AllureName("Google Title Check")]
     [AllureDescription("Checks the title to see if network error persists with Google as well.")]
     [AllureSeverity(SeverityLevel.minor)]
+    [AllureLabel("Environment", "Staging")]
+    [AllureLabel("Component", "Login")]
     public async Task Google_NetworkConnectionCheck()
     {
         // Arrange
