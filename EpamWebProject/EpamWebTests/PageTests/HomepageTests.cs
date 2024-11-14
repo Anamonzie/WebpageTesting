@@ -1,4 +1,5 @@
 using Allure.NUnit;
+using Allure.Net.Commons;
 using Allure.NUnit.Attributes;
 using EpamWeb.Attachments;
 using EpamWeb.Factory;
@@ -53,6 +54,9 @@ public class Tests : BaseTest
     [AllureTag("GoogleTest")]
     public async Task Google_NetworkConnectionCheck()
     {
+        AllureApi.SetSeverity(SeverityLevel.minor);
+        AllureApi.SetOwner("John Doe");
+        AllureApi.SetDescription("Checking Google Connection");
         // Arrange
         const string expectedTitle = TestData.ExpectedGoogleTitle;
         var testPage = Pages[TestContext.CurrentContext.Test.Name];
