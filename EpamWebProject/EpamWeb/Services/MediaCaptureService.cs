@@ -15,10 +15,16 @@ namespace EpamWeb.Services
 
         public async Task<string> CaptureScreenshot(IPage page)
         {
-            var screenshotsDirectory = Path.Combine("Screenshots", TestContext.CurrentContext.Test.Name);
+            var baseDirectory = Path.Combine(TestContext.CurrentContext.WorkDirectory, "Screenshots");
+            if (Environment.GetEnvironmentVariable("CI") == "true")
+            {
+                baseDirectory = Path.Combine("allure-results", "Screenshots");
+            }
+            
+            var screenshotsDirectory = Path.Combine(baseDirectory, TestContext.CurrentContext.Test.Name);
             Directory.CreateDirectory(screenshotsDirectory);
-            var screenshotPath = Path.Combine(screenshotsDirectory, $"screenshot_{DateTime.UtcNow:MMdd_HHmm}.png");
 
+            var screenshotPath = Path.Combine(screenshotsDirectory, $"screenshot_{TestContext.CurrentContext.Test.Name}_{DateTime.UtcNow:MMdd_HHmm}.png");
             await page.ScreenshotAsync(new()
             {
                 Path = screenshotPath,

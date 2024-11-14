@@ -1,15 +1,16 @@
 ﻿using Allure.Net.Commons;
 using Microsoft.Playwright;
+using NUnit.Framework;
 
 namespace EpamWeb.Attachments
 {
     public class AllureAttachmentManager : IAllureAttachmentManager
     {
-        //private static readonly object logLock = new();
-
         public async Task AddScreenshotAttachment(string screenshotPath)
         {
+            TestContext.AddTestAttachment(screenshotPath);
             await Task.Run(() => AllureApi.AddAttachment("Screenshot", "image/png", screenshotPath));
+            //AllureLifecycle.Instance.AddAttachment("Screenshot", "image/png", screenshotPath);
         }
 
         public async Task AddVideoAttachment(IPage page)
@@ -19,22 +20,15 @@ namespace EpamWeb.Attachments
                 var path = await page.Video.PathAsync();
                 var videoPath = Path.Combine("videos", path);
 
+                TestContext.AddTestAttachment(videoPath);
                 AllureApi.AddAttachment("Test Video", "video/webm", videoPath);
             }
         }
 
         public void AttachLogToAllure(string logFilePath)
         {
+            TestContext.AddTestAttachment(logFilePath);
             AllureApi.AddAttachment("Test Logs", "text/plain", logFilePath);
-
-            //lock (logLock) // Ensure only one thread can access this block at a time
-            //{
-            //    if (logFilePath != null && logFilePath.Exists)
-            //    {
-            //        var logsPath = logFilePath.FullName;
-            //        AllureApi.AddAttachment("Test Logs", "text/plain", logsPath);
-            //    }
-            //}
         }
     }
 }
