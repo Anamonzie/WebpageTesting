@@ -49,8 +49,8 @@ public class Tests : BaseTest
     [Test]
     [AllureName("Google Title Check")]
     [AllureSeverity(SeverityLevel.minor)]
-    [AllureTag("GoogleTest")]
     [Category("Integration")]
+    [AllureTag("GoogleTest")]
     public async Task Google_NetworkConnectionCheck()
     {
         // Arrange
@@ -133,7 +133,6 @@ public class Tests : BaseTest
 
     //    var logDirectory = Path.Combine(AppContext.BaseDirectory, "logs", $"{TestContext.CurrentContext.Test.Name}");
     //    var logFilePath = Path.Combine(logDirectory, $"{TestContext.CurrentContext.Test.Name}-log.txt");
-
     //    if (File.Exists(logFilePath))
     //    {
     //        allureAttachmentManager.AttachLogToAllure(logFilePath);
