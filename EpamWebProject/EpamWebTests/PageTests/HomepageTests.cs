@@ -13,7 +13,7 @@ namespace EpamWebTests.PageTests;
 
 [AllureNUnit]
 [TestFixture]
-[AllureSuite("EPAM Homepage Tests")]
+//[AllureSuite("EPAM Homepage Tests")]
 public class Tests : BaseTest
 {
     private static readonly ThreadLocal<IBrowser> browser = new();
