@@ -21,7 +21,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-
+    
     - name: Print a secret
       run: echo "My secret value is ${{ secrets.SECRET_EXAMPLE }}"
     
@@ -37,7 +37,7 @@ jobs:
       run: npx playwright install-deps
       
     - name: Install dependencies
-      run: dotnet restore EpamWebTests/EpamWebTests.sln
+      run: dotnet restore EpamWebProject/EpamWebTests/EpamWebTests.sln
 
     - name: Install Playwright Browsers
       run: npx playwright install
@@ -46,23 +46,23 @@ jobs:
       run: mkdir -p allure-results allure-history
       
     - name: Build the project
-      run: dotnet build EpamWebTests/EpamWebTests.sln --no-restore
-      
-    - name: Test HTTP Connectivity to EPAM
-      run: curl -Is https://www.epam.com/ || echo "HTTP request to EPAM failed"
-    
-    - name: Test HTTP Connectivity to Facebook
-      run: curl -Is https://www.facebook.com/ || echo "HTTP request to Facebook failed"
-
+      run: dotnet build EpamWebProject/EpamWebTests/EpamWebTests.sln --no-restore
 
     - name: Run Playwright Tests
       run: |
         if [ "${{ github.event.inputs.category }}" == "all" ] || [ -z "${{ github.event.inputs.category }}" ]; then
-          dotnet test EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory ${{ github.workspace }}/allure-results
+          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory ${{ github.workspace }}/allure-results
         else
-          dotnet test EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory ${{ github.workspace }}/allure-results --filter "Category=${{ github.event.inputs.category }}"
+          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory ${{ github.workspace }}/allure-results --filter "Category=${{ github.event.inputs.category }}"
         fi
-      
+
+    # Flatten allure results
+    - name: Flatten allure results
+      run: |
+        mkdir -p ./allure-results
+        find ./allure-results -mindepth 2 -type f -exec mv -t ./allure-results {} +
+        find ./allure-results -type d -empty -delete        
+    
     - name: Load test report history
       uses: actions/checkout@v4
       if: always()
@@ -70,22 +70,44 @@ jobs:
       with:
         ref: gh-pages
         path: gh-pages
+
+    # Remove `.git` from allure-history to avoid permission issues
+ #   - name: Remove .git from Allure History
+#      run: |
+#        if [ -d "gh-pages/.git" ]; then
+#          rm -rf gh-pages/.git
+  #      fi
         
     # Publish Allure Report
     - name: Build and Publish Allure Report
-      uses: simple-elf/allure-report-action@v1.1
+      uses: simple-elf/allure-report-action@master
       if: always()
       with:
-        allure_results: ./allure-results  # Path where Allure results are stored
+        allure_results: allure-results
         gh_pages: gh-pages
         allure_history: allure-history
 
     # Publish test report to GitHub Pages
     - name: Publish Allure Test Report
-      uses: peaceiris/actions-gh-pages@v4
       if: always()
+      uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_branch: gh-pages
         publish_dir: allure-history
 
+    # Upload Allure Results for Debugging
+    - name: Upload Allure Results for Debugging
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: allure-results
+        path: allure-results
+        
+    # Upload Allure History for Debugging
+    - name: Upload Allure History for Debugging
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: allure-history
+        path: allure-history

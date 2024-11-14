@@ -48,10 +48,10 @@ public class Tests : BaseTest
 
     [Test]
     [AllureName("Google Title Check")]
-    [AllureDescription("Checks the title to see if network error persists with Google as well.")]
+    //[AllureDescription("Checks the title to see if network error persists with Google as well.")]
     [AllureSeverity(SeverityLevel.minor)]
-    [AllureTag("GoogleTest")]
     [Category("Integration")]
+    [AllureTag("GoogleTest")]
     public async Task Google_NetworkConnectionCheck()
     {
         // Arrange
@@ -70,7 +70,7 @@ public class Tests : BaseTest
 
     [Test]
     [AllureName("EPAM Homepage Title Check")]
-    [AllureDescription("Checks if the title of the EPAM homepage is as expected.")]
+    //[AllureDescription("Checks if the title of the EPAM homepage is as expected.")]
     [Category("Integration")]
     [AllureTag("HamburgerMenu")]
     [AllureSeverity(SeverityLevel.minor)]
@@ -93,7 +93,7 @@ public class Tests : BaseTest
 
     [Test]
     [AllureName("EPAM Homepage Hamburger Menu Check")]
-    [AllureDescription("Checks if the hamburger menu items are as expected.")]
+    //[AllureDescription("Checks if the hamburger menu items are as expected.")]
     [Category("Smoke")]
     [AllureTag("HamburgerMenu")]
     [AllureSeverity(SeverityLevel.critical)]
@@ -136,7 +136,6 @@ public class Tests : BaseTest
 
     //    var logDirectory = Path.Combine(AppContext.BaseDirectory, "logs", $"{TestContext.CurrentContext.Test.Name}");
     //    var logFilePath = Path.Combine(logDirectory, $"{TestContext.CurrentContext.Test.Name}-log.txt");
-
     //    if (File.Exists(logFilePath))
     //    {
     //        allureAttachmentManager.AttachLogToAllure(logFilePath);
