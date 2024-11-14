@@ -1,0 +1,6 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","18843","EpamHomepage_HamburgerMenu","","Thu Nov 14 11:55:12 GMT 2024","passed","Thu Nov 14 11:55:30 GMT 2024","","EpamWebTests.PageTests.Tests","EpamWebTests.PageTests.Tests",""
+"","16595","EpamInsightsPage_SearchFunctionalityCheck","","Thu Nov 14 11:55:12 GMT 2024","passed","Thu Nov 14 11:55:28 GMT 2024","","EpamWebTests.PageTests.InsightsPageTests","EpamWebTests.PageTests.InsightsPageTests",""
+"","19071","EpamHomepage_TitleCheck","","Thu Nov 14 11:55:12 GMT 2024","passed","Thu Nov 14 11:55:31 GMT 2024","","EpamWebTests.PageTests.Tests","EpamWebTests.PageTests.Tests",""
+"","17251","EpamInsightsPage_FindButtonRedirectCheck","","Thu Nov 14 11:55:12 GMT 2024","passed","Thu Nov 14 11:55:29 GMT 2024","","EpamWebTests.PageTests.InsightsPageTests","EpamWebTests.PageTests.InsightsPageTests",""
+"","7676","Google_NetworkConnectionCheck","","Thu Nov 14 11:55:12 GMT 2024","passed","Thu Nov 14 11:55:19 GMT 2024","","EpamWebTests.PageTests.Tests","EpamWebTests.PageTests.Tests",""
