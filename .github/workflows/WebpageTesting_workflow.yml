@@ -51,22 +51,14 @@ jobs:
     - name: Run Playwright Tests
       run: |
         if [ "${{ github.event.inputs.category }}" == "all" ] || [ -z "${{ github.event.inputs.category }}" ]; then
-          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory ${{ github.workspace }}/allure-results
+          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --logger "console;verbosity=detailed" --results-directory allure-results
         else
-          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory ${{ github.workspace }}/allure-results --filter "Category=${{ github.event.inputs.category }}"
+          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --logger "console;verbosity=detailed" --results-directory allure-results --filter "Category=${{ github.event.inputs.category }}"
         fi
         
     - name: List Allure Results Directory
       run: |
         ls -R ${{ github.workspace }}/allure-results
-        
-    # Upload Screenshots for Debugging
-    - name: Upload Screenshots for Debugging
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: screenshots
-        path: ${{ github.workspace }}/Screenshots
     
     - name: Load test report history
       uses: actions/checkout@v4
