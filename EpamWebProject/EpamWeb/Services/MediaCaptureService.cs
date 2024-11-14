@@ -24,7 +24,7 @@ namespace EpamWeb.Services
             var screenshotsDirectory = Path.Combine(baseDirectory, TestContext.CurrentContext.Test.Name);
             Directory.CreateDirectory(screenshotsDirectory);
 
-            var screenshotPath = Path.Combine(screenshotsDirectory, $"screenshot_{DateTime.UtcNow:MMdd_HHmm}.png");
+            var screenshotPath = Path.Combine(screenshotsDirectory, $"screenshot_{TestContext.CurrentContext.Test.Name}_{DateTime.UtcNow:MMdd_HHmm}.png");
             await page.ScreenshotAsync(new()
             {
                 Path = screenshotPath,
