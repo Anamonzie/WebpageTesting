@@ -72,7 +72,7 @@ jobs:
         allure_results: allure-results
         gh_pages: gh-pages
         #allure_report: allure-report
-        allure_history: allure-history
+        allure_history: last-history
 
     # Publish test report to GitHub Pages
     - name: Publish Allure Test Report
@@ -81,7 +81,7 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_branch: gh-pages
-        publish_dir: allure-history
+        publish_dir: last-history
 
     - name: Upload Allure Results for Debugging
       if: always()
