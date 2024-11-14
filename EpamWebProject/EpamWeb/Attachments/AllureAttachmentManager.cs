@@ -1,5 +1,6 @@
 ﻿using Allure.Net.Commons;
 using Microsoft.Playwright;
+using NUnit.Framework;
 
 namespace EpamWeb.Attachments
 {
