@@ -1,4 +1,5 @@
 ﻿using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using EpamWeb.Attachments;
 using EpamWeb.Factory;
 using EpamWeb.Loggers;
@@ -31,6 +32,7 @@ namespace EpamWebTests.PageTests
         }
 
         [SetUp]
+        [AllureBefore("Setup session")]
         public async Task Setup()
         {
             var testName = TestContext.CurrentContext.Test.Name;
@@ -50,6 +52,7 @@ namespace EpamWebTests.PageTests
         }
 
         [TearDown]
+        [AllureAfter("Dispose session")]
         public async Task TearDown()
         {
             var testName = TestContext.CurrentContext.Test.Name;

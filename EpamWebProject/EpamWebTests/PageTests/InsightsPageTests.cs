@@ -12,7 +12,7 @@ using System.Collections.Concurrent;
 namespace EpamWebTests.PageTests
 {
     [TestFixture]
-    [AllureSuite("Insights Page Tests")]
+    [AllureFeature("Insights Page Tests")]
     public class InsightsPageTests : BaseTest
     {
         //private static readonly ThreadLocal<IBrowser> browser = new();
@@ -47,10 +47,8 @@ namespace EpamWebTests.PageTests
 
         [Test]
         [AllureName("Insights Page Search Functionality Check")]
-        [AllureDescription("Verifies that the search functionality on the EPAM Insights page works as expected.")]
         [AllureTag("Search", "InsightsPage")]
         [Category("Smoke")]
-        [AllureSuite("Suite name")]
         [AllureSeverity(SeverityLevel.critical)]
         public async Task EpamInsightsPage_SearchFunctionalityCheck()
         {
@@ -73,10 +71,8 @@ namespace EpamWebTests.PageTests
 
         [Test]
         [AllureName("Insights Page Find Button Redirect Check")]
-        [AllureDescription("Checks if the 'Find' button redirects to the correct page.")]
         [AllureTag("Redirect", "InsightsPage")]
         [Category("Regression")]
-        [AllureSuite("Suite name")]
         [AllureSeverity(SeverityLevel.normal)]
         public async Task EpamInsightsPage_FindButtonRedirectCheck()
         {
