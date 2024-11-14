@@ -13,7 +13,7 @@ using SeverityLevel = Allure.Net.Commons.SeverityLevel;
 namespace EpamWebTests.PageTests;
 
 [TestFixture]
-[AllureSuite("EPAM Homepage Tests")]
+[AllureFeature("EPAM Homepage Tests")]
 public class Tests : BaseTest
 {
     //private static readonly ThreadLocal<IBrowser> browser = new();
@@ -48,7 +48,6 @@ public class Tests : BaseTest
 
     [Test]
     [AllureName("Google Title Check")]
-    [AllureDescription("Checks the title to see if network error persists with Google as well.")]
     [AllureSeverity(SeverityLevel.minor)]
     [AllureTag("GoogleTest")]
     [Category("Integration")]
@@ -70,7 +69,6 @@ public class Tests : BaseTest
 
     [Test]
     [AllureName("EPAM Homepage Title Check")]
-    [AllureDescription("Checks if the title of the EPAM homepage is as expected.")]
     [Category("Integration")]
     [AllureTag("HamburgerMenu")]
     [AllureSeverity(SeverityLevel.minor)]
@@ -93,7 +91,6 @@ public class Tests : BaseTest
 
     [Test]
     [AllureName("EPAM Homepage Hamburger Menu Check")]
-    [AllureDescription("Checks if the hamburger menu items are as expected.")]
     [Category("Smoke")]
     [AllureTag("HamburgerMenu")]
     [AllureSeverity(SeverityLevel.critical)]
