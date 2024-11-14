@@ -15,16 +15,17 @@ namespace EpamWeb.Services
 
         public async Task<string> CaptureScreenshot(IPage page)
         {
-            var screenshotsDirectory = Path.Combine("Screenshots", TestContext.CurrentContext.Test.Name);
+            var baseDirectory = Path.Combine(TestContext.CurrentContext.WorkDirectory, "Screenshots");
+            var screenshotsDirectory = Path.Combine(baseDirectory, TestContext.CurrentContext.Test.Name);
             Directory.CreateDirectory(screenshotsDirectory);
-            var screenshotPath = Path.Combine(screenshotsDirectory, $"screenshot_{DateTime.UtcNow:MMdd_HHmm}.png");
 
+            var screenshotPath = Path.Combine(screenshotsDirectory, $"screenshot_{DateTime.UtcNow:MMdd_HHmm}.png");
             await page.ScreenshotAsync(new()
             {
                 Path = screenshotPath,
                 FullPage = true,
             });
-            
+
             TestContext.AddTestAttachment(screenshotPath);
             logger.Info(TestContext.CurrentContext.Test.Name, $"Captured screenshot at {screenshotPath}");
 
