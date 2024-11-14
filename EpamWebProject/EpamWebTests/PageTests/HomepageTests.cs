@@ -46,11 +46,12 @@ public class Tests : BaseTest
         serviceFactory = ServiceFactory.CreateInstance(pageFactory, page, logger);
     }
 
-    [Test]
+    [Test(Description = "This test will be a success")]
     [AllureName("Google Title Check")]
     [AllureDescription("Checks the title to see if network error persists with Google as well.")]
     [AllureSeverity(SeverityLevel.minor)]
     [AllureLabel("Environment", "Staging")]
+    [AllureSuite("Suite name")]
     [AllureLabel("Component", "Login")]
     public async Task Google_NetworkConnectionCheck()
     {
@@ -68,8 +69,9 @@ public class Tests : BaseTest
         logger.Info(TestContext.CurrentContext.Test.Name, $"Checking page title; expected: {expectedTitle}, actual: {result}.");
     }
 
-    [Test]
+    [Test(Description = "This test will be a success")]
     [AllureName("EPAM Homepage Title Check")]
+    [AllureSuite("Suite name")]
     [AllureDescription("Checks if the title of the EPAM homepage is as expected.")]
     [Category("Integration")]
     [AllureTag("HamburgerMenu")]
