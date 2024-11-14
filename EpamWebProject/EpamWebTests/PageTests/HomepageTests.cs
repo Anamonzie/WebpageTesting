@@ -12,8 +12,9 @@ using SeverityLevel = Allure.Net.Commons.SeverityLevel;
 namespace EpamWebTests.PageTests;
 
 [AllureNUnit]
+[AllureFeature("Labels UI")]
 [TestFixture]
-//[AllureSuite("EPAM Homepage Tests")]
+[AllureSuite("EPAM Homepage Tests")]
 public class Tests : BaseTest
 {
     private static readonly ThreadLocal<IBrowser> browser = new();
@@ -46,13 +47,12 @@ public class Tests : BaseTest
         serviceFactory = ServiceFactory.CreateInstance(pageFactory, page, logger);
     }
 
-    [Test(Description = "This test will be a success")]
+    [Test]
     [AllureName("Google Title Check")]
-    [AllureDescription("Checks the title to see if network error persists with Google as well.")]
+    //[AllureDescription("Checks the title to see if network error persists with Google as well.")]
     [AllureSeverity(SeverityLevel.minor)]
-    [AllureLabel("Environment", "Staging")]
-    [AllureSuite("Suite name")]
-    [AllureLabel("Component", "Login")]
+    [Category("Integration")]
+    [AllureTag("GoogleTest")]
     public async Task Google_NetworkConnectionCheck()
     {
         // Arrange
@@ -69,10 +69,9 @@ public class Tests : BaseTest
         logger.Info(TestContext.CurrentContext.Test.Name, $"Checking page title; expected: {expectedTitle}, actual: {result}.");
     }
 
-    [Test(Description = "This test will be a success")]
+    [Test]
     [AllureName("EPAM Homepage Title Check")]
-    [AllureSuite("Suite name")]
-    [AllureDescription("Checks if the title of the EPAM homepage is as expected.")]
+    //[AllureDescription("Checks if the title of the EPAM homepage is as expected.")]
     [Category("Integration")]
     [AllureTag("HamburgerMenu")]
     [AllureSeverity(SeverityLevel.minor)]
@@ -95,7 +94,7 @@ public class Tests : BaseTest
 
     [Test]
     [AllureName("EPAM Homepage Hamburger Menu Check")]
-    [AllureDescription("Checks if the hamburger menu items are as expected.")]
+    //[AllureDescription("Checks if the hamburger menu items are as expected.")]
     [Category("Smoke")]
     [AllureTag("HamburgerMenu")]
     [AllureSeverity(SeverityLevel.critical)]
