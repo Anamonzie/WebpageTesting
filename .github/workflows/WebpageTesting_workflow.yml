@@ -54,9 +54,9 @@ jobs:
     - name: Run Playwright Tests
       run: |
         if [ "${{ github.event.inputs.category }}" == "all" ] || [ -z "${{ github.event.inputs.category }}" ]; then
-          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --logger "console;verbosity=detailed" --results-directory ALLURE_RESULTS_DIR
+          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --logger "console;verbosity=detailed" -- TestRunParameters.Parameter(name="allure.results.directory",value="./allure-results")
         else
-          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --logger "console;verbosity=detailed" --results-directory ALLURE_RESULTS_DIR --filter "Category=${{ github.event.inputs.category }}"
+          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --logger "console;verbosity=detailed" -- TestRunParameters.Parameter(name="allure.results.directory",value="./allure-results") --filter "Category=${{ github.event.inputs.category }}"
         fi
 
     # Flatten allure results
