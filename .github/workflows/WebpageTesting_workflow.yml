@@ -47,16 +47,13 @@ jobs:
       
     - name: Build the project
       run: dotnet build EpamWebProject/EpamWebTests/EpamWebTests.sln --no-restore
-      
-    - name: Install Allure NUnit Adapter
-      run: dotnet add package Allure.NUnit
-
+    
     - name: Run Playwright Tests
       run: |
         if [ "${{ github.event.inputs.category }}" == "all" ] || [ -z "${{ github.event.inputs.category }}" ]; then
-          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger:"Allure;LogFilePath=allure-results" --results-directory ${{ github.workspace }}/allure-results
+          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --list-loggers --logger:"Allure;LogFilePath=${{ github.workspace }}/allure-results" --results-directory ${{ github.workspace }}/allure-results
         else
-          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger:"Allure;LogFilePath=allure-results" --results-directory ${{ github.workspace }}/allure-results --filter "Category=${{ github.event.inputs.category }}"
+          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --list-loggers --logger:"Allure;LogFilePath=${{ github.workspace }}/allure-results" ${{ github.workspace }}/allure-results --filter "Category=${{ github.event.inputs.category }}"
         fi
 
     # Flatten allure results
