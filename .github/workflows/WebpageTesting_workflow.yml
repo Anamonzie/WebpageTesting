@@ -55,6 +55,17 @@ jobs:
         else
           dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory ${{ github.workspace }}/allure-results --filter "Category=${{ github.event.inputs.category }}"
         fi
+
+    # Convert TRX to Allure Results
+    - name: Convert TRX to Allure Results
+      run: allure-trx ./TestResults/*.trx -o allure-results
+
+    # Flatten allure results
+    - name: Flatten allure results
+      run: |
+        mkdir -p ./allure-results
+        find ./allure-results -mindepth 2 -type f -exec mv -t ./allure-results {} +
+        find ./allure-results -type d -empty -delete    
         
     - name: Load test report history
       uses: actions/checkout@v4
