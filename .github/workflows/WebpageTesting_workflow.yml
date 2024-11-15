@@ -18,9 +18,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:  # Define environment variables here
-      ALLURE_RESULTS_DIR: ${{ github.workspace }}/EpamWebProject/EpamWebTests/allure-results
-      ALLURE_CONFIG: ${{ github.workspace }}/EpamWebProject/EpamWebTests/allureConfig.json
+ #   env:  # Define environment variables here
+#      ALLURE_RESULTS_DIR: ${{ github.workspace }}/EpamWebProject/EpamWebTests/allure-results
+ #     ALLURE_CONFIG: ${{ github.workspace }}/EpamWebProject/EpamWebTests/allureConfig.json
 
     steps:
     - uses: actions/checkout@v4
