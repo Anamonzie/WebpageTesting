@@ -56,9 +56,9 @@ jobs:
     - name: Run Playwright Tests
       run: |
         if [ "${{ github.event.inputs.category }}" == "all" ] || [ -z "${{ github.event.inputs.category }}" ]; then
-          dotnet test --no-build --configuration Debug EpamWebProject/EpamWebTests/EpamWebTests.csproj 
+          dotnet test --no-build --configuration Debug --logger "html;logfilename=testResults.html" EpamWebProject/EpamWebTests/EpamWebTests.csproj 
         else
-          dotnet test --no-build --configuration Debug --filter "Category=${{ github.event.inputs.category }}" EpamWebProject/EpamWebTests/EpamWebTests.csproj 
+          dotnet test --no-build --configuration Debug --filter "Category=${{ github.event.inputs.category }}" --logger "html;logfilename=testResults.html" EpamWebProject/EpamWebTests/EpamWebTests.csproj 
         fi
         
     # Flatten allure results
