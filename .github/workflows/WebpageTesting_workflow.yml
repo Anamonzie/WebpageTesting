@@ -47,6 +47,9 @@ jobs:
       
     - name: Build the project
       run: dotnet build EpamWebProject/EpamWebTests/EpamWebTests.sln --no-restore
+      
+    - name: Install Allure NUnit Adapter
+      run: dotnet add package Allure.NUnit
 
     - name: Run Playwright Tests
       run: |
