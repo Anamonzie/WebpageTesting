@@ -60,13 +60,7 @@ jobs:
         else
           dotnet test --no-build --configuration Release --filter "Category=${{ github.event.inputs.category }}" --logger:"console;verbosity=normal" EpamWebProject/EpamWebTests/EpamWebTests.csproj 
         fi
-        
-    # Flatten allure results
-    - name: Flatten allure results
-      run: |
-        mkdir -p ./allure-results
-        find ./allure-results -mindepth 2 -type f -exec mv -t ./allure-results {} +
-        find ./allure-results -type d -empty -delete    
+
         
     - name: Load test report history
       uses: actions/checkout@v4
