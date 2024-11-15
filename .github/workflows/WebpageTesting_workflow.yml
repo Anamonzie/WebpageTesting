@@ -56,11 +56,10 @@ jobs:
     - name: Run Playwright Tests
       run: |
         if [ "${{ github.event.inputs.category }}" == "all" ] || [ -z "${{ github.event.inputs.category }}" ]; then
-          dotnet test --configuration Release --logger "trx;logfilename=testResults.trx" EpamWebProject/EpamWebTests/EpamWebTests.csproj 
+          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --logger "trx;logfilename=testResults.trx" 
         else
-          dotnet test --configuration Release --filter "Category=${{ github.event.inputs.category }}" --logger "trx;logfilename=testResults.trx" EpamWebProject/EpamWebTests/EpamWebTests.csproj 
+          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --filter "Category=${{ github.event.inputs.category }}" --logger "trx;logfilename=testResults.trx" 
         fi
-
         
     - name: Load test report history
       uses: actions/checkout@v4
