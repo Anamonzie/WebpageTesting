@@ -56,8 +56,6 @@ jobs:
           dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --results-directory ${{ github.workspace }}/allure-results --filter "Category=${{ github.event.inputs.category }}"
         fi
         
-    
-    
     - name: Load test report history
       uses: actions/checkout@v4
       if: always()
@@ -67,11 +65,11 @@ jobs:
         path: gh-pages
 
     # Remove `.git` from allure-history to avoid permission issues
- #   - name: Remove .git from Allure History
-#      run: |
-#        if [ -d "gh-pages/.git" ]; then
-#          rm -rf gh-pages/.git
-  #      fi
+    - name: Remove .git from Allure History
+      run: |
+        if [ -d "gh-pages/.git" ]; then
+          rm -rf gh-pages/.git
+        fi
         
     # Publish Allure Report
     - name: Build and Publish Allure Report
