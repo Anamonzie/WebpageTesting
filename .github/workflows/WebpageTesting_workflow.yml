@@ -5,8 +5,8 @@ name: WebpageTesting
 
 env:  # Define environment variables here
   ALLURE_RESULTS_DIR: ${{ github.workspace }}/EpamWebProject/EpamWebTests/allure-results
-  ALLURE_CONFIG: EpamWebProject/EpamWebTests/allureConfig.json
-  SOLUTION_FILE: EpamWebProject/EpamWebTests/EpamWebTests.sln
+  ALLURE_CONFIG: ${{ github.workspace }}/EpamWebProject/EpamWebTests/allureConfig.json
+  SOLUTION_FILE: ${{ github.workspace }}/EpamWebProject/EpamWebTests/EpamWebTests.sln
   
 on:
   push:
