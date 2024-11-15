@@ -3,6 +3,11 @@
 
 name: WebpageTesting
 
+env:  # Define environment variables here
+  ALLURE_RESULTS_DIR: ${{ github.workspace }}/EpamWebProject/EpamWebTests/allure-results
+  ALLURE_CONFIG: EpamWebProject/EpamWebTests/allureConfig.json
+  SOLUTION_FILE: EpamWebProject/EpamWebTests/EpamWebTests.sln
+  
 on:
   push:
     branches: [ "main" ]
@@ -18,9 +23,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
- #   env:  # Define environment variables here
-#      ALLURE_RESULTS_DIR: ${{ github.workspace }}/EpamWebProject/EpamWebTests/allure-results
- #     ALLURE_CONFIG: ${{ github.workspace }}/EpamWebProject/EpamWebTests/allureConfig.json
 
     steps:
     - uses: actions/checkout@v4
@@ -39,8 +41,8 @@ jobs:
     - name: Install Playwright Dependencies
       run: npx playwright install-deps
       
-    - name: Install dependencies
-      run: dotnet restore EpamWebProject/EpamWebTests/EpamWebTests.sln
+    - name: Restore Packages
+      run: dotnet restore ${{ env.SOLUTION_FILE }}
 
     - name: Install Playwright Browsers
       run: npx playwright install
@@ -49,7 +51,7 @@ jobs:
       run: mkdir -p allure-results allure-history
       
     - name: Build the project
-      run: dotnet build EpamWebProject/EpamWebTests/EpamWebTests.sln --no-restore
+      run: dotnet build ${{ env.SOLUTION_FILE }} --no-restore
     
     - name: Run Playwright Tests
       run: |
