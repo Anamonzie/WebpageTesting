@@ -28,8 +28,6 @@
     <PackageReference Include="Microsoft.Playwright" Version="1.48.0" />
     <PackageReference Include="Microsoft.Playwright.NUnit" Version="1.48.0" />
     <PackageReference Include="Microsoft.Playwright.TestAdapter" Version="1.48.0" />
-    <PackageReference Include="Microsoft.TestPlatform" Version="17.11.1" />
-    <PackageReference Include="MSTest.TestAdapter" Version="3.6.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NUnit" Version="4.2.2" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
