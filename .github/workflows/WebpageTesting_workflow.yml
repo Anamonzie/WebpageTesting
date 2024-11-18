@@ -51,14 +51,14 @@ jobs:
       run: mkdir -p allure-results allure-history
       
     - name: Build the project
-      run: dotnet build --no-restore --configuration Release ${{ env.SOLUTION_FILE }}
+      run: dotnet build --configuration Release ${{ env.SOLUTION_FILE }} --no-restore
     
     - name: Run Playwright Tests
       run: |
         if [ "${{ github.event.inputs.category }}" == "all" ] || [ -z "${{ github.event.inputs.category }}" ]; then
-          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --logger "trx;logfilename=testResults.trx"
+          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory ${{ github.workspace }}/allure-results
         else
-          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --filter "Category=${{ github.event.inputs.category }}" --logger "trx;logfilename=testResults.trx"
+          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory ${{ github.workspace }}/allure-results --filter "Category=${{ github.event.inputs.category }}"
         fi
         
     - name: Load test report history
