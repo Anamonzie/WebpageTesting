@@ -51,7 +51,7 @@ jobs:
       run: mkdir -p allure-results allure-history
       
     - name: Build the project
-      run: dotnet build --configuration Release ${{ env.SOLUTION_FILE }} --no-restore
+      run: dotnet build --no-restore --configuration Release ${{ env.SOLUTION_FILE }} 
     
     - name: Run Playwright Tests
       run: |
