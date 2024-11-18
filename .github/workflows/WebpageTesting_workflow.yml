@@ -3,6 +3,11 @@
 
 name: WebpageTesting
 
+env:  # Define environment variables here
+  ALLURE_RESULTS_DIR: ${{ github.workspace }}/EpamWebProject/EpamWebTests/allure-results
+  ALLURE_CONFIG: ${{ github.workspace }}/EpamWebProject/EpamWebTests/allureConfig.json
+  SOLUTION_FILE: ${{ github.workspace }}/EpamWebProject/EpamWebTests/EpamWebTests.sln
+  
 on:
   push:
     branches: [ "main" ]
@@ -36,8 +41,8 @@ jobs:
     - name: Install Playwright Dependencies
       run: npx playwright install-deps
       
-    - name: Install dependencies
-      run: dotnet restore EpamWebProject/EpamWebTests/EpamWebTests.sln
+    - name: Restore Packages
+      run: dotnet restore ${{ env.SOLUTION_FILE }}
 
     - name: Install Playwright Browsers
       run: npx playwright install
@@ -46,23 +51,16 @@ jobs:
       run: mkdir -p allure-results allure-history
       
     - name: Build the project
-      run: dotnet build EpamWebProject/EpamWebTests/EpamWebTests.sln --no-restore
-
+      run: dotnet build --no-restore --configuration Release ${{ env.SOLUTION_FILE }}
+    
     - name: Run Playwright Tests
       run: |
         if [ "${{ github.event.inputs.category }}" == "all" ] || [ -z "${{ github.event.inputs.category }}" ]; then
-          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger:"Allure;LogFilePath=allure-results" --results-directory ${{ github.workspace }}/allure-results
+          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --logger "trx;logfilename=testResults.trx" 
         else
-          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger:"Allure;LogFilePath=allure-results" --results-directory ${{ github.workspace }}/allure-results --filter "Category=${{ github.event.inputs.category }}"
+          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --filter "Category=${{ github.event.inputs.category }}" --logger "trx;logfilename=testResults.trx" 
         fi
-
-    # Flatten allure results
-    - name: Flatten allure results
-      run: |
-        mkdir -p ./allure-results
-        find ./allure-results -mindepth 2 -type f -exec mv -t ./allure-results {} +
-        find ./allure-results -type d -empty -delete        
-    
+        
     - name: Load test report history
       uses: actions/checkout@v4
       if: always()
@@ -72,19 +70,18 @@ jobs:
         path: gh-pages
 
     # Remove `.git` from allure-history to avoid permission issues
- #   - name: Remove .git from Allure History
-#      run: |
-#        if [ -d "gh-pages/.git" ]; then
-#          rm -rf gh-pages/.git
-  #      fi
+    - name: Remove .git from Allure History
+      run: |
+        if [ -d "gh-pages/.git" ]; then
+          rm -rf gh-pages/.git
+        fi
         
     # Publish Allure Report
     - name: Build and Publish Allure Report
       uses: simple-elf/allure-report-action@master
       if: always()
       with:
-        allure_results: ./allure-results
-        #gh_pages: gh-pages
+        allure_results: allure-results
         allure_history: allure-history
 
     # Publish test report to GitHub Pages
