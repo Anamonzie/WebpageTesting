@@ -64,7 +64,10 @@ jobs:
     - name: Flatten Allure Results Directory
       run: |
         find allure-results -type f -exec mv {} allure-results/ \;
-   
+
+    - name: Clean Up Empty Directories
+      run: find allure-results -type d -empty -delete
+      
     - name: Load test report history
       uses: actions/checkout@v4
       if: always()
