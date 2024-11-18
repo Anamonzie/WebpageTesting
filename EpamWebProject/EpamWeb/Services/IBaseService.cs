@@ -1,6 +1,6 @@
 ﻿namespace EpamWeb.Services
 {
-    public interface IPageService
+    public interface IBaseService
     {
         Task NavigateToUrlAsync(string url);
         Task NavigateToUrlAndAcceptCookiesAsync(string url);

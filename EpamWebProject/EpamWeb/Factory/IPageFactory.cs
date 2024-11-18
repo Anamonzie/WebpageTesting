@@ -5,8 +5,9 @@ namespace EpamWeb.Factory
 {
     public interface IPageFactory
     {
-        IPage GetPage();
-        IHomepage CreateHomepage();
-        IInsightsPage CreateInsightsPage();
+        Task<IPage> GetOrCreatePageAsync(string testName);
+        Task RemovePageAsync(string testName);
+        IHomepage CreateHomepage(IPage page);
+        IInsightsPage CreateInsightsPage(IPage page);
     }
 }

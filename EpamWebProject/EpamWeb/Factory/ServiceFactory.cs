@@ -23,13 +23,13 @@ namespace EpamWeb.Factory
 
         public IHomepageService CreateHomepageService(IPage page)
         {
-            IHomepage homepage = pageFactory.CreateHomepage();
+            IHomepage homepage = pageFactory.CreateHomepage(page);
             return new HomepageService(homepage, page, logger);
         }
 
         public IInsightsPageService CreateInsightsPageService(IPage page)
         {
-            IInsightsPage insightsPage = pageFactory.CreateInsightsPage();
+            IInsightsPage insightsPage = pageFactory.CreateInsightsPage(page);
             return new InsightsPageService(insightsPage, page, logger);
         }
     }
