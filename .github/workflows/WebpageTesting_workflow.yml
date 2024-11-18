@@ -47,8 +47,8 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install
       
-   # - name: Create Allure Results Directory
-   #   run: mkdir -p allure-results allure-history
+    - name: Create Allure Results Directory
+      run: mkdir -p allure-results allure-history
       
     - name: Build the project
       run: dotnet build --no-restore --configuration Release ${{ env.SOLUTION_FILE }}
