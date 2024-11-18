@@ -1,7 +1,5 @@
 {
   "allure": {
-    "directory": "allure-results",
-    "history": "allure-history",
-    "clean": true
+    "directory": "allure-results"
   }
 }

@@ -24,7 +24,7 @@ public class Tests : BaseTest
         AllureApi.SetDescription("Checking Google Connection");
         // Arrange
         const string expectedTitle = TestData.ExpectedGoogleTitle;
-        var testPage = Pages[TestContext.CurrentContext.Test.Name];
+        var testPage = await pageFactory.GetOrCreatePageAsync(TestContext.CurrentContext.Test.Name);
 
         await testPage.GotoAsync(ConstantData.GoogleUrl);
 
@@ -45,7 +45,7 @@ public class Tests : BaseTest
     {
         // Arrange
         const string expectedTitle = TestData.ExpectedHomepageTitle;
-        var testPage = Pages[TestContext.CurrentContext.Test.Name];
+        var testPage = await pageFactory.GetOrCreatePageAsync(TestContext.CurrentContext.Test.Name);
 
         var homepageService = serviceFactory.CreateHomepageService(testPage);
         await homepageService.NavigateToUrlAndAcceptCookiesAsync(ConstantData.EpamHomepageUrl);
@@ -67,7 +67,7 @@ public class Tests : BaseTest
     {
         // Arrange
         var expectedItems = TestData.ExpectedHamburgerMenuItems;
-        var testPage = Pages[TestContext.CurrentContext.Test.Name];
+        var testPage = await pageFactory.GetOrCreatePageAsync(TestContext.CurrentContext.Test.Name);
 
         var homepageService = serviceFactory.CreateHomepageService(testPage);
         await homepageService.NavigateToUrlAndAcceptCookiesAsync(ConstantData.EpamHomepageUrl);

@@ -5,7 +5,6 @@ using EpamWeb.Factory;
 using EpamWeb.Loggers;
 using EpamWeb.Services;
 using Microsoft.Playwright;
-using System.Collections.Concurrent;
 
 namespace EpamWebTests.PageTests
 {
@@ -15,7 +14,6 @@ namespace EpamWebTests.PageTests
         protected static IBrowserFactory browserFactory;
         protected static ILoggerManager logger;
         protected static readonly ThreadLocal<IBrowser> browser = new();
-        protected static readonly ConcurrentDictionary<string, IPage> Pages = new();
 
         protected IPageFactory pageFactory;
         protected IServiceFactory serviceFactory;
@@ -43,11 +41,10 @@ namespace EpamWebTests.PageTests
 
             browser.Value = await browserFactory.GetBrowser();
             context = await browser.Value.NewContextAsync(mediaCaptureService.StartVideoRecordingAsync());
+            pageFactory = new PageFactory(context);
 
-            var page = await context.NewPageAsync();
-            Pages[testName] = page;
+            var page = await pageFactory.GetOrCreatePageAsync(testName);
 
-            pageFactory = new PageFactory(page);
             serviceFactory = ServiceFactory.CreateInstance(pageFactory, page, logger);
         }
 
@@ -56,17 +53,20 @@ namespace EpamWebTests.PageTests
         public async Task TearDown()
         {
             var testName = TestContext.CurrentContext.Test.Name;
+            var page = await pageFactory.GetOrCreatePageAsync(testName);
 
-            if (Pages.TryRemove(testName, out var testPage) && !testPage.IsClosed)
+            if (!page.IsClosed)
             {
-                var screenshotPath = await mediaCaptureService.CaptureScreenshot(testPage);
+                var screenshotPath = await mediaCaptureService.CaptureScreenshot(page);
                 await allureAttachmentManager.AddScreenshotAttachment(screenshotPath);
 
-                await testPage.CloseAsync();
-                await testPage.Context.CloseAsync();
+                await page.CloseAsync();
+                await page.Context.CloseAsync();
 
-                await allureAttachmentManager.AddVideoAttachment(testPage);
+                await allureAttachmentManager.AddVideoAttachment(page);
             }
+
+            await pageFactory.RemovePageAsync(testName);
 
             logger.CloseAndFlush(testName);
 

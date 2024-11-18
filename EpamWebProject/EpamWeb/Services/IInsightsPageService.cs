@@ -1,6 +1,6 @@
 ﻿namespace EpamWeb.Services
 {
-    public interface IInsightsPageService : IPageService
+    public interface IInsightsPageService : IBaseService
     {
         Task ClickFindButtonAsync();
         Task InputTextInSearchFieldAsync();

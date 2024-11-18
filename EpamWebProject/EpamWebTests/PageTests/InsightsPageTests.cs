@@ -17,7 +17,7 @@ namespace EpamWebTests.PageTests
         public async Task EpamInsightsPage_SearchFunctionalityCheck()
         {
             // Arrange
-            var testPage = Pages[TestContext.CurrentContext.Test.Name];
+            var testPage = await pageFactory.GetOrCreatePageAsync(TestContext.CurrentContext.Test.Name);
             var insightsPageService = serviceFactory.CreateInsightsPageService(testPage);
 
             await insightsPageService.NavigateToUrlAndAcceptCookiesAsync(ConstantData.EpamInsightsPageUrl);
@@ -41,7 +41,7 @@ namespace EpamWebTests.PageTests
         public async Task EpamInsightsPage_FindButtonRedirectCheck()
         {
             // Arrange
-            var testPage = Pages[TestContext.CurrentContext.Test.Name];
+            var testPage = await pageFactory.GetOrCreatePageAsync(TestContext.CurrentContext.Test.Name);
             var insightsPageService = serviceFactory.CreateInsightsPageService(testPage);
 
             await insightsPageService.NavigateToUrlAndAcceptCookiesAsync(ConstantData.EpamInsightsPageUrl);
