@@ -21,8 +21,11 @@ on:
         default: 'all'
         
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 'EpamWebProject/EpamWebTests'
 
     steps:
     - uses: actions/checkout@v4
@@ -35,31 +38,15 @@ jobs:
       with:
         dotnet-version: 8.0.x
         
-    - name: Install Playwright
-      run: npm install @playwright/test
-
-    - name: Install Playwright Dependencies
-      run: npx playwright install-deps
+    - name: Build Solution   
+      run: dotnet build --configuration Release
       
-    - name: Restore Packages
-      run: dotnet restore ${{ env.SOLUTION_FILE }}
-
-    - name: Install Playwright Browsers
-      run: npx playwright install
+    - name: Ensure browsers are installed
+      run: pwsh bin/Release/net8.0/playwright.ps1 install --with-deps
       
-    - name: Create Allure Results Directory
-      run: mkdir -p allure-results allure-history
-      
-    - name: Build the project
-      run: dotnet build --no-restore --configuration Release ${{ env.SOLUTION_FILE }} 
-    
-    - name: Run Playwright Tests
+    - name: Run Playwright tests
       run: |
-        if [ "${{ github.event.inputs.category }}" == "all" ] || [ -z "${{ github.event.inputs.category }}" ]; then
-          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger "trx;LogFileName=TestResults.trx" --results-directory ${{ github.workspace }}/allure-results
-        else
-          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger "trx;LogFileName=TestResults.trx" --results-directory ${{ github.workspace }}/allure-results --filter "Category=${{ github.event.inputs.category }}"
-        fi      
+        dotnet test --configuration Release 
 
  #   - name: Flatten Allure Results Directory
  #     run: |
@@ -68,38 +55,38 @@ jobs:
   #  - name: Clean Up Empty Directories
  #     run: find allure-results -type d -empty -delete
       
-    - name: Load test report history
-      uses: actions/checkout@v4
-      if: always()
-      continue-on-error: true
-      with:
-        ref: gh-pages
-        path: gh-pages
-
+ #   - name: Load test report history
+#      uses: actions/checkout@v4
+#      if: always()
+#      continue-on-error: true
+#      with:
+#        ref: gh-pages
+   #     path: gh-pages
+#
     # Remove `.git` from allure-history to avoid permission issues
-    - name: Remove .git from Allure History
-      run: |
-        if [ -d "gh-pages/.git" ]; then
-          rm -rf gh-pages/.git
-        fi
+#    - name: Remove .git from Allure History
+#      run: |
+#        if [ -d "gh-pages/.git" ]; then
+#          rm -rf gh-pages/.git
+ #       fi
         
     # Publish Allure Report
-    - name: Build and Publish Allure Report
-      uses: simple-elf/allure-report-action@master
-      if: always()
-      with:
-        allure_results: allure-results
-        allure_history: allure-history
+#    - name: Build and Publish Allure Report
+#      uses: simple-elf/allure-report-action@master
+#      if: always()
+#      with:
+#        allure_results: allure-results
+ #       allure_history: allure-history
 
     # Publish test report to GitHub Pages
-    - name: Publish Allure Test Report
-      if: always()
-      uses: peaceiris/actions-gh-pages@v4
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_branch: gh-pages
-        publish_dir: allure-history
-
+#    - name: Publish Allure Test Report
+#      if: always()
+ #     uses: peaceiris/actions-gh-pages@v4
+ #     with:
+ #       github_token: ${{ secrets.GITHUB_TOKEN }}
+ #       publish_branch: gh-pages
+   #     publish_dir: allure-history
+#
     # Upload Allure Results for Debugging
     - name: Upload Allure Results for Debugging
       if: always()
@@ -109,9 +96,9 @@ jobs:
         path: allure-results
         
     # Upload Allure History for Debugging
-    - name: Upload Allure History for Debugging
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: allure-history
-        path: allure-history
+#    - name: Upload Allure History for Debugging
+ #     if: always()
+ #     uses: actions/upload-artifact@v4
+ #     with:
+  #      name: allure-history
+  #      path: allure-history
