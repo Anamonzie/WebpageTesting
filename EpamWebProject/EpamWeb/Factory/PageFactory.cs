@@ -38,7 +38,6 @@ namespace EpamWeb.Factory
             return new Homepage(page);
         }
 
-        //Func<IPage, IHomepage> CreateHomepage2 = static (IPage page) => new Homepage(page);
 
         public IInsightsPage CreateInsightsPage(IPage page)
         {

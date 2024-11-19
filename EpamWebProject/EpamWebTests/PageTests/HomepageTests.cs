@@ -1,4 +1,3 @@
-using Allure.NUnit;
 using Allure.Net.Commons;
 using Allure.NUnit.Attributes;
 using EpamWeb.Utils;
