@@ -40,6 +40,9 @@ jobs:
 
     - name: Install Playwright Dependencies
       run: npx playwright install-deps
+
+    - name: Install Allure TRX Converter
+      run: npm install -g allure-trx
       
     - name: Restore Packages
       run: dotnet restore ${{ env.SOLUTION_FILE }}
@@ -56,16 +59,13 @@ jobs:
     - name: Run Playwright Tests
       run: |
         if [ "${{ github.event.inputs.category }}" == "all" ] || [ -z "${{ github.event.inputs.category }}" ]; then
-          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger:"allure;LogFileName=allure-results" --results-directory ${{ github.workspace }}/allure-results
+          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger "trx;LogFileName=TestResults.trx" --results-directory ${{ github.workspace }}/allure-results
         else
-          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger:"allure;LogFileName=allure-results" --results-directory ${{ github.workspace }}/allure-results --filter "Category=${{ github.event.inputs.category }}"
-        fi
-        
-  #  - name: Install Allure TRX Converter
-  #    run: npm install -g allure-trx
+          dotnet test EpamWebProject/EpamWebTests/EpamWebTests.csproj --configuration Release --verbosity normal --logger "trx;LogFileName=TestResults.trx" --results-directory ${{ github.workspace }}/allure-results --filter "Category=${{ github.event.inputs.category }}"
+        fi      
 
- #   - name: Convert TRX to Allure Results
- #     run: allure-trx --input ${{ github.workspace }}/allure-results/TestResults.trx --output allure-results
+    - name: Convert TRX to Allure Results
+      run: allure-trx --input ${{ github.workspace }}/allure-results/TestResults.trx --output allure-results
 
 
   #  - name: Flatten Allure Results Directory
