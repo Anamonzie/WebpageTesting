@@ -1,0 +1,5 @@
+20-11-2024 15:14 [INF] (40) 6174 EpamHomepage_HamburgerMenu || Successfully navigated to https://www.epam.com.
+20-11-2024 15:14 [INF] (40) 6174 EpamHomepage_HamburgerMenu || Clicking on 'Accept All' cookies button
+20-11-2024 15:14 [INF] (40) 6174 EpamHomepage_HamburgerMenu || Clicking on the Hamburger Menu Button
+20-11-2024 15:14 [INF] (40) 6174 EpamHomepage_HamburgerMenu || Menu items are: Services, Insights, About, Careers
+20-11-2024 15:15 [INF] (40) 6174 EpamHomepage_HamburgerMenu || Captured screenshot at allure-results/Screenshots/EpamHomepage_HamburgerMenu/screenshot_EpamHomepage_HamburgerMenu_1120_1514.png
