@@ -34,7 +34,7 @@ jobs:
         dotnet-version: 8.0.x
         
     - name: Restore NuGet packages
-      run: dotnet restore EpamWebTests.sln       
+      run: dotnet restore   
       
     - name: Build Solution   
       run: dotnet build --configuration Release
@@ -44,7 +44,9 @@ jobs:
       
     - name: Run Playwright tests
       run: |
-        dotnet test --configuration Release 
+        mkdir allure-results
+        dotnet test --configuration Release --test-adapter-path:. --results-directory allure-results
+        
  #EpamWebTests.csproj 
  #--logger "trx;LogFileName=test-results.trx" --results-directory ${{ github.workspace }}/allure-results
 
