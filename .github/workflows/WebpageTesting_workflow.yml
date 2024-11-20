@@ -116,7 +116,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: allure-results
-        path: ${{ env.ALLURE_RESULTS_DIR }}
+        path: allure-results
 
 
  #   - name: Generate Allure Report
