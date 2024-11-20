@@ -46,7 +46,7 @@ jobs:
       
     - name: Run Playwright tests
       run: |
-        dotnet test --configuration Release 
+        dotnet test --configuration Release EpamWebProject/EpamWebTests/EpamWebTests.csproj
 
  #   - name: Flatten Allure Results Directory
  #     run: |
