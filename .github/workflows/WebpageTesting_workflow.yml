@@ -31,10 +31,7 @@ jobs:
     - name: Setup .NET    
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
-        
-    - name: Restore NuGet packages
-      run: dotnet restore   
+        dotnet-version: 8.0.x       
       
     - name: Build Solution   
       run: dotnet build --configuration Release
@@ -44,51 +41,8 @@ jobs:
       
     - name: Run Playwright tests
       run: |
-        mkdir allure-results
-        dotnet test --configuration Release --test-adapter-path:. --results-directory allure-results
+        dotnet test --configuration Release 
         
- #EpamWebTests.csproj 
- #--logger "trx;LogFileName=test-results.trx" --results-directory ${{ github.workspace }}/allure-results
-
- #   - name: Flatten Allure Results Directory
- #     run: |
- #       find allure-results -type f -exec mv {} allure-results/ \;
-
-  #  - name: Clean Up Empty Directories
- #     run: find allure-results -type d -empty -delete
-      
- #   - name: Load test report history
-  #    uses: actions/checkout@v4
- #     if: always()
- #     continue-on-error: true
- #     with:
- #       ref: gh-pages
-  #      path: gh-pages
-
-    # Remove `.git` from allure-history to avoid permission issues
-#    - name: Remove .git from Allure History
-#      run: |
-#        if [ -d "gh-pages/.git" ]; then
-#          rm -rf gh-pages/.git
- #       fi
-        
-    # Publish Allure Report
-#    - name: Build and Publish Allure Report
-#      uses: simple-elf/allure-report-action@master
-#      if: always()
-#      with:
- #       allure_results: allure-results
- #       allure_history: allure-history
-
-    # Publish test report to GitHub Pages
-#    - name: Publish Allure Test Report
-#      if: always()
- #     uses: peaceiris/actions-gh-pages@v4
- #     with:
- #       github_token: ${{ secrets.GITHUB_TOKEN }}
-  #      publish_branch: gh-pages
-  #      publish_dir: allure-history
-
     - name: Get Allure history
       uses: actions/checkout@v4
       if: always()
@@ -98,7 +52,7 @@ jobs:
         path: gh-pages
 
     - name: Generate Allure Report
-      uses: simple-elf/allure-report-action@master
+      uses: simple-elf/allure-report-action@v1.11 
       if: always()
       with:
         allure_results: allure-results
