@@ -71,22 +71,22 @@ jobs:
  #       fi
         
     # Publish Allure Report
-#    - name: Build and Publish Allure Report
-#      uses: simple-elf/allure-report-action@master
-#      if: always()
-#      with:
-#        allure_results: allure-results
- #       allure_history: allure-history
+    - name: Build and Publish Allure Report
+      uses: simple-elf/allure-report-action@master
+      if: always()
+      with:
+        allure_results: allure-results
+        allure_history: allure-history
 
     # Publish test report to GitHub Pages
-#    - name: Publish Allure Test Report
-#      if: always()
- #     uses: peaceiris/actions-gh-pages@v4
- #     with:
- #       github_token: ${{ secrets.GITHUB_TOKEN }}
- #       publish_branch: gh-pages
-   #     publish_dir: allure-history
-#
+    - name: Publish Allure Test Report
+      if: always()
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: gh-pages
+        publish_dir: allure-history
+
     # Upload Allure Results for Debugging
     - name: Upload Allure Results for Debugging
       if: always()
