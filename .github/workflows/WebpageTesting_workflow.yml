@@ -55,14 +55,14 @@ jobs:
   #  - name: Clean Up Empty Directories
  #     run: find allure-results -type d -empty -delete
       
- #   - name: Load test report history
-#      uses: actions/checkout@v4
-#      if: always()
-#      continue-on-error: true
-#      with:
-#        ref: gh-pages
-   #     path: gh-pages
-#
+    - name: Load test report history
+      uses: actions/checkout@v4
+      if: always()
+      continue-on-error: true
+      with:
+        ref: gh-pages
+        path: gh-pages
+
     # Remove `.git` from allure-history to avoid permission issues
 #    - name: Remove .git from Allure History
 #      run: |
