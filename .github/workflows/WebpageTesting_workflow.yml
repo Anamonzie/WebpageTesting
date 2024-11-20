@@ -55,13 +55,13 @@ jobs:
   #  - name: Clean Up Empty Directories
  #     run: find allure-results -type d -empty -delete
       
-    - name: Load test report history
-      uses: actions/checkout@v4
-      if: always()
-      continue-on-error: true
-      with:
-        ref: gh-pages
-        path: gh-pages
+ #   - name: Load test report history
+  #    uses: actions/checkout@v4
+ #     if: always()
+ #     continue-on-error: true
+ #     with:
+ #       ref: gh-pages
+  #      path: gh-pages
 
     # Remove `.git` from allure-history to avoid permission issues
 #    - name: Remove .git from Allure History
@@ -71,21 +71,21 @@ jobs:
  #       fi
         
     # Publish Allure Report
-    - name: Build and Publish Allure Report
-      uses: simple-elf/allure-report-action@master
-      if: always()
-      with:
-        allure_results: allure-results
-        allure_history: allure-history
+#    - name: Build and Publish Allure Report
+#      uses: simple-elf/allure-report-action@master
+#      if: always()
+#      with:
+ #       allure_results: allure-results
+ #       allure_history: allure-history
 
     # Publish test report to GitHub Pages
-    - name: Publish Allure Test Report
-      if: always()
-      uses: peaceiris/actions-gh-pages@v4
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_branch: gh-pages
-        publish_dir: allure-history
+#    - name: Publish Allure Test Report
+#      if: always()
+ #     uses: peaceiris/actions-gh-pages@v4
+ #     with:
+ #       github_token: ${{ secrets.GITHUB_TOKEN }}
+  #      publish_branch: gh-pages
+  #      publish_dir: allure-history
 
     # Upload Allure Results for Debugging
     - name: Upload Allure Results for Debugging
@@ -93,7 +93,19 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: allure-results
-        path: allure-results
+        path: ${{ ALLURE_RESULTS_DIR }}
+
+
+    - name: Generate Allure Report
+      if: always()
+      run: allure generate --clean -o allure-report
+
+    - name: Publish Allure Report
+      if: always()
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: allure-report
         
     # Upload Allure History for Debugging
 #    - name: Upload Allure History for Debugging
