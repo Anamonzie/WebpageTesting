@@ -73,23 +73,3 @@ jobs:
       with:
         name: allure-results
         path: allure-results
-
-
- #   - name: Generate Allure Report
-  #    if: always()
- #     run: allure generate --clean -o allure-report
-
-#    - name: Publish Allure Report
-#      if: always()
- #     uses: peaceiris/actions-gh-pages@v4
- #     with:
- #       github_token: ${{ secrets.GITHUB_TOKEN }}
- #       publish_dir: allure-report
-        
-    # Upload Allure History for Debugging
-#    - name: Upload Allure History for Debugging
- #     if: always()
- #     uses: actions/upload-artifact@v4
- #     with:
-  #      name: allure-history
-  #      path: allure-history
