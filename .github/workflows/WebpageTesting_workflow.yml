@@ -44,7 +44,7 @@ jobs:
       
     - name: Run Playwright tests
       run: |
-        dotnet test --configuration Release EpamWebTests.csproj
+        dotnet test --configuration Release EpamWebTests.csproj --results-directory ${{ github.workspace }}/allure-results
 
  #   - name: Flatten Allure Results Directory
  #     run: |
