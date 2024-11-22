@@ -1,0 +1,5 @@
+22-11-2024 14:03 [INF] (10) 6124 EpamInsightsPage_SearchFunctionalityCheck || Successfully navigated to https://www.epam.com/insights.
+22-11-2024 14:03 [INF] (10) 6124 EpamInsightsPage_SearchFunctionalityCheck || Inputting some text in the search field
+22-11-2024 14:03 [INF] (10) 6124 EpamInsightsPage_SearchFunctionalityCheck || Clicking on Find button
+22-11-2024 14:03 [INF] (10) 6124 EpamInsightsPage_SearchFunctionalityCheck || Checking page title; expected to contain: Cloud, actual:  774 results for "Cloud".
+22-11-2024 14:03 [INF] (10) 6124 EpamInsightsPage_SearchFunctionalityCheck || Captured screenshot at allure-results/Screenshots/EpamInsightsPage_SearchFunctionalityCheck/screenshot_EpamInsightsPage_SearchFunctionalityCheck_1122_1403.png
