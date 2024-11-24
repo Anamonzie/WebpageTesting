@@ -1,0 +1,6 @@
+24-11-2024 18:32 [INF] (39) 6113 EpamHomepage_TitleCheck || Successfully navigated to https://www.epam.com.
+24-11-2024 18:32 [INF] (39) 6113 EpamHomepage_TitleCheck || Clicking on 'Accept All' cookies button
+24-11-2024 18:32 [INF] (39) 6113 EpamHomepage_TitleCheck || Navigation to https://www.epam.com completed event triggered.
+24-11-2024 18:32 [INF] (39) 6113 EpamHomepage_TitleCheck || Getting page title
+24-11-2024 18:32 [INF] (39) 6113 EpamHomepage_TitleCheck || Checking page title; expected: EPAM | Software Engineering & Product Development Services, actual: EPAM | Software Engineering & Product Development Services.
+24-11-2024 18:32 [INF] (39) 6113 EpamHomepage_TitleCheck || Captured screenshot at allure-results/Screenshots/EpamHomepage_TitleCheck/screenshot_EpamHomepage_TitleCheck_1124_1832.png

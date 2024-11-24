@@ -1,0 +1,6 @@
+24-11-2024 18:32 [INF] (13) 6113 EpamInsightsPage_FindButtonRedirectCheck || Successfully navigated to https://www.epam.com/insights.
+24-11-2024 18:32 [INF] (13) 6113 EpamInsightsPage_FindButtonRedirectCheck || Clicking on 'Accept All' cookies button
+24-11-2024 18:32 [INF] (13) 6113 EpamInsightsPage_FindButtonRedirectCheck || Clicking on Find button
+24-11-2024 18:32 [INF] (13) 6113 EpamInsightsPage_FindButtonRedirectCheck || Getting page title
+24-11-2024 18:32 [INF] (13) 6113 EpamInsightsPage_FindButtonRedirectCheck || Checking page title; expected: Search Our Website | EPAM, actual: Search Our Website | EPAM.
+24-11-2024 18:32 [INF] (13) 6113 EpamInsightsPage_FindButtonRedirectCheck || Captured screenshot at allure-results/Screenshots/EpamInsightsPage_FindButtonRedirectCheck/screenshot_EpamInsightsPage_FindButtonRedirectCheck_1124_1832.png
