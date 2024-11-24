@@ -9,6 +9,9 @@ namespace EpamWeb.Services
 {
     public class HomepageService : IHomepageService
     {
+        // Declaring an event for navigation completion
+        public event EventHandler<string> NavigationCompleted;
+
         private readonly IHomepage homepage;
         private readonly IPage page;
         private readonly ILoggerManager logger;
@@ -31,6 +34,13 @@ namespace EpamWeb.Services
         }
 
         /// * METHODS * ///
+
+        // triggering the event in the method
+        protected virtual void OnNavigationCompleted(string url)
+        {
+            NavigationCompleted?.Invoke(this, url);
+        }
+
         public async Task NavigateToUrlAsync(string url)
         {
             await retryPolicy.ExecuteAsync(async () =>
@@ -42,6 +52,7 @@ namespace EpamWeb.Services
 
                 logger.Info(TestContext.CurrentContext.Test.Name, $"Successfully navigated to {url}.");
             });
+
         }
 
         public async Task NavigateToUrlAndAcceptCookiesAsync(string url)
@@ -52,6 +63,9 @@ namespace EpamWeb.Services
             {
                 logger.Info(TestContext.CurrentContext.Test.Name, "Clicking on 'Accept All' cookies button");
                 await homepage.CookiesAcceptButton.ClickAsync();
+
+                // Raise the NavigationCompleted event
+                OnNavigationCompleted(url);
             }
         }
 
