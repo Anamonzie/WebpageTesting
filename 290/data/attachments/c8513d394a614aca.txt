@@ -1,0 +1,1 @@
+27-11-2024 11:08 [INF] (13) 5811 CreatePost_ShouldReturnNewPost || Captured screenshot at allure-results/Screenshots/CreatePost_ShouldReturnNewPost/screenshot_CreatePost_ShouldReturnNewPost_1127_1108.png
