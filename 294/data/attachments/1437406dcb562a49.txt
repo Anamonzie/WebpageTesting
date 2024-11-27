@@ -1,0 +1,4 @@
+27-11-2024 12:24 [INF] (7) 6089 EpamHomepage_HamburgerMenu || Successfully navigated to https://www.epam.com.
+27-11-2024 12:24 [INF] (7) 6089 EpamHomepage_HamburgerMenu || Clicking on the Hamburger Menu Button
+27-11-2024 12:25 [INF] (7) 6089 EpamHomepage_HamburgerMenu || Menu items are: Services, Insights, About, Careers
+27-11-2024 12:25 [INF] (7) 6089 EpamHomepage_HamburgerMenu || Captured screenshot at allure-results/Screenshots/EpamHomepage_HamburgerMenu/screenshot_EpamHomepage_HamburgerMenu_1127_1225.png
