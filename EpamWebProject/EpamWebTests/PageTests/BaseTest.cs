@@ -4,6 +4,7 @@ using EpamWeb.Attachments;
 using EpamWeb.Factory;
 using EpamWeb.Loggers;
 using EpamWeb.Services;
+using EpamWeb.Utils;
 using Microsoft.Playwright;
 
 namespace EpamWebTests.PageTests
@@ -22,6 +23,10 @@ namespace EpamWebTests.PageTests
         protected IMediaCaptureService mediaCaptureService;
         protected IAllureAttachmentManager allureAttachmentManager;
 
+        protected IApiServiceFactory apiServiceFactory;
+        protected IAPIRequestContext api; // playwright interface for managing the context of API requests
+        protected IApiService apiService; // my abstraction
+
         [OneTimeSetUp]
         public static void GlobalSetup()
         {
@@ -29,10 +34,20 @@ namespace EpamWebTests.PageTests
             logger = LoggerManager.Instance;
         }
 
+        [OneTimeTearDown]
+        public async Task GlobalTearDown()
+        {
+            await api.DisposeAsync();
+        }
+
         [SetUp]
         [AllureBefore("Setup session")]
         public async Task Setup()
         {
+            // for API tests
+            apiService = apiServiceFactory.Create(ConstantData.ApiUrl);
+
+            // For old tests
             var testName = TestContext.CurrentContext.Test.Name;
             logger.InitializeLogFilePath(testName);
 
