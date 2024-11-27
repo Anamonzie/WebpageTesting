@@ -18,5 +18,8 @@ namespace EpamWeb.Utils
         public const string SearchInput = "Cloud";
 
         public const string ExpectedGoogleTitle = "Google";
+
+        public const string ApiFilePost1 = "ExpectedData/Post1.json";
+        public const string PathToApiGeneratedPost = "GeneratedData/NewPost.json";
     }
 }

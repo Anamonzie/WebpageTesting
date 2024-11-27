@@ -1,4 +1,4 @@
-﻿using EpamWeb.Services;
+﻿using EpamWeb.Services.ServiceInterfaces;
 using Microsoft.Playwright;
 
 namespace EpamWeb.Factory

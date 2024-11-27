@@ -1,6 +1,7 @@
 ﻿using Allure.Net.Commons;
 using Allure.NUnit.Attributes;
 using EpamWeb.Utils;
+using EpamWebTests.BaseTestClasses;
 using FluentAssertions;
 
 namespace EpamWebTests.PageTests

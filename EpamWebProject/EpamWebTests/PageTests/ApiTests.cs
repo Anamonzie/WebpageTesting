@@ -1,84 +1,57 @@
 ﻿using Allure.NUnit.Attributes;
 using AutoFixture;
-using EpamWeb.Factory;
+using EpamWeb.Factories;
 using EpamWeb.Models;
 using EpamWeb.Utils;
+using EpamWebTests.BaseTestClasses;
 using FluentAssertions;
-using System.Text.Json;
 
 namespace EpamWebTests.PageTests
 {
     [TestFixture]
     [Category("ApiTest")]
+    [AllureFeature("API Tests")]
     public class ApiTests : ApiTestBase
     {
-        public ApiTests()
-        {
-            apiServiceFactory = new ApiServiceFactory(); // Initialize once
-        }
-
-        [Test, Category("ApiTest")]
+        [Test]
         [AllureName("GET posts")]
         public async Task GetPosts_ShouldReturnListOfPosts()
         {
-            var posts = await apiService.GetAsync<List<PostModel>>(ApiEndpoints.Posts);
+            var endpoint = ApiEndpoints.Posts;
+
+            var posts = await apiService.GetAsync<List<PostModel>>(endpoint);
 
             posts.Should().NotBeEmpty("Expected at least one post.");
         }
 
-        [Test, Category("ApiTest")]
+        [Test]
         [AllureName("GET post by ID")]
         public async Task GetPostById_ShouldReturnCorrectPost()
         {
             int postId = 1;
+            var expectedPost = fileService.ReadFromFile<PostModel>(TestData.ApiFilePost1);
+            var endpoint = string.Format(ApiEndpoints.PostById, postId);
 
-            var expectedPost = ReadFromFile<PostModel>("ExpectedData/Post1.json");
-            var post = await apiService.GetAsync<PostModel>(string.Format(ApiEndpoints.PostById, postId));
+            var post = await apiService.GetAsync<PostModel>(endpoint);
 
             post.Should().BeEquivalentTo(expectedPost, "Expected post should match.");
         }
 
-        [Test, Category("ApiTest")]
+        [Test]
         [AllureName("POST a post")]
         public async Task CreatePost_ShouldReturnNewPost()
         {
-            var fixture = new Fixture();
-            fixture.Customize<PostModel>(c => c
-                .Without(p => p.Id)
-                .With(p => p.Title, $"A new post {Guid.NewGuid()}")
-                .With(p => p.Body, $"bar {Guid.NewGuid()}"));
+            // Arrange
+            var newPost = PostModelFactory.CreateRandomPost();
 
-            var newPost = fixture.Create<PostModel>();
+            fileService.WriteToFile(TestData.PathToApiGeneratedPost, newPost);
+            var endpoint = ApiEndpoints.Posts;
 
-            WriteToFile("GeneratedData/NewPost.json", newPost);
+            // Act
+            var createdPost = await apiService.PostAsync<PostModel>(endpoint, newPost);
 
-            var createdPost = await apiService.PostAsync<PostModel>(ApiEndpoints.Posts, newPost);
-
+            // Assert
             createdPost.Should().BeEquivalentTo(newPost, options => options.Excluding(p => p.Id));
-        }
-
-        private void WriteToFile<T>(string filePath, T data)
-        {
-            var directory = Path.GetDirectoryName(filePath);
-
-            if (!Directory.Exists(directory))
-            {
-                Directory.CreateDirectory(directory);
-            }
-
-            // Write JSON data to the file
-            var jsonData = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(filePath, jsonData);
-        }
-
-        private T ReadFromFile<T>(string filePath)
-        {
-            if (!File.Exists(filePath))
-                throw new FileNotFoundException($"File not found: {filePath}");
-
-            var jsonData = File.ReadAllText(filePath);
-            return JsonSerializer.Deserialize<T>(jsonData)
-                ?? throw new InvalidOperationException($"Failed to deserialize data from {filePath}"); ;
         }
     }
 }

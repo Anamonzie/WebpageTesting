@@ -4,6 +4,7 @@ using Microsoft.Playwright;
 using NUnit.Framework;
 using Polly.Retry;
 using Polly;
+using EpamWeb.Services.ServiceInterfaces;
 
 namespace EpamWeb.Services
 {

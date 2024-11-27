@@ -1,4 +1,4 @@
-﻿using EpamWeb.Services;
+﻿using EpamWeb.Services.ServiceInterfaces;
 
 namespace EpamWeb.Factory
 {

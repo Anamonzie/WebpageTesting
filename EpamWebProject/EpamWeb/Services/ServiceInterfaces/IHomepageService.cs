@@ -1,4 +1,4 @@
-﻿namespace EpamWeb.Services
+﻿namespace EpamWeb.Services.ServiceInterfaces
 {
     public interface IHomepageService : IBaseService
     {

@@ -1,4 +1,5 @@
 ﻿using EpamWeb.Loggers;
+using EpamWeb.Services.ServiceInterfaces;
 using Microsoft.Playwright;
 using NUnit.Framework;
 

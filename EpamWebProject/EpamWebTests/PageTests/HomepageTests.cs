@@ -1,7 +1,7 @@
 using Allure.Net.Commons;
 using Allure.NUnit.Attributes;
 using EpamWeb.Utils;
-
+using EpamWebTests.BaseTestClasses;
 using FluentAssertions;
 using SeverityLevel = Allure.Net.Commons.SeverityLevel;
 

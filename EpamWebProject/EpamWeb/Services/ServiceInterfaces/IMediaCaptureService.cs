@@ -1,6 +1,6 @@
 ﻿using Microsoft.Playwright;
 
-namespace EpamWeb.Services
+namespace EpamWeb.Services.ServiceInterfaces
 {
     public interface IMediaCaptureService
     {

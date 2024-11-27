@@ -4,9 +4,10 @@ using EpamWeb.Attachments;
 using EpamWeb.Factory;
 using EpamWeb.Loggers;
 using EpamWeb.Services;
+using EpamWeb.Services.ServiceInterfaces;
 using Microsoft.Playwright;
 
-namespace EpamWebTests.PageTests
+namespace EpamWebTests.BaseTestClasses
 {
     [AllureNUnit]
     public abstract class BaseTest
