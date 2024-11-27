@@ -1,68 +1,84 @@
-﻿using System.Text.Json;
+﻿using Allure.NUnit.Attributes;
+using AutoFixture;
+using EpamWeb.Factory;
+using EpamWeb.Models;
+using EpamWeb.Utils;
+using FluentAssertions;
+using System.Text.Json;
 
 namespace EpamWebTests.PageTests
 {
     [TestFixture]
-    public class ApiTests : BaseTest
+    [Category("ApiTest")]
+    public class ApiTests : ApiTestBase
     {
-        [Test]
+        public ApiTests()
+        {
+            apiServiceFactory = new ApiServiceFactory(); // Initialize once
+        }
+
+        [Test, Category("ApiTest")]
+        [AllureName("GET posts")]
         public async Task GetPosts_ShouldReturnListOfPosts()
         {
-            //var response = await _api.GetAsync("/posts");
-            //Assert.That(response.Status, Is.EqualTo(200));
+            var posts = await apiService.GetAsync<List<PostModel>>(ApiEndpoints.Posts);
 
-            //var posts = JsonSerializer.Deserialize<List<JsonElement>>(await response.TextAsync());
-            //Assert.That(posts.Count > 0, "Expected at least one post.");
-
-            var posts = await _apiService.GetAsync<List<JsonElement>>("/posts");
-            Assert.That(posts.Count, Is.GreaterThan(0), "Expected at least one post.");
-
+            posts.Should().NotBeEmpty("Expected at least one post.");
         }
 
-        [Test]
+        [Test, Category("ApiTest")]
+        [AllureName("GET post by ID")]
         public async Task GetPostById_ShouldReturnCorrectPost()
         {
-            //    int postId = 1;
-            //    var response = await _api.GetAsync($"/posts/{postId}");
-            //    Assert.That(response.Status, Is.EqualTo(200));
-
-            //    var post = JsonSerializer.Deserialize<JsonElement>(await response.TextAsync());
-
-            //    Assert.That(post.GetProperty("id").GetInt32(), Is.EqualTo(postId), "Post ID does not match.");
-
             int postId = 1;
-            var post = await _apiService.GetAsync<JsonElement>($"/posts/{postId}");
-            Assert.That(post.GetProperty("id").GetInt32(), Is.EqualTo(postId), "Post ID does not match.");
 
+            var expectedPost = ReadFromFile<PostModel>("ExpectedData/Post1.json");
+            var post = await apiService.GetAsync<PostModel>(string.Format(ApiEndpoints.PostById, postId));
+
+            post.Should().BeEquivalentTo(expectedPost, "Expected post should match.");
         }
 
-        [Test]
+        [Test, Category("ApiTest")]
+        [AllureName("POST a post")]
         public async Task CreatePost_ShouldReturnNewPost()
         {
-            var newPost = new
+            var fixture = new Fixture();
+            fixture.Customize<PostModel>(c => c
+                .Without(p => p.Id)
+                .With(p => p.Title, $"A new post {Guid.NewGuid()}")
+                .With(p => p.Body, $"bar {Guid.NewGuid()}"));
+
+            var newPost = fixture.Create<PostModel>();
+
+            WriteToFile("GeneratedData/NewPost.json", newPost);
+
+            var createdPost = await apiService.PostAsync<PostModel>(ApiEndpoints.Posts, newPost);
+
+            createdPost.Should().BeEquivalentTo(newPost, options => options.Excluding(p => p.Id));
+        }
+
+        private void WriteToFile<T>(string filePath, T data)
+        {
+            var directory = Path.GetDirectoryName(filePath);
+
+            if (!Directory.Exists(directory))
             {
-                title = "foo",
-                body = "bar",
-                userId = 1
-            };
+                Directory.CreateDirectory(directory);
+            }
 
-            //    var response = await _api.PostAsync("/posts", new APIRequestContextOptions
-            //    {
-            //        DataObject = newPost
-            //    });
+            // Write JSON data to the file
+            var jsonData = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(filePath, jsonData);
+        }
 
-            //    Assert.That(response.Status, Is.EqualTo(201)); // Created
+        private T ReadFromFile<T>(string filePath)
+        {
+            if (!File.Exists(filePath))
+                throw new FileNotFoundException($"File not found: {filePath}");
 
-            //    var createdPost = JsonSerializer.Deserialize<JsonElement>(await response.TextAsync());
-            //    Assert.That(createdPost.GetProperty("title").GetString(), Is.EqualTo(newPost.title), "Title mismatch.");
-            //    Assert.That(createdPost.GetProperty("body").GetString(), Is.EqualTo(newPost.body), "Body mismatch.");
-            //    Assert.That(createdPost.GetProperty("userId").GetInt32(), Is.EqualTo(newPost.userId), "User ID mismatch.");
-            //}
-
-            var createdPost = await _apiService.PostAsync<JsonElement>("/posts", newPost);
-            Assert.That(createdPost.GetProperty("title").GetString(), Is.EqualTo(newPost.title), "Title mismatch.");
-            Assert.That(createdPost.GetProperty("body").GetString(), Is.EqualTo(newPost.body), "Body mismatch.");
-            Assert.That(createdPost.GetProperty("userId").GetInt32(), Is.EqualTo(newPost.userId), "User ID mismatch.");
+            var jsonData = File.ReadAllText(filePath);
+            return JsonSerializer.Deserialize<T>(jsonData)
+                ?? throw new InvalidOperationException($"Failed to deserialize data from {filePath}"); ;
         }
     }
 }
