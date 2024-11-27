@@ -1,0 +1,1 @@
+27-11-2024 14:10 [INF] (12) 6075 GetPosts_ShouldReturnListOfPosts || Captured screenshot at allure-results/Screenshots/GetPosts_ShouldReturnListOfPosts/screenshot_GetPosts_ShouldReturnListOfPosts_1127_1410.png
