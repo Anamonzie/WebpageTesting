@@ -1,0 +1,1 @@
+27-11-2024 11:12 [INF] (7) 6089 GetPostById_ShouldReturnCorrectPost || Captured screenshot at allure-results/Screenshots/GetPostById_ShouldReturnCorrectPost/screenshot_GetPostById_ShouldReturnCorrectPost_1127_1112.png
