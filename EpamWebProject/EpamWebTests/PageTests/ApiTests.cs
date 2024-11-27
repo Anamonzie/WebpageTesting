@@ -13,7 +13,7 @@ namespace EpamWebTests.PageTests
     {
         public ApiTests()
         {
-            apiServiceFactory = new ApiServiceFactory(); 
+            apiServiceFactory = new ApiServiceFactory(); // Initialize once
         }
 
         [Test]
@@ -65,6 +65,7 @@ namespace EpamWebTests.PageTests
                 Directory.CreateDirectory(directory);
             }
 
+            // Write JSON data to the file
             var jsonData = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(filePath, jsonData);
         }
