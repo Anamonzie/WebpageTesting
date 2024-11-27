@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace EpamWeb.Services
 {
-    public class ApiService
+    public class ApiService : IApiService
     {
         private readonly IAPIRequestContext _apiContext;
 
@@ -37,7 +37,7 @@ namespace EpamWeb.Services
         public async Task<IAPIResponse> GetRawAsync(string endpoint)
         {
             var response = await _apiContext.GetAsync(endpoint);
-            
+
             EnsureSuccessStatus(response);
 
             return response;

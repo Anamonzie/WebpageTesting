@@ -22,9 +22,6 @@ namespace EpamWebTests.PageTests
         protected IMediaCaptureService mediaCaptureService;
         protected IAllureAttachmentManager allureAttachmentManager;
 
-        protected IAPIRequestContext _api;
-        protected ApiService _apiService;
-
         [OneTimeSetUp]
         public static void GlobalSetup()
         {
@@ -32,25 +29,10 @@ namespace EpamWebTests.PageTests
             logger = LoggerManager.Instance;
         }
 
-        [OneTimeTearDown]
-        public async Task GlobalTearDown()
-        {
-            await _api.DisposeAsync();
-        }
-
         [SetUp]
         [AllureBefore("Setup session")]
         public async Task Setup()
         {
-            // for API tests
-            var playwright = await Playwright.CreateAsync();
-            _api = await playwright.APIRequest.NewContextAsync(new APIRequestNewContextOptions
-            {
-                BaseURL = "https://jsonplaceholder.typicode.com",
-            });
-
-            _apiService = new ApiService(_api);
-
             // For old tests
             var testName = TestContext.CurrentContext.Test.Name;
             logger.InitializeLogFilePath(testName);
