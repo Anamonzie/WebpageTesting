@@ -1,4 +1,4 @@
-﻿using Allure.NUnit.Attributes;
+using Allure.NUnit.Attributes;
 using AutoFixture;
 using EpamWeb.Factory;
 using EpamWeb.Models;
@@ -13,7 +13,7 @@ namespace EpamWebTests.PageTests
     {
         public ApiTests()
         {
-            apiServiceFactory = new ApiServiceFactory(); // Initialize once
+            apiServiceFactory = new ApiServiceFactory(); 
         }
 
         [Test]
@@ -65,7 +65,6 @@ namespace EpamWebTests.PageTests
                 Directory.CreateDirectory(directory);
             }
 
-            // Write JSON data to the file
             var jsonData = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(filePath, jsonData);
         }
@@ -77,7 +76,7 @@ namespace EpamWebTests.PageTests
 
             var jsonData = File.ReadAllText(filePath);
             return JsonSerializer.Deserialize<T>(jsonData)
-                ?? throw new InvalidOperationException($"Failed to deserialize data from {filePath}"); ;
+                ?? throw new InvalidOperationException($"Failed to deserialize data from {filePath}");
         }
     }
 }

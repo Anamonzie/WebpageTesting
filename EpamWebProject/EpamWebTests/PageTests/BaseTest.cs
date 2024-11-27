@@ -59,7 +59,6 @@ namespace EpamWebTests.PageTests
             pageFactory = new PageFactory(context);
 
             var page = await pageFactory.GetOrCreatePageAsync(testName);
-
             serviceFactory = ServiceFactory.CreateInstance(pageFactory, page, logger);
         }
 

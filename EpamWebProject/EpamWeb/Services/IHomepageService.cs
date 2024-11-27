@@ -4,5 +4,7 @@
     {
         Task ClickHamburgerMenuAsync();
         Task<List<string>> GetHamburgerMenuListItemsAsync();
+
+        event EventHandler<string> NavigationCompleted;
     }
 }

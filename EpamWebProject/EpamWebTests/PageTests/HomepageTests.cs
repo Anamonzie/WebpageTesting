@@ -1,4 +1,3 @@
-using Allure.NUnit;
 using Allure.Net.Commons;
 using Allure.NUnit.Attributes;
 using EpamWeb.Utils;
@@ -48,6 +47,13 @@ public class Tests : BaseTest
         var testPage = await pageFactory.GetOrCreatePageAsync(TestContext.CurrentContext.Test.Name);
 
         var homepageService = serviceFactory.CreateHomepageService(testPage);
+
+        //subscribing to the event
+        homepageService.NavigationCompleted += (sender, url) =>
+        {
+            logger.Info(TestContext.CurrentContext.Test.Name, $"Navigation to {url} completed event triggered.");
+        };
+
         await homepageService.NavigateToUrlAndAcceptCookiesAsync(ConstantData.EpamHomepageUrl);
 
         // Act

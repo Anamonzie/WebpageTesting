@@ -19,6 +19,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Covariance_Contravariance",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovarianceContravariance", "..\..\CovarianceContravariance\CovarianceContravariance.csproj", "{9AE59AC0-9114-4EA8-83C8-ACFF0C6EE20B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D9C1489E-401F-4634-A1F4-63945D45CA02}"
+	ProjectSection(SolutionItems) = preProject
+		BuiltIn.cs = BuiltIn.cs
+		Class1.cs = Class1.cs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

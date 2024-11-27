@@ -10,7 +10,6 @@ namespace EpamWeb.Attachments
         {
             TestContext.AddTestAttachment(screenshotPath);
             await Task.Run(() => AllureApi.AddAttachment("Screenshot", "image/png", screenshotPath));
-            //AllureLifecycle.Instance.AddAttachment("Screenshot", "image/png", screenshotPath);
         }
 
         public async Task AddVideoAttachment(IPage page)
