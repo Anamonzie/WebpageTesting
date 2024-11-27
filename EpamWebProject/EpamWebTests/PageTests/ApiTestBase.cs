@@ -17,12 +17,13 @@ namespace EpamWebTests.PageTests
             apiService = apiServiceFactory.Create(ConstantData.ApiUrl);
         }
 
-        [OneTimeTearDown]
-        public async Task ApiTestsTeardown()
+        [TearDown]
+        public async Task ApiTestTearDown()
         {
             if (api != null)
             {
                 await api.DisposeAsync();
+                api = null;
             }
         }
     }
