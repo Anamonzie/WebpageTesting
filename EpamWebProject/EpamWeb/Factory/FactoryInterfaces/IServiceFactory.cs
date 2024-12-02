@@ -1,7 +1,7 @@
 ﻿using EpamWeb.Services.ServiceInterfaces;
 using Microsoft.Playwright;
 
-namespace EpamWeb.Factory
+namespace EpamWeb.Factory.FactoryInterfaces
 {
     public interface IServiceFactory
     {

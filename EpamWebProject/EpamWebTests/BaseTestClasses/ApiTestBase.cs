@@ -1,4 +1,6 @@
-﻿using EpamWeb.Factory;
+﻿using AutoFixture;
+using EpamWeb.Factory;
+using EpamWeb.Factory.FactoryInterfaces;
 using EpamWeb.Services;
 using EpamWeb.Services.ServiceInterfaces;
 using EpamWeb.Utils;
@@ -6,17 +8,19 @@ using Microsoft.Playwright;
 
 namespace EpamWebTests.BaseTestClasses
 {
-    public abstract class ApiTestBase : BaseTest
+    public abstract class ApiTestBase 
     {
         protected IApiServiceFactory apiServiceFactory;
-        protected IAPIRequestContext api; // playwright interface for managing the context of API requests
-        protected IApiService apiService; // my abstraction
+        protected IAPIRequestContext api;
+        protected IApiService apiService; 
         protected IFileService fileService;
+
+        protected Fixture FixtureInstance { get; } = AutoFixtureFactory.Instance;
 
         [SetUp]
         public void ApiTestSetup()
         {
-            apiServiceFactory = new ApiServiceFactory();
+            apiServiceFactory = ApiServiceFactory.Instance;
             fileService = new FileService();
 
             apiService = apiServiceFactory.Create(ConstantData.ApiUrl);

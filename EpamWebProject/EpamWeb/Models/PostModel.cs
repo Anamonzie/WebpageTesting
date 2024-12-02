@@ -7,13 +7,13 @@ namespace EpamWeb.Models
         [JsonPropertyName("Id")]
         public int Id { get; set; }
 
-        [JsonPropertyName("title")]
+        [JsonPropertyName("Title")]
         public string? Title { get; set; }
 
-        [JsonPropertyName("body")]
+        [JsonPropertyName("Body")]
         public string? Body { get; set; }
 
-        [JsonPropertyName("userId")]
+        [JsonPropertyName("UserId")]
         public int UserId { get; set; }
 
         public override string ToString()
@@ -21,13 +21,12 @@ namespace EpamWeb.Models
             return $"Id: {Id}, Title: {Title}, Body: {Body}, UserId: {UserId}";
         }
 
-        public override bool Equals(object? obj)
+        public bool Equals(PostModel obj)
         {
-            return obj is PostModel post &&
-                Id == post.Id &&
-                Title == post.Title &&
-                Body == post.Body &&
-                UserId == post.UserId;
+            return Id == obj.Id &&
+                Title == obj.Title &&
+                Body == obj.Body &&
+                UserId == obj.UserId;
         }
 
         public override int GetHashCode()

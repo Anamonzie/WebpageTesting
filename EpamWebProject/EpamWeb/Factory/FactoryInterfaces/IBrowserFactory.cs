@@ -1,6 +1,6 @@
 ﻿using Microsoft.Playwright;
 
-namespace EpamWeb.Factory
+namespace EpamWeb.Factory.FactoryInterfaces
 {
     public interface IBrowserFactory
     {

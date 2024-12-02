@@ -1,6 +1,5 @@
 ﻿using Allure.NUnit.Attributes;
 using AutoFixture;
-using EpamWeb.Factories;
 using EpamWeb.Models;
 using EpamWeb.Utils;
 using EpamWebTests.BaseTestClasses;
@@ -16,11 +15,14 @@ namespace EpamWebTests.PageTests
         [Test]
         [AllureName("GET posts")]
         public async Task GetPosts_ShouldReturnListOfPosts()
-        {
+        {            
+            // Arrange
             var endpoint = ApiEndpoints.Posts;
 
+            // Act
             var posts = await apiService.GetAsync<List<PostModel>>(endpoint);
 
+            // Assert
             posts.Should().NotBeEmpty("Expected at least one post.");
         }
 
@@ -28,12 +30,15 @@ namespace EpamWebTests.PageTests
         [AllureName("GET post by ID")]
         public async Task GetPostById_ShouldReturnCorrectPost()
         {
+            // Arrange
             int postId = 1;
             var expectedPost = fileService.ReadFromFile<PostModel>(TestData.ApiFilePost1);
             var endpoint = string.Format(ApiEndpoints.PostById, postId);
 
+            // Act
             var post = await apiService.GetAsync<PostModel>(endpoint);
 
+            // Assert
             post.Should().BeEquivalentTo(expectedPost, "Expected post should match.");
         }
 
@@ -42,9 +47,10 @@ namespace EpamWebTests.PageTests
         public async Task CreatePost_ShouldReturnNewPost()
         {
             // Arrange
-            var newPost = PostModelFactory.CreateRandomPost();
+            //var newPost = PostModelCustomization.CreateRandomPost();
 
-            fileService.WriteToFile(TestData.PathToApiGeneratedPost, newPost);
+            var newPost = FixtureInstance.Create<PostModel>();
+            //fileService.WriteToFile(TestData.PathToApiGeneratedPost, newPost);
             var endpoint = ApiEndpoints.Posts;
 
             // Act

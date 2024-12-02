@@ -2,6 +2,7 @@
 using Allure.NUnit.Attributes;
 using EpamWeb.Attachments;
 using EpamWeb.Factory;
+using EpamWeb.Factory.FactoryInterfaces;
 using EpamWeb.Loggers;
 using EpamWeb.Services;
 using EpamWeb.Services.ServiceInterfaces;
@@ -34,7 +35,6 @@ namespace EpamWebTests.BaseTestClasses
         [AllureBefore("Setup session")]
         public async Task Setup()
         {
-            // For old tests
             var testName = TestContext.CurrentContext.Test.Name;
             logger.InitializeLogFilePath(testName);
 

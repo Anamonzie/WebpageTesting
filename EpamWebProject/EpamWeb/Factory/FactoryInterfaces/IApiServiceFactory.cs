@@ -1,6 +1,6 @@
 ﻿using EpamWeb.Services.ServiceInterfaces;
 
-namespace EpamWeb.Factory
+namespace EpamWeb.Factory.FactoryInterfaces
 {
     public interface IApiServiceFactory
     {
