@@ -1,5 +1,5 @@
 ﻿using Allure.NUnit.Attributes;
-using AutoFixture;
+using EpamWeb.ModelBuilder;
 using EpamWeb.Models;
 using EpamWeb.Utils;
 using EpamWebTests.BaseTestClasses;
@@ -47,17 +47,38 @@ namespace EpamWebTests.PageTests
         public async Task CreatePost_ShouldReturnNewPost()
         {
             // Arrange
-            //var newPost = PostModelCustomization.CreateRandomPost();
 
-            var newPost = FixtureInstance.Create<PostModel>();
-            //fileService.WriteToFile(TestData.PathToApiGeneratedPost, newPost);
+            ///var newPost = PostModelCustomization.CreateRandomPost();
+            ///var newPost = FixtureInstance.Create<PostModel>();
+            ///fileService.WriteToFile(TestData.PathToApiGeneratedPost, newPost);
+
+            var expectedPost = new PostModelBuilder()
+                .WithTitle("Custom Title")
+                .WithBody("Custom Body")
+                .WithUserId(123)
+                .Build();
+
             var endpoint = ApiEndpoints.Posts;
 
             // Act
-            var createdPost = await apiService.PostAsync<PostModel>(endpoint, newPost);
+
+            var createdPost = await apiService.PostAsync<PostModel>(endpoint, expectedPost);
+
+            ///  *Creating endpoint for newly created Post and GETting it*
+            ////var getEndpoint = $"{endpoint}/{createdPost.Id}";
+            ////var retrievedPost = await apiService.GetAsync<PostModel>(getEndpoint);
 
             // Assert
-            createdPost.Should().BeEquivalentTo(newPost, options => options.Excluding(p => p.Id));
+
+            Assert.Multiple(() =>
+            {
+                createdPost.Should()
+                    .BeEquivalentTo(expectedPost, options => options.Excluding(p => p.Id),
+                        "the created post should match the expected data except for the Id");
+
+                //retrievedPost.Should()
+                //    .BeEquivalentTo(createdPost, "the retrieved post should match the post returned by the POST request");
+            });
         }
     }
 }

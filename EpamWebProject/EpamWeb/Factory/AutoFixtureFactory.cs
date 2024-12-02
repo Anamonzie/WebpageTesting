@@ -1,5 +1,5 @@
 ﻿using AutoFixture;
-using EpamWeb.Factories;
+using EpamWeb.Customizations;
 using EpamWeb.Factory.FactoryInterfaces;
 
 namespace EpamWeb.Factory

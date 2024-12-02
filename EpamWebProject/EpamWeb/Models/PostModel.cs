@@ -4,7 +4,7 @@ namespace EpamWeb.Models
 {
     public class PostModel
     {
-        [JsonPropertyName("Id")]
+        [JsonPropertyName("id")]
         public int Id { get; set; }
 
         [JsonPropertyName("Title")]
