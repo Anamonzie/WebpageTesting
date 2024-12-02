@@ -1,0 +1,4 @@
+02-12-2024 22:15 [INF] (13) 5901 EpamHomepage_TitleCheck || Successfully navigated to https://www.epam.com.
+02-12-2024 22:15 [INF] (13) 5901 EpamHomepage_TitleCheck || Getting page title
+02-12-2024 22:15 [INF] (13) 5901 EpamHomepage_TitleCheck || Checking page title; expected: EPAM | Software Engineering & Product Development Services, actual: EPAM | Software Engineering & Product Development Services.
+02-12-2024 22:15 [INF] (13) 5901 EpamHomepage_TitleCheck || Captured screenshot at allure-results/Screenshots/EpamHomepage_TitleCheck/screenshot_EpamHomepage_TitleCheck_1202_2215.png

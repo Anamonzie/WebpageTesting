@@ -1,2 +1,0 @@
-22-11-2024 13:43 [INF] (42) 6188 Google_NetworkConnectionCheck || Checking page title; expected: Google, actual: Google.
-22-11-2024 13:43 [INF] (42) 6188 Google_NetworkConnectionCheck || Captured screenshot at allure-results/Screenshots/Google_NetworkConnectionCheck/screenshot_Google_NetworkConnectionCheck_1122_1343.png

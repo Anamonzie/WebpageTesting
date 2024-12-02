@@ -1,0 +1,2 @@
+02-12-2024 22:15 [INF] (45) 5901 Google_NetworkConnectionCheck || Checking page title; expected: Google, actual: Google.
+02-12-2024 22:15 [INF] (45) 5901 Google_NetworkConnectionCheck || Captured screenshot at allure-results/Screenshots/Google_NetworkConnectionCheck/screenshot_Google_NetworkConnectionCheck_1202_2215.png
